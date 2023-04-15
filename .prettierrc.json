@@ -1,6 +1,8 @@
 {
+  "pluginSearchDirs": ["."],
+  "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }],
   "jsxSingleQuote": true,
   "trailingComma": "es5",
-  "semi": false,
+  "semi": true,
   "printWidth": 120
 }

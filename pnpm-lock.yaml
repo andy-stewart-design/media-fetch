@@ -7,11 +7,10 @@ specifiers:
   '@rollup/plugin-node-resolve': ^15.0.1
   '@rollup/plugin-terser': ^0.4.0
   '@rollup/plugin-typescript': ^11.0.0
-  figma-plugin-ds-svelte: ^1.4.3
-  lorem-ipsum: ^2.0.8
   postcss: ^8.4.21
   prettier: ^2.8.6
   prettier-plugin-svelte: ^2.10.0
+  prettier-plugin-tailwindcss: ^0.2.7
   rollup: ^3.20.1
   rollup-plugin-postcss: ^4.0.2
   rollup-plugin-svelte: ^7.1.4
@@ -23,7 +22,6 @@ specifiers:
   typescript: ^5.0.2
 
 dependencies:
-  lorem-ipsum: 2.0.8
   svelte-preprocess: 5.0.3_s3nzjngzuqqwrio2vroyigrseq
 
 devDependencies:
@@ -33,10 +31,10 @@ devDependencies:
   '@rollup/plugin-node-resolve': 15.0.1_rollup@3.20.1
   '@rollup/plugin-terser': 0.4.0_rollup@3.20.1
   '@rollup/plugin-typescript': 11.0.0_eacmbhuh3lqetrbtumripnqatm
-  figma-plugin-ds-svelte: 1.4.3
   postcss: 8.4.21
   prettier: 2.8.6
   prettier-plugin-svelte: 2.10.0_bzjcbf5vweu43cmyrxgltnmf74
+  prettier-plugin-tailwindcss: 0.2.7_dj2gop65rtxix3uxs52ikhizjy
   rollup: 3.20.1
   rollup-plugin-postcss: 4.0.2_postcss@8.4.21
   rollup-plugin-svelte: 7.1.4_5qggibio4uvrhce75qegcgljxe
@@ -396,11 +394,6 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
-  /commander/9.5.0:
-    resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
-    engines: {node: ^12.20.0 || >=14}
-    dev: false
-
   /commondir/1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
     dev: true
@@ -627,12 +620,6 @@ packages:
       reusify: 1.0.4
     dev: true
 
-  /figma-plugin-ds-svelte/1.4.3:
-    resolution: {integrity: sha512-a/8CHjsNiGD/cMItH0Tk0apyw/Fzgo6NsuywdEB89HDU5RWlgzGjeeHoIbyGjGBErJwxfGTGmzhn9afBFKp9eQ==}
-    dependencies:
-      svelte-click-outside: 1.0.0
-    dev: true
-
   /fill-range/7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
     engines: {node: '>=8'}
@@ -817,14 +804,6 @@ packages:
   /lodash.uniq/4.5.0:
     resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
     dev: true
-
-  /lorem-ipsum/2.0.8:
-    resolution: {integrity: sha512-5RIwHuCb979RASgCJH0VKERn9cQo/+NcAi2BMe9ddj+gp7hujl6BI+qdOG4nVsLDpwWEJwTVYXNKP6BGgbcoGA==}
-    engines: {node: '>= 8.x', npm: '>= 5.x'}
-    hasBin: true
-    dependencies:
-      commander: 9.5.0
-    dev: false
 
   /magic-string/0.27.0:
     resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
@@ -1376,6 +1355,62 @@ packages:
       svelte: 3.57.0
     dev: true
 
+  /prettier-plugin-tailwindcss/0.2.7_dj2gop65rtxix3uxs52ikhizjy:
+    resolution: {integrity: sha512-jQopIOgjLpX+y8HeD56XZw7onupRTC0cw7eKKUimI7vhjkPF5/1ltW5LyqaPtSyc8HvEpvNZsvvsGFa2qpa59w==}
+    engines: {node: '>=12.17.0'}
+    peerDependencies:
+      '@ianvs/prettier-plugin-sort-imports': '*'
+      '@prettier/plugin-php': '*'
+      '@prettier/plugin-pug': '*'
+      '@shopify/prettier-plugin-liquid': '*'
+      '@shufo/prettier-plugin-blade': '*'
+      '@trivago/prettier-plugin-sort-imports': '*'
+      prettier: '>=2.2.0'
+      prettier-plugin-astro: '*'
+      prettier-plugin-css-order: '*'
+      prettier-plugin-import-sort: '*'
+      prettier-plugin-jsdoc: '*'
+      prettier-plugin-organize-attributes: '*'
+      prettier-plugin-organize-imports: '*'
+      prettier-plugin-style-order: '*'
+      prettier-plugin-svelte: '*'
+      prettier-plugin-twig-melody: '*'
+    peerDependenciesMeta:
+      '@ianvs/prettier-plugin-sort-imports':
+        optional: true
+      '@prettier/plugin-php':
+        optional: true
+      '@prettier/plugin-pug':
+        optional: true
+      '@shopify/prettier-plugin-liquid':
+        optional: true
+      '@shufo/prettier-plugin-blade':
+        optional: true
+      '@trivago/prettier-plugin-sort-imports':
+        optional: true
+      prettier-plugin-astro:
+        optional: true
+      prettier-plugin-css-order:
+        optional: true
+      prettier-plugin-import-sort:
+        optional: true
+      prettier-plugin-jsdoc:
+        optional: true
+      prettier-plugin-organize-attributes:
+        optional: true
+      prettier-plugin-organize-imports:
+        optional: true
+      prettier-plugin-style-order:
+        optional: true
+      prettier-plugin-svelte:
+        optional: true
+      prettier-plugin-twig-melody:
+        optional: true
+    dependencies:
+      prettier: 2.8.6
+      prettier-plugin-svelte: 2.10.0_bzjcbf5vweu43cmyrxgltnmf74
+    dev: true
+
   /prettier/2.8.6:
     resolution: {integrity: sha512-mtuzdiBbHwPEgl7NxWlqOkithPyp4VN93V7VeHVWBF+ad3I5avc0RVDT4oImXQy9H/AqxA2NSQH8pSxHW6FYbQ==}
     engines: {node: '>=10.13.0'}
@@ -1610,10 +1645,6 @@ packages:
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
-    dev: true
-
-  /svelte-click-outside/1.0.0:
-    resolution: {integrity: sha512-TVDn5Vd8L0WI0Y9BFh/2I7judkIqYCbFKkGwGl/f8D0inwBFNyU0weKhrbJY4VQtYnWriq0NPl+mIYGisgALbw==}
     dev: true
 
   /svelte-preprocess/5.0.3_s3nzjngzuqqwrio2vroyigrseq:
