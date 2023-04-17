@@ -4,34 +4,44 @@
   import { fade } from "svelte/transition";
   import "./app.css";
 
+  type MediaType = "IMAGE" | "VIDEO";
+
   interface ImageArray {
     src: string;
     thumb: string;
-    width: string;
-    height: string;
-    photographer: string;
+    width: number;
+    height: number;
+    creator: string;
     service: string;
   }
 
+  let mediaType: MediaType = "VIDEO";
   let query: string;
-  let images: ImageArray[];
+  let mediaArray: ImageArray[];
 
   onmessage = (event) => {
-    if (event.data.pluginMessage.images) {
-      images = event.data.pluginMessage.images;
+    if (event.data.pluginMessage.media) {
+      mediaArray = event.data.pluginMessage.media;
     }
   };
 
   const postSearch = () => {
     if (query && query.replaceAll(" ", "") !== "") {
-      parent.postMessage({ pluginMessage: { type: "SEARCH", query } }, "*");
+      parent.postMessage({ pluginMessage: { messageType: "SEARCH", mediaType, query } }, "*");
     } else console.log("need a search query");
   };
+
   const clearSearch = () => (query = "");
 
-  const postCreate = (src: string) => parent.postMessage({ pluginMessage: { type: "CREATE", src } }, "*");
+  const postCreate = (src: string, width: number, height: number) => {
+    console.log("posting create", { src, width, height });
+
+    parent.postMessage({ pluginMessage: { messageType: "CREATE", mediaType, src, width, height } }, "*");
+  };
 
   const handleClick = (e: KeyboardEvent) => e.key === "Enter" && postSearch();
+
+  $: console.log(mediaArray);
 </script>
 
 <div class="flex min-h-[100%] flex-col">
@@ -51,6 +61,7 @@
         bind:value={query}
         placeholder="Search for images"
         on:keydown={handleClick}
+        spellcheck="false"
       />
       <button
         class="flex w-11 items-center justify-center focus:outline-none focus-visible:outline-blue-600 disabled:opacity-0"
@@ -62,26 +73,26 @@
       </button>
     </div>
   </div>
-  {#if images}
-    {#key images}
+  {#if mediaArray}
+    {#key mediaArray}
       <div class="grid grid-cols-2 gap-4 p-4" in:fade>
-        {#each images as image}
+        {#each mediaArray as entry}
           <div class="flex flex-col gap-1">
             <button
               class="group relative grow border border-white/10 bg-white/5"
-              on:click={() => postCreate(image.src)}
+              on:click={() => postCreate(entry.src, entry.width, entry.height)}
             >
-              <img src={image.thumb} alt={image.photographer} width={image.width} height={image.height} />
+              <img src={entry.thumb} alt={entry.creator} width={entry.width} height={entry.height} />
               <div
                 class="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-black/40 font-semibold opacity-0 group-hover:opacity-100"
               >
-                Add Image
+                Add {mediaType.toLocaleLowerCase()}
               </div>
             </button>
             <p class="text-[11px]">
               <span class="opacity-60">by</span>
-              <span class="font-semibold">{image.photographer}</span> <span class="opacity-60">from</span>
-              <span class="font-semibold capitalize">{image.service}</span>
+              <span class="font-semibold">{entry.creator}</span> <span class="opacity-60">from</span>
+              <span class="font-semibold capitalize">{entry.service}</span>
             </p>
           </div>
         {/each}

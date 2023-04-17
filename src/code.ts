@@ -4,110 +4,178 @@
 
 type PhotoSource = "UNSPLASH" | "PEXELS" | "PIXABAY";
 
+type MediaType = "IMAGE" | "VIDEO";
+
 interface SearchMessage {
-  type: "SEARCH";
+  messageType: "SEARCH";
+  mediaType: MediaType;
   query: string;
 }
 
 interface CreateMessage {
-  type: "CREATE";
+  messageType: "CREATE";
+  mediaType: MediaType;
   src: string;
+  width: number;
+  height: number;
 }
 
 figma.showUI(__html__, { themeColors: true, width: 480, height: 560 });
 
-const pexelsBaseURL = "https://api.pexels.com/v1/search";
+const pexelsBaseImageURL = "https://api.pexels.com/v1/search";
+const pexelsBaseVideoURL = "https://api.pexels.com/videos/search";
 const pexelsAPIKey = "6g13kUgrPvTdfvJ0TfNQS2QXzVBLFqO0tu5gMQTCaIOQCGYWISSckCPs";
 const unsplashBaseURL = "https://api.unsplash.com/search/photos";
 const unsplashAPIKey = "tAWVEwm8Gkhpp9r8wNTDyS_sgLptx6uEuqTm6_Hx6os";
 
 figma.ui.onmessage = async (msg: SearchMessage | CreateMessage) => {
-  if (msg.type === "SEARCH") {
-    const fetchParams1 = createFetchParams("UNSPLASH", msg.query, 25);
-    const fetchParams2 = createFetchParams("PEXELS", msg.query, 25);
+  if (msg.messageType === "SEARCH") {
+    if (msg.mediaType === "VIDEO") {
+      console.log("Searching for video");
 
-    const foo = await Promise.allSettled([fetchPhotos(fetchParams1), fetchPhotos(fetchParams2)]);
-    const bar = foo.map((result) => {
-      if (result.status === "fulfilled") {
-        const set = result.value;
-        if (set.service === "PEXELS") {
-          return set.photos.map((image) => {
-            const orientation = image.width > image.height ? "landscape" : "portrait";
-            return {
-              service: set.service.toLocaleLowerCase(),
-              photographer: image.photographer,
-              thumb: image.src.medium,
-              src: image.src.large2x,
-              width: image.width,
-              height: image.height,
-              orientation,
-            };
-          });
-        } else if (set.service === "UNSPLASH") {
-          return set.results.map((image) => {
-            const orientation = image.width > image.height ? "landscape" : "portrait";
-            const src =
-              orientation === "landscape"
-                ? image.urls.regular.replace("w=1080", "w=1920")
-                : image.urls.regular.replace("w=1080", "w=1280");
-            return {
-              service: set.service.toLocaleLowerCase(),
-              photographer: image.user.name,
-              thumb: image.urls.small,
-              src,
-              width: image.width,
-              height: image.height,
-              orientation,
-            };
-          });
+      const fetchParams = createFetchParams("PEXELS", msg.mediaType, msg.query, 25);
+
+      const videoDataRaw = await fetchMedia(fetchParams);
+
+      const videoData = videoDataRaw.videos.map((video) => {
+        const orientation = video.width > video.height ? "landscape" : "portrait";
+        const getVideoSrc = (files: any[]) => {
+          const targetWidth = Math.max.apply(
+            Math,
+            video.video_files.map((file) => (file.width < 2000 ? file.width : 0))
+          );
+          return files.filter((file) => file.width === targetWidth)[0].link;
+        };
+        const videoSrc = getVideoSrc(video.video_files);
+
+        return {
+          service: videoDataRaw.service.toLocaleLowerCase(),
+          creator: video.user.name,
+          thumb: video.image,
+          src: videoSrc,
+          width: video.width,
+          height: video.height,
+          orientation,
+        };
+      });
+
+      console.log(videoData);
+
+      figma.ui.postMessage({ media: shuffle(videoData.flat()) });
+    } else {
+      const fetchParams1 = createFetchParams("UNSPLASH", msg.mediaType, msg.query, 25);
+      const fetchParams2 = createFetchParams("PEXELS", msg.mediaType, msg.query, 25);
+
+      const imageDataRaw = await Promise.allSettled([fetchMedia(fetchParams1), fetchMedia(fetchParams2)]);
+      const imageData = imageDataRaw.map((result) => {
+        if (result.status === "fulfilled") {
+          const set = result.value;
+          if (set.service === "PEXELS") {
+            return set.photos.map((image) => {
+              const orientation = image.width > image.height ? "landscape" : "portrait";
+              return {
+                service: set.service.toLocaleLowerCase(),
+                creator: image.photographer,
+                thumb: image.src.medium,
+                src: image.src.large2x,
+                width: image.width,
+                height: image.height,
+                orientation,
+              };
+            });
+          } else if (set.service === "UNSPLASH") {
+            return set.results.map((image) => {
+              const orientation = image.width > image.height ? "landscape" : "portrait";
+              const src =
+                orientation === "landscape"
+                  ? image.urls.regular.replace("w=1080", "w=1920")
+                  : image.urls.regular.replace("w=1080", "w=1280");
+              return {
+                service: set.service.toLocaleLowerCase(),
+                photographer: image.user.name,
+                thumb: image.urls.small,
+                src,
+                width: image.width,
+                height: image.height,
+                orientation,
+              };
+            });
+          }
         }
-      }
-    });
-    console.log(bar);
+      });
+      // console.log(imageData);
 
-    figma.ui.postMessage({ images: shuffle(bar.flat()) });
-  } else if (msg.type === "CREATE") {
-    const imgData = await figma.createImageAsync(msg.src);
-    const { width, height } = await imgData.getSizeAsync();
+      figma.ui.postMessage({ media: shuffle(imageData.flat()) });
+    }
+  } else if (msg.messageType === "CREATE") {
+    if (msg.mediaType === "VIDEO") {
+      console.log("creating video", msg);
+      const video = await fetch(msg.src);
+      const videobuffer = await video.arrayBuffer();
+      const videoUint8Array = new Uint8Array(videobuffer);
 
-    const { x, y } = figma.viewport.center;
+      const videoData = await figma.createVideoAsync(videoUint8Array);
 
-    const rect = figma.createRectangle();
-    rect.resize(width, height);
-    rect.x = x - width / 2;
-    rect.y = y - height / 2;
+      const { x, y } = figma.viewport.center;
 
-    rect.fills = [
-      {
-        type: "IMAGE",
-        imageHash: imgData.hash,
-        scaleMode: "FILL",
-      },
-    ];
+      const rect = figma.createRectangle();
+      rect.resize(msg.width, msg.height);
+      rect.x = x - msg.width / 2;
+      rect.y = y - msg.height / 2;
 
-    // figma.closePlugin();
+      rect.fills = [
+        {
+          type: "VIDEO",
+          videoHash: videoData.hash,
+          scaleMode: "FILL",
+        },
+      ];
+
+      // figma.closePlugin();
+    } else if (msg.mediaType === "IMAGE") {
+      const imgData = await figma.createImageAsync(msg.src);
+
+      const { x, y } = figma.viewport.center;
+
+      const rect = figma.createRectangle();
+      rect.resize(msg.width, msg.height);
+      rect.x = x - msg.width / 2;
+      rect.y = y - msg.height / 2;
+
+      rect.fills = [
+        {
+          type: "IMAGE",
+          imageHash: imgData.hash,
+          scaleMode: "FILL",
+        },
+      ];
+
+      // figma.closePlugin();
+    }
   }
 };
 
-const createFetchParams = (service: PhotoSource, query: string, amount: number) => {
+const createFetchParams = (service: PhotoSource, mediaType: MediaType, query: string, amount: number) => {
   let url: string;
-  switch (service) {
-    case "PEXELS":
-      url = `${pexelsBaseURL}?query=${query}&per_page=${amount}`;
-      break;
-    case "UNSPLASH":
-      url = `${unsplashBaseURL}?client_id=${unsplashAPIKey}&query=${query}&per_page=${amount}`;
-      break;
-    case "PIXABAY":
-      console.log("Still need to set up pixabay");
-      break;
-    default:
-      console.error("Invalid service specified");
+
+  if (service === "PEXELS") {
+    if (mediaType === "IMAGE") {
+      url = `${pexelsBaseImageURL}?query=${query}&per_page=${amount}`;
+    } else if (mediaType === "VIDEO") {
+      url = `${pexelsBaseVideoURL}?query=${query}&per_page=${amount}`;
+    }
+  } else if (service === "UNSPLASH") {
+    url = `${unsplashBaseURL}?client_id=${unsplashAPIKey}&query=${query}&per_page=${amount}`;
+  } else if (service === "PIXABAY") {
+    console.log("Still need to set up pixabay");
+  } else {
+    console.error("Invalid service specified");
   }
+
   return { service, url };
 };
 
-const fetchPhotos = async ({ service, url }: { service: PhotoSource; url: string }) => {
+const fetchMedia = async ({ service, url }: { service: PhotoSource; url: string }) => {
   const target = { service };
   switch (service) {
     case "PEXELS":
