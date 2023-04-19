@@ -1,12 +1,15 @@
 <script lang="ts">
+  import { fade } from "svelte/transition";
+  import ImageCard from "./components/ImageCard.svelte";
   import search from "./components/svg/search.svg";
   import close from "./components/svg/close.svg";
-  import { fade } from "svelte/transition";
+  import loading from "./components/svg/loading.svg";
   import "./app.css";
+  import VideoCard from "./components/VideoCard.svelte";
 
   type MediaType = "IMAGE" | "VIDEO";
 
-  interface ImageArray {
+  interface MediaEntry {
     src: string;
     thumb: string;
     width: number;
@@ -15,13 +18,23 @@
     service: string;
   }
 
-  let mediaType: MediaType = "VIDEO";
+  interface VideoEntry extends MediaEntry {
+    videoThumb: string;
+  }
+
+  let isWorking = false;
+  let mediaType: MediaType = "IMAGE";
   let query: string;
-  let mediaArray: ImageArray[];
+  let imageArray: MediaEntry[];
+  let videoArray: VideoEntry[];
 
   onmessage = (event) => {
+    if (event.data.pluginMessage.messageType === "STATUS") {
+      isWorking = event.data.pluginMessage.workInProgress;
+    }
     if (event.data.pluginMessage.media) {
-      mediaArray = event.data.pluginMessage.media;
+      if (event.data.pluginMessage.mediaType === "IMAGE") imageArray = event.data.pluginMessage.media;
+      else if (event.data.pluginMessage.mediaType === "VIDEO") videoArray = event.data.pluginMessage.media;
     }
   };
 
@@ -40,13 +53,25 @@
   };
 
   const handleClick = (e: KeyboardEvent) => e.key === "Enter" && postSearch();
-
-  $: console.log(mediaArray);
 </script>
 
-<div class="flex min-h-[100%] flex-col">
-  <div class="sticky top-0 z-50 border-b border-white/10 bg-figma-gray-900 p-4">
-    <div class="flex h-12 border border-white/10">
+<div class="relative flex min-h-[100%] flex-col">
+  <div class="flex">
+    <button
+      class="grow border-t-2 border-transparent bg-figma-gray-900/75 p-3 aria-checked:border-current aria-checked:bg-figma-gray-800"
+      on:click={() => (mediaType = "IMAGE")}
+      role="radio"
+      aria-checked={mediaType === "IMAGE"}>Images</button
+    >
+    <button
+      class="grow border-t-2 border-transparent bg-figma-gray-900/75 p-3 aria-checked:border-current aria-checked:bg-figma-gray-800"
+      on:click={() => (mediaType = "VIDEO")}
+      role="radio"
+      aria-checked={mediaType === "VIDEO"}>Video</button
+    >
+  </div>
+  <div class="sticky top-0 z-50 border-b border-white/10 bg-figma-gray-800 py-3 px-4">
+    <div class="flex h-12">
       <button
         class="flex w-11 items-center justify-center focus:outline-none focus-visible:outline-blue-600 disabled:opacity-50"
         aria-label="Search"
@@ -59,7 +84,7 @@
         class="grow bg-transparent pt-1.5 pb-2 placeholder:text-white/50 focus:outline-none focus-visible:border-blue-600"
         type="text"
         bind:value={query}
-        placeholder="Search for images"
+        placeholder={`Search for ${mediaType.toLocaleLowerCase()}s`}
         on:keydown={handleClick}
         spellcheck="false"
       />
@@ -73,34 +98,26 @@
       </button>
     </div>
   </div>
-  {#if mediaArray}
-    {#key mediaArray}
-      <div class="grid grid-cols-2 gap-4 p-4" in:fade>
-        {#each mediaArray as entry}
-          <div class="flex flex-col gap-1">
-            <button
-              class="group relative grow border border-white/10 bg-white/5"
-              on:click={() => postCreate(entry.src, entry.width, entry.height)}
-            >
-              <img src={entry.thumb} alt={entry.creator} width={entry.width} height={entry.height} />
-              <div
-                class="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-black/40 font-semibold opacity-0 group-hover:opacity-100"
-              >
-                Add {mediaType.toLocaleLowerCase()}
-              </div>
-            </button>
-            <p class="text-[11px]">
-              <span class="opacity-60">by</span>
-              <span class="font-semibold">{entry.creator}</span> <span class="opacity-60">from</span>
-              <span class="font-semibold capitalize">{entry.service}</span>
-            </p>
-          </div>
-        {/each}
-      </div>
-    {/key}
+  {#if mediaType === "IMAGE" && imageArray}
+    <div class="grid grid-cols-2 gap-4 bg-figma-gray-900/60 p-4" in:fade>
+      {#each imageArray as image}
+        <ImageCard {image} on:click={() => postCreate(image.src, image.width, image.height)} />
+      {/each}
+    </div>
+  {:else if mediaType === "VIDEO" && videoArray}
+    <div class="grid grid-cols-2 gap-4 bg-figma-gray-900/60 p-4" in:fade>
+      {#each videoArray as video}
+        <VideoCard {video} on:click={() => postCreate(video.src, video.width, video.height)} />
+      {/each}
+    </div>
   {:else}
-    <div class="flex grow items-center justify-center">
+    <div class="flex grow items-center justify-center bg-figma-gray-900/60">
       <p class="mb-4 opacity-50">Enter a search term</p>
+    </div>
+  {/if}
+  {#if isWorking}
+    <div class="absolute top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black/70">
+      {@html loading}
     </div>
   {/if}
 </div>
