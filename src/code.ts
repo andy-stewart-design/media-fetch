@@ -1,20 +1,7 @@
 // TODO: Handle error/rejection
+// TODO: No implicit any
 
-type PhotoSource = "UNSPLASH" | "PEXELS" | "PIXABAY";
-
-type MediaType = "IMAGE" | "VIDEO";
-
-interface SearchMessage {
-  messageType: "SEARCH";
-  query: string;
-}
-
-interface CreateMessage {
-  messageType: "CREATE";
-  src: string;
-  width: number;
-  height: number;
-}
+import { PhotoSource, MediaType, SearchMessage, CreateMessage } from "./types/app";
 
 figma.showUI(__html__, { themeColors: true, width: 560, height: 560 });
 
@@ -27,15 +14,8 @@ const pixabayBaseURL = "https://pixabay.com/api/";
 
 figma.ui.onmessage = async (msg: SearchMessage | CreateMessage) => {
   if (msg.messageType === "SEARCH") {
-    const fetchParams1 = createFetchParams("UNSPLASH", msg.query, 12);
-    const fetchParams2 = createFetchParams("PEXELS", msg.query, 12);
-    const fetchParams3 = createFetchParams("PIXABAY", msg.query, 12);
-
-    const results = await Promise.allSettled([
-      fetchMedia(fetchParams1),
-      fetchMedia(fetchParams2),
-      fetchMedia(fetchParams3),
-    ]);
+    const fetchParamsArray = msg.services.map((service) => createFetchParams(service, msg.query, 12));
+    const results = await Promise.allSettled(fetchParamsArray.map((params) => fetchMedia(params)));
 
     const fulfilledResults = results.filter(isFulfilled).map((p) => p.value);
     const rejectedResults = results.filter(isRejected);
@@ -93,9 +73,6 @@ figma.ui.onmessage = async (msg: SearchMessage | CreateMessage) => {
         });
       }
     });
-
-    console.log(fulfilledResults);
-    console.log(imageData);
 
     figma.ui.postMessage({ media: shuffle(imageData.flat()) });
   } else if (msg.messageType === "CREATE") {

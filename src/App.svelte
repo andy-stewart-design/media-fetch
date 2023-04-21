@@ -8,18 +8,13 @@
   import loading from "./components/svg/loading.svg";
   import "./app.css";
 
-  interface MediaEntry {
-    src: string;
-    thumb: string;
-    width: number;
-    height: number;
-    creator: string;
-    service: string;
-  }
+  import { MediaEntry, PhotoSource, SearchMessage } from "./types/app";
 
-  let isWorking = false;
+  let services: PhotoSource[] = ["UNSPLASH", "PEXELS", "PIXABAY"];
   let query: string;
+
   let imageArray: MediaEntry[];
+  let isWorking = false;
 
   onmessage = (event) => {
     if (event.data.pluginMessage.messageType === "STATUS") {
@@ -28,16 +23,17 @@
       isWorking = event.data.pluginMessage.workInProgress;
     }
     if (event.data.pluginMessage.media) {
-      imageArray = event.data.pluginMessage.media;
+      const duplicateArray = imageArray ? imageArray.slice() : [];
+      const newArray = duplicateArray.concat(event.data.pluginMessage.media);
+      imageArray = newArray;
     }
   };
 
   const postSearch = () => {
     if (query && query.replaceAll(" ", "") !== "") {
       const searchQuery = query.replaceAll(" ", "+");
-      console.log(query, searchQuery);
-
-      parent.postMessage({ pluginMessage: { messageType: "SEARCH", query: searchQuery } }, "*");
+      const pluginMessage: SearchMessage = { messageType: "SEARCH", query: searchQuery, services };
+      parent.postMessage({ pluginMessage }, "*");
     } else console.log("need a search query");
   };
 

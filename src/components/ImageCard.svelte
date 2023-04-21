@@ -1,23 +1,33 @@
 <script lang="ts">
-  interface Mediaimage {
-    src: string;
-    thumb: string;
-    width: number;
-    height: number;
-    creator: string;
-    service: string;
-  }
+  import unsplash from "../svg/unsplash.svg";
+  import pexels from "../svg/pexels.svg";
+  import pixabay from "../svg/pixabay.svg";
+  import { MediaEntry } from "../types/app";
 
-  export let image: Mediaimage;
+  export let image: MediaEntry;
+
+  const { service } = image;
+  const watermark =
+    service.toLocaleUpperCase() === "UNSPLASH"
+      ? unsplash
+      : service.toLocaleUpperCase() === "PIXABAY"
+      ? pixabay
+      : pexels;
 </script>
 
-<div class="flex flex-col gap-1">
-  <button class="group relative grow border border-white/10 bg-white/5" on:click>
+<div class=" relative flex flex-col gap-1">
+  <button class="group relative grow overflow-hidden border border-white/10 bg-white/5" on:click>
     <img src={image.thumb} alt={image.creator} width={image.width} height={image.height} />
     <div
-      class="absolute top-0 left-0 flex h-full w-full items-center justify-center overflow-hidden border border-current bg-figma-gray-900/50 text-sm font-semibold opacity-0 group-hover:opacity-100"
+      class="absolute -bottom-16 -left-16 h-32 w-32 bg-gradient-radial from-black via-transparent to-transparent opacity-30"
+    />
+    <div
+      class="absolute top-0 left-0 flex h-full w-full items-center justify-center overflow-hidden border border-current bg-figma-gray-900/75 text-sm font-semibold opacity-0 transition-opacity ease-out group-hover:opacity-100"
     >
       Add Image
+    </div>
+    <div class="absolute bottom-0 left-0 w-8 p-1.5 opacity-60 transition-opacity ease-out group-hover:opacity-100">
+      {@html watermark}
     </div>
   </button>
   <p class="text-[11px]">

@@ -1,12 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 
-const plugin = require("tailwindcss/plugin")
+const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   darkMode: ["class", ".figma-dark"],
   content: ["./src/**/*.{html,js,svelte,ts}"],
   theme: {
     extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      },
       colors: {
         figma: {
           blue: `#18a0fb`,
@@ -26,8 +29,8 @@ module.exports = {
   },
   plugins: [
     plugin(({ addVariant }) => {
-      addVariant("active", ".active&")
-      addVariant("selection", "&::selection")
+      addVariant("active", ".active&");
+      addVariant("selection", "&::selection");
     }),
   ],
-}
+};
