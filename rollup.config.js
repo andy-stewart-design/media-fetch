@@ -1,17 +1,23 @@
-import svelte from "rollup-plugin-svelte"
-import sveltePreprocess from "svelte-preprocess"
-import resolve from "@rollup/plugin-node-resolve"
-import commonjs from "@rollup/plugin-commonjs"
-import typescript from "@rollup/plugin-typescript"
-import html from "@rollup/plugin-html"
-import terser from "@rollup/plugin-terser"
-import svg from "rollup-plugin-svg"
+import svelte from "rollup-plugin-svelte";
+import sveltePreprocess from "svelte-preprocess";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import typescript from "@rollup/plugin-typescript";
+import html from "@rollup/plugin-html";
+import terser from "@rollup/plugin-terser";
+import svg from "rollup-plugin-svg";
 
 // Post CSS
-import postcss from "rollup-plugin-postcss"
-import tailwind from "tailwindcss"
+import postcss from "rollup-plugin-postcss";
+import tailwind from "tailwindcss";
 
-const production = !process.env.ROLLUP_WATCH
+// ENV Vars
+import replace from "@rollup/plugin-replace";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const production = !process.env.ROLLUP_WATCH;
 
 /**
  * @type {import('rollup').RollupOptions}
@@ -25,6 +31,13 @@ export default [
       file: `dist/bundle.js`,
     },
     plugins: [
+      replace({
+        preventAssignment: true,
+        PEXELS_API_KEY: JSON.stringify(process.env.PEXELS_API_KEY),
+        "process.env.PEXELS_API_KEY": JSON.stringify(process.env.PEXELS_API_KEY),
+        "process.env.UNSPLASH_API_KEY": JSON.stringify(process.env.UNSPLASH_API_KEY),
+        "process.env.PIXABAY_API_KEY": JSON.stringify(process.env.PIXABAY_API_KEY),
+      }),
       typescript(),
       svelte({
         compilerOptions: {
@@ -46,7 +59,7 @@ export default [
       html({
         fileName: `ui.html`,
         template({ bundle }) {
-          return createTemplate(bundle)
+          return createTemplate(bundle);
         },
       }),
       production && terser(),
@@ -63,6 +76,12 @@ export default [
       name: `code`,
     },
     plugins: [
+      replace({
+        preventAssignment: true,
+        "process.env.PEXELS_API_KEY": JSON.stringify(process.env.PEXELS_API_KEY),
+        "process.env.UNSPLASH_API_KEY": JSON.stringify(process.env.UNSPLASH_API_KEY),
+        "process.env.PIXABAY_API_KEY": JSON.stringify(process.env.PIXABAY_API_KEY),
+      }),
       typescript(),
       commonjs(),
       resolve({
@@ -71,11 +90,11 @@ export default [
       production && terser(),
     ],
   },
-]
+];
 
 function createTemplate(bundle) {
-  const title = "Figma Plugin Starter"
+  const title = "Figma Plugin Starter";
   return `<!doctype html><html lang="en">
           <head><meta charset="utf-8"><title>${title}</title></head>
-          <body><script>${bundle[`bundle.js`].code}</script></body></html>`
+          <body><script>${bundle[`bundle.js`].code}</script></body></html>`;
 }

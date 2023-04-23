@@ -5,11 +5,8 @@ import { PhotoSource, MediaType, SearchMessage, CreateMessage } from "./types/ap
 
 figma.showUI(__html__, { themeColors: true, width: 560, height: 560 });
 
-const pexelsAPIKey = "6g13kUgrPvTdfvJ0TfNQS2QXzVBLFqO0tu5gMQTCaIOQCGYWISSckCPs";
 const pexelsBaseURL = "https://api.pexels.com/v1/search";
-const unsplashAPIKey = "tAWVEwm8Gkhpp9r8wNTDyS_sgLptx6uEuqTm6_Hx6os";
 const unsplashBaseURL = "https://api.unsplash.com/search/photos";
-const pixabayAPIKey = "35568846-b12b8564471b5e493ec192e02";
 const pixabayBaseURL = "https://pixabay.com/api/";
 
 figma.ui.onmessage = async (msg: SearchMessage | CreateMessage) => {
@@ -104,9 +101,9 @@ const createFetchParams = (service: PhotoSource, query: string, amount = 20) => 
   if (service === "PEXELS") {
     url = `${pexelsBaseURL}?query=${query}&per_page=${amount}`;
   } else if (service === "UNSPLASH") {
-    url = `${unsplashBaseURL}?client_id=${unsplashAPIKey}&query=${query}&per_page=${amount}`;
+    url = `${unsplashBaseURL}?client_id=${process.env.UNSPLASH_API_KEY}&query=${query}&per_page=${amount}`;
   } else if (service === "PIXABAY") {
-    url = `${pixabayBaseURL}?key=${pixabayAPIKey}&q=${query}&per_page=${amount}`;
+    url = `${pixabayBaseURL}?key=${process.env.PIXABAY_API_KEY}&q=${query}&per_page=${amount}`;
   } else {
     console.error("Invalid service specified");
   }
@@ -122,7 +119,7 @@ const fetchMedia = async ({ service, url }: { service: PhotoSource; url: string 
         method: "GET",
         headers: {
           Accept: "application/json",
-          Authorization: pexelsAPIKey,
+          Authorization: process.env.PEXELS_API_KEY,
         },
       });
       const pexelsJSON = await pexelsResults.json();
