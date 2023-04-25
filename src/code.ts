@@ -1,7 +1,8 @@
 // TODO: Handle error/rejection
 // TODO: No implicit any
 
-import { PhotoSource, MediaType, SearchMessage, CreateMessage } from "./types/app";
+import { queryParamsSchema } from "./data/params";
+import { PhotoService, SearchParams, SearchMessage, CreateMessage } from "./types/app";
 
 figma.showUI(__html__, { themeColors: true, width: 560, height: 560 });
 
@@ -10,8 +11,12 @@ const unsplashBaseURL = "https://api.unsplash.com/search/photos";
 const pixabayBaseURL = "https://pixabay.com/api/";
 
 figma.ui.onmessage = async (msg: SearchMessage | CreateMessage) => {
-  if (msg.messageType === "SEARCH") {
-    const fetchParamsArray = msg.services.map((service) => createFetchParams(service, msg.query, 12));
+  figma.ui.postMessage({ type: "STATUS", workInProgress: true });
+  if (msg.type === "SEARCH") {
+    const queryAmount = Math.floor(30 / msg.payload.services.length);
+    const fetchParamsArray = msg.payload.services.map((service) =>
+      createFetchParams(service, msg.payload.params, queryAmount)
+    );
     const results = await Promise.allSettled(fetchParamsArray.map((params) => fetchMedia(params)));
 
     const fulfilledResults = results.filter(isFulfilled).map((p) => p.value);
@@ -71,17 +76,18 @@ figma.ui.onmessage = async (msg: SearchMessage | CreateMessage) => {
       }
     });
 
+    figma.ui.postMessage({ type: "STATUS", workInProgress: false });
     figma.ui.postMessage({ media: shuffle(imageData.flat()) });
-  } else if (msg.messageType === "CREATE") {
-    figma.ui.postMessage({ messageType: "STATUS", workInProgress: true });
-    const imgData = await figma.createImageAsync(msg.src);
+  } else if (msg.type === "CREATE") {
+    figma.ui.postMessage({ type: "STATUS", workInProgress: true });
+    const imgData = await figma.createImageAsync(msg.payload.src);
 
     const { x, y } = figma.viewport.center;
 
     const rect = figma.createRectangle();
-    rect.resize(msg.width, msg.height);
-    rect.x = x - msg.width / 2;
-    rect.y = y - msg.height / 2;
+    rect.resize(msg.payload.width, msg.payload.height);
+    rect.x = x - msg.payload.width / 2;
+    rect.y = y - msg.payload.height / 2;
 
     rect.fills = [
       {
@@ -90,28 +96,57 @@ figma.ui.onmessage = async (msg: SearchMessage | CreateMessage) => {
         scaleMode: "FILL",
       },
     ];
-    figma.ui.postMessage({ messageType: "STATUS", workInProgress: false });
+    figma.ui.postMessage({ type: "STATUS", workInProgress: false });
     // figma.closePlugin();
   }
 };
 
-const createFetchParams = (service: PhotoSource, query: string, amount = 20) => {
+const createFetchParams = (service: PhotoService, params: SearchParams, amount = 20) => {
   let url: string;
+  const { orientation, color } = params;
+  const amountQuery = `&per_page=${amount}`;
 
   if (service === "PEXELS") {
-    url = `${pexelsBaseURL}?query=${query}&per_page=${amount}`;
+    const searchQuery = `?query=${params.query}`;
+    const selectedOrientation =
+      queryParamsSchema[service][Object.keys({ orientation })[0].toLocaleUpperCase()][orientation];
+    const orientationQuery = selectedOrientation ? `&orientation=${selectedOrientation}` : null;
+    const selectedColor = queryParamsSchema[service][Object.keys({ color })[0].toLocaleUpperCase()][color];
+    const colorQuery = selectedColor ? `&avg_color=${selectedColor}` : null;
+
+    const urlArray = [pexelsBaseURL, searchQuery, amountQuery, orientationQuery, colorQuery];
+    url = urlArray.join("");
   } else if (service === "UNSPLASH") {
-    url = `${unsplashBaseURL}?client_id=${process.env.UNSPLASH_API_KEY}&query=${query}&per_page=${amount}`;
+    const apiKeyQuery = `?client_id=${process.env.UNSPLASH_API_KEY}`;
+    const searchQuery = `&query=${params.query}`;
+    const selectedOrientation =
+      queryParamsSchema[service][Object.keys({ orientation })[0].toLocaleUpperCase()][orientation];
+    const orientationQuery = selectedOrientation ? `&orientation=${selectedOrientation}` : null;
+    const selectedColor = queryParamsSchema[service][Object.keys({ color })[0].toLocaleUpperCase()][color];
+    const colorQuery = selectedColor ? `&color=${selectedColor}` : null;
+
+    const urlArray = [unsplashBaseURL, apiKeyQuery, searchQuery, amountQuery, orientationQuery, colorQuery];
+    url = urlArray.join("");
   } else if (service === "PIXABAY") {
-    url = `${pixabayBaseURL}?key=${process.env.PIXABAY_API_KEY}&q=${query}&per_page=${amount}`;
+    const apiKeyQuery = `?key=${process.env.PIXABAY_API_KEY}`;
+    const searchQuery = `&q=${params.query}`;
+    const selectedOrientation =
+      queryParamsSchema[service][Object.keys({ orientation })[0].toLocaleUpperCase()][orientation];
+    const orientationQuery = selectedOrientation ? `&orientation=${selectedOrientation}` : null;
+    const selectedColor = queryParamsSchema[service][Object.keys({ color })[0].toLocaleUpperCase()][color];
+    const colorQuery = selectedColor ? `&colors=${selectedColor}` : null;
+
+    const urlArray = [pixabayBaseURL, apiKeyQuery, searchQuery, amountQuery, orientationQuery, colorQuery];
+    url = urlArray.join("");
   } else {
     console.error("Invalid service specified");
   }
 
+  console.log(service, url);
   return { service, url };
 };
 
-const fetchMedia = async ({ service, url }: { service: PhotoSource; url: string }) => {
+const fetchMedia = async ({ service, url }: { service: PhotoService; url: string }) => {
   const target = { service };
   switch (service) {
     case "PEXELS":

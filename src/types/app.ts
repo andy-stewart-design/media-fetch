@@ -4,22 +4,53 @@ export interface MediaEntry {
   width: number;
   height: number;
   creator: string;
-  service: PhotoSource;
+  service: PhotoService;
 }
 
-export type PhotoSource = "UNSPLASH" | "PEXELS" | "PIXABAY";
+export type PhotoService = "UNSPLASH" | "PEXELS" | "PIXABAY";
+export type ServiceOption = {
+  name: PhotoService;
+  logo: string;
+};
 
 export type MediaType = "IMAGE" | "VIDEO";
 
-export interface SearchMessage {
-  messageType: "SEARCH";
-  services: PhotoSource[];
+export type OrientationOption = "ALL" | "HORIZONTAL" | "VERTICAL";
+export type ColorOption =
+  | "ALL"
+  | "BLACK"
+  | "BLUE"
+  | "BROWN"
+  | "GRAY"
+  | "GRAYSCALE"
+  | "GREEN"
+  | "ORANGE"
+  | "PINK"
+  | "PURPLE"
+  | "RED"
+  | "TEAL"
+  | "WHITE"
+  | "YELLOW";
+
+export interface SearchParams {
   query: string;
+  orientation: OrientationOption;
+  color: ColorOption;
+}
+
+export interface SearchMessage {
+  type: "SEARCH";
+  payload: {
+    services: PhotoService[];
+    params: SearchParams;
+  };
 }
 
 export interface CreateMessage {
-  messageType: "CREATE";
-  src: string;
-  width: number;
-  height: number;
+  type: "CREATE";
+  payload: {
+    src: string;
+    width: number;
+    height: number;
+  };
 }

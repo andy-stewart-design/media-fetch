@@ -4,7 +4,7 @@ const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   darkMode: ["class", ".figma-dark"],
-  content: ["./src/**/*.{html,js,svelte,ts}"],
+  content: ["./src/**/*.{html,js,svelte,ts,svg}"],
   theme: {
     extend: {
       backgroundImage: {
