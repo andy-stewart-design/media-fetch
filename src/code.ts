@@ -2,7 +2,7 @@
 // TODO: No implicit any
 
 import { queryParamsSchema } from "./data/params";
-import { PhotoService, SearchParams, SearchMessage, CreateMessage } from "./types/app";
+import { PhotoService, SearchParams, SearchMessage, CreateMessage } from "./types/main";
 
 figma.showUI(__html__, { themeColors: true, width: 560, height: 560 });
 

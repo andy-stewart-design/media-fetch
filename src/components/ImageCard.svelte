@@ -2,7 +2,7 @@
   import unsplash from "../svg/unsplash.svg";
   import pexels from "../svg/pexels.svg";
   import pixabay from "../svg/pixabay.svg";
-  import { MediaEntry } from "../types/app";
+  import { MediaEntry } from "../types/main";
 
   export let image: MediaEntry;
 
@@ -22,7 +22,7 @@
       class="absolute -bottom-16 -left-16 h-32 w-32 bg-gradient-radial from-black via-transparent to-transparent opacity-30"
     />
     <div
-      class="absolute top-0 left-0 flex h-full w-full items-center justify-center overflow-hidden border border-current bg-figma-gray-900/75 text-sm font-semibold opacity-0 transition-opacity ease-out group-hover:opacity-100"
+      class="absolute left-0 top-0 flex h-full w-full items-center justify-center overflow-hidden border border-current bg-figma-gray-900/75 text-sm font-semibold opacity-0 transition-opacity ease-out group-hover:opacity-100"
     >
       Add Image
     </div>
