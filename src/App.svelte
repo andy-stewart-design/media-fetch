@@ -2,7 +2,6 @@
   // TODO: filters (amount, orientation, color)
 
   import { fade } from "svelte/transition";
-  import { RadioGroup, RadioLabel, RadioOption } from "neutral-ui";
   import ImageCard from "./components/ImageCard.svelte";
   import search from "./components/svg/search.svg";
   import close from "./components/svg/close.svg";
@@ -20,6 +19,7 @@
     OrientationOption,
     ColorOption,
   } from "./types/main";
+  import { ListboxBase, ListboxButtonBase, ListboxOptionsBase, ListboxOptionBase } from "./components/listbox";
 
   interface ColorOptions {
     name: ColorOption;
@@ -91,27 +91,11 @@
   };
 
   const handleClick = (e: KeyboardEvent) => e.key === "Enter" && postSearch();
-
-  const filterService = (service: PhotoService) => {
-    if (!selectedServices.includes(service)) {
-      selectedServices = selectedServices.concat(service);
-    } else if (selectedServices.length > 1) {
-      selectedServices = selectedServices.filter((s) => s != service);
-    }
-    // if (selectedServices.includes(service) && selectedServices.length > 1)
-    //   selectedServices = selectedServices.filter((s) => s != service);
-    // else selectedServices = selectedServices.concat(service);
-    console.log(selectedServices);
-  };
-
-  let showServiceModal = false;
-  let showOrientationsModal = false;
-  let showColorsModal = false;
 </script>
 
 <div class="relative flex min-h-[100%] flex-col">
   <div class="sticky top-0 z-50 grid gap-2 border-b border-white/10 bg-figma-gray-800 px-6 py-3">
-    <div class="flex h-12 gap-3 border-b border-white/10">
+    <div class="flex h-12 gap-3 border-b border-white/10 transition-colors ease-out [&:has(input:focus)]:border-white">
       <button
         class="flex items-center justify-center focus:outline-none focus-visible:outline-blue-600 disabled:opacity-50"
         aria-label="Search"
@@ -137,102 +121,77 @@
         {@html close}
       </button>
     </div>
-    <div class="flex gap-6 py-3">
+
+    <div class="grid grid-cols-3 gap-3 py-3">
       <!-- SERVICE SELECT -->
-      <div class="relative">
-        <button
-          class="flex items-center gap-1 text-sm font-medium"
-          on:click={() => (showServiceModal = !showServiceModal)}
-        >
+      <ListboxBase multiple bind:value={selectedServices}>
+        <ListboxButtonBase>
           {selectedServices.length === 3 ? "All Services" : selectedServices.length === 2 ? `2 Services` : `1 Service`}
           <svg viewBox="0 0 12 12" width="12" height="12">
             <path d="M2 4 L6 8 L10 4" stroke="currentColor" stroke-width="1.5" fill="none" />
           </svg>
-        </button>
-        <div
-          class="invisible absolute mt-1 hidden flex-col gap-3 rounded bg-black p-4 data-[active=true]:visible data-[active=true]:flex"
-          data-active={showServiceModal}
-        >
+        </ListboxButtonBase>
+        <ListboxOptionsBase>
           {#each services as service}
-            <button
-              on:click={() => filterService(service.name)}
-              class="group flex items-center gap-2 rounded-full text-sm font-medium capitalize text-white/50 transition-colors data-[selected=true]:text-white"
-              class:active={selectedServices.includes(service.name)}
-              data-selected={selectedServices.includes(service.name)}
-            >
+            <ListboxOptionBase value={service.name}>
               <span
-                class="inline-block w-7 rounded-full border border-white/10 p-1 text-white/50 transition-colors group-data-[selected=true]:bg-white/80 group-data-[selected=true]:text-black"
-                >{@html service.logo}</span
+                class="inline-flex items-center gap-3 text-white/50 transition-colors ease-out group-data-[selected=true]:text-white"
               >
-              {service.name.toLocaleLowerCase()}
-            </button>
+                <span
+                  class="inline-block w-7 rounded-full border border-white/10 p-1 group-data-[selected=true]:bg-white/80 group-data-[selected=true]:text-black"
+                >
+                  {@html service.logo}
+                </span>
+                {service.name.toLocaleLowerCase()}
+              </span>
+            </ListboxOptionBase>
           {/each}
-        </div>
-      </div>
+        </ListboxOptionsBase>
+      </ListboxBase>
 
       <!-- ORIENTATION SELECT -->
-      <div>
-        <button
-          class="flex items-center gap-1 text-sm font-medium capitalize"
-          on:click={() => (showOrientationsModal = !showOrientationsModal)}
-        >
+      <ListboxBase bind:value={selectedOrientation}>
+        <ListboxButtonBase>
           {selectedOrientation === "ALL" ? "All Orientations" : selectedOrientation.toLocaleLowerCase()}
           <svg viewBox="0 0 12 12" width="12" height="12">
             <path d="M2 4 L6 8 L10 4" stroke="currentColor" stroke-width="1.5" fill="none" />
           </svg>
-        </button>
-        <div
-          class="invisible absolute mt-1 hidden flex-col gap-3 rounded bg-black py-1 data-[active=true]:visible data-[active=true]:flex"
-          data-active={showOrientationsModal}
-        >
-          <RadioGroup bind:value={selectedOrientation} class="flex-col gap-3">
-            <RadioLabel hidden>Orientation</RadioLabel>
-            {#each orientations as orientation}
-              <RadioOption
-                class="min-w-[120px] border border-white/10 px-4 py-1.5 text-sm font-medium capitalize transition-colors aria-checked:bg-white/80 aria-checked:text-black"
-                value={orientation}
-              >
-                {orientation.toLocaleLowerCase()}
-              </RadioOption>
-            {/each}
-          </RadioGroup>
-        </div>
-      </div>
+        </ListboxButtonBase>
+        <ListboxOptionsBase>
+          {#each orientations as orientation}
+            <ListboxOptionBase value={orientation}>
+              <span class="opacity-0 group-data-[selected=true]:opacity-100">
+                <svg viewBox="0 0 16 16" width="16" height="16">
+                  <path d="M2 9 L6 13 L14 5" stroke="currentColor" fill="none" stroke-width="2" />
+                </svg>
+              </span>
+              {orientation.toLocaleLowerCase()}
+            </ListboxOptionBase>
+          {/each}
+        </ListboxOptionsBase>
+      </ListboxBase>
 
       <!-- COLOR SELECT -->
-      <div>
-        <button
-          class="flex items-center gap-1 text-sm font-medium capitalize"
-          on:click={() => (showColorsModal = !showColorsModal)}
-        >
-          <!-- <svg viewBox="0 0 16 16" width="16" height="16" class="mr-1 text-blue-500">
-            <rect width="14" height="14" x="1" y="1" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" />
-            <rect width="8" height="8" x="1" y="7" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" />
-          </svg> -->
+      <ListboxBase bind:value={selectedColor}>
+        <ListboxButtonBase>
           {selectedColor === "ALL" ? "All Colors" : selectedColor.toLocaleLowerCase()}
           <svg viewBox="0 0 12 12" width="12" height="12">
             <path d="M2 4 L6 8 L10 4" stroke="currentColor" stroke-width="1.5" fill="none" />
           </svg>
-        </button>
-        <div
-          class="invisible absolute mt-1 hidden rounded bg-black data-[active=true]:visible data-[active=true]:flex"
-          data-active={showColorsModal}
-        >
-          <RadioGroup bind:value={selectedColor} class="flex-col gap-3">
-            <RadioLabel hidden>Orientation</RadioLabel>
-            <div class="grid grid-cols-4 p-2">
-              {#each colors as color}
-                <RadioOption class="group rounded-full p-1.5 aria-checked:bg-white/[0.15]" value={color.name}>
-                  <span
-                    class="inline-block h-6 w-6 rounded-full border border-white/30 transition-colors group-aria-checked:border-white"
-                    style:background={color.hex}
-                  />
-                </RadioOption>
-              {/each}
-            </div>
-          </RadioGroup>
-        </div>
-      </div>
+        </ListboxButtonBase>
+        <ListboxOptionsBase>
+          <div class="grid grid-cols-4 px-2 py-1">
+            {#each colors as color}
+              <ListboxOptionBase value={color.name} grid>
+                <span
+                  class="inline-block h-6 w-6 shrink-0 rounded-full border border-white/30 transition-colors group-data-[selected=true]:border-white"
+                  style:background={color.hex}
+                />
+              </ListboxOptionBase>
+            {/each}
+          </div>
+        </ListboxOptionsBase>
+      </ListboxBase>
     </div>
   </div>
   {#if imageArray}
