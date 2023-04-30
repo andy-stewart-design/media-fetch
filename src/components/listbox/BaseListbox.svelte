@@ -3,9 +3,9 @@
   import type { Value } from "neutral-ui/dist/listbox/types";
 
   export let value: Value | Value[];
-  export let multiple = false;
+  export let multi = false;
 </script>
 
-<Listbox {multiple} bind:value class="text-sm font-semibold">
+<Listbox {multi} atLeast="1" bind:value class="text-sm font-semibold">
   <slot />
 </Listbox>

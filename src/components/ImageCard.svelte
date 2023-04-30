@@ -1,7 +1,7 @@
 <script lang="ts">
-  import unsplash from "../svg/unsplash.svg";
-  import pexels from "../svg/pexels.svg";
-  import pixabay from "../svg/pixabay.svg";
+  import unsplash from "./svg/unsplash.svg";
+  import pexels from "./svg/pexels.svg";
+  import pixabay from "./svg/pixabay.svg";
   import { MediaEntry } from "../types/main";
 
   export let image: MediaEntry;

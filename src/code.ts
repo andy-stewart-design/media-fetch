@@ -1,4 +1,5 @@
 // TODO: Handle error/rejection
+// TODOL Load More functionality
 // TODO: No implicit any
 
 import { queryParamsSchema } from "./data/params";
