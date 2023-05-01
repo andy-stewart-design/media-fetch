@@ -59,18 +59,22 @@
 
   onmessage = (event) => {
     if (event.data.pluginMessage.type === "STATUS") {
-      // console.log("message received: is working", event.data.pluginMessage.workInProgress);
       isWorking = event.data.pluginMessage.workInProgress;
     }
     if (event.data.pluginMessage.media) {
-      const duplicateArray = imageArray ? imageArray.slice() : [];
-      const newArray = duplicateArray.concat(event.data.pluginMessage.media);
-      imageArray = newArray;
+      if (event.data.pluginMessage.type === "REPLACE") {
+        imageArray = event.data.pluginMessage.media;
+      } else if (event.data.pluginMessage.type === "PUSH") {
+        console.log(event.data.pluginMessage);
+        const duplicateArray = imageArray ? imageArray.slice() : [];
+        imageArray = duplicateArray.concat(event.data.pluginMessage.media);
+      }
     }
   };
 
   const postSearch = () => {
     if (query && query.replaceAll(" ", "") !== "") {
+      if (imageArray) imageArray = undefined;
       const searchQuery = query.replaceAll(" ", "+");
       const pluginMessage: SearchMessage = {
         type: "SEARCH",
@@ -82,6 +86,8 @@
       parent.postMessage({ pluginMessage }, "*");
     } else console.log("need a search query");
   };
+
+  const postLoadMore = () => parent.postMessage({ pluginMessage: { type: "LOADMORE" } }, "*");
 
   const clearSearch = () => (query = "");
 
@@ -204,10 +210,17 @@
     </div>
   </div>
   {#if imageArray}
-    <div class="grid grid-cols-2 gap-4 bg-figma-gray-900/60 p-4" in:fade>
-      {#each imageArray as image}
-        <ImageCard {image} on:click={() => postCreate(image.src, image.width, image.height)} />
-      {/each}
+    <div class="bg-figma-gray-900/60">
+      <div class="grid grid-cols-2 gap-4 p-4" in:fade>
+        {#each imageArray as image}
+          <ImageCard {image} on:click={() => postCreate(image.src, image.width, image.height)} />
+        {/each}
+      </div>
+      <div class="flex justify-center px-4 pb-8 pt-6">
+        <button on:click={postLoadMore} class="rounded border border-white px-4 pb-2 pt-1.5 font-medium">
+          Load More
+        </button>
+      </div>
     </div>
   {:else}
     <div class="flex grow items-center justify-center bg-figma-gray-900/60">

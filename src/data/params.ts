@@ -1,15 +1,17 @@
 export const queryParamsSchema = {
   UNSPLASH: {
     ORIENTATION: {
+      ALL: undefined as undefined,
       VERTICAL: "portrait",
       HORIZONTAL: "landscape",
       SQUARE: "squarish",
     },
     COLOR: {
+      ALL: undefined as undefined,
       BLACK: "black",
       BLUE: "blue",
-      BROWN: null,
-      GRAY: null,
+      BROWN: undefined as undefined,
+      GRAY: undefined as undefined,
       GRAYSCALE: "black_and_white",
       GREEN: "green",
       ORANGE: "orange",
@@ -23,16 +25,18 @@ export const queryParamsSchema = {
   },
   PEXELS: {
     ORIENTATION: {
+      ALL: undefined as undefined,
       VERTICAL: "portrait",
       HORIZONTAL: "landscape",
       SQUARE: "square",
     },
     COLOR: {
+      ALL: undefined as undefined,
       BLACK: "black",
       BLUE: "blue",
       BROWN: "#7C4700",
       GRAY: "gray",
-      GRAYSCALE: null,
+      GRAYSCALE: undefined as undefined,
       GREEN: "green",
       ORANGE: "orange",
       PINK: "pink",
@@ -45,11 +49,13 @@ export const queryParamsSchema = {
   },
   PIXABAY: {
     ORIENTATION: {
+      ALL: "all",
       VERTICAL: "vertical",
       HORIZONTAL: "horizontal",
-      SQUARE: null,
+      SQUARE: undefined as undefined,
     },
     COLOR: {
+      ALL: undefined as undefined,
       BLACK: "black",
       BLUE: "blue",
       BROWN: "brown",
