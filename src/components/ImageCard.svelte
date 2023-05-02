@@ -16,17 +16,19 @@
 </script>
 
 <div class=" relative flex flex-col gap-1">
-  <button class="group relative grow overflow-hidden border border-white/10 bg-white/5" on:click>
+  <button class="group relative grow overflow-hidden border border-foreground/10 bg-black/50" on:click>
     <img src={image.thumb} alt={image.creator} width={image.width} height={image.height} />
     <div
       class="absolute -bottom-16 -left-16 h-32 w-32 bg-gradient-radial from-black via-transparent to-transparent opacity-30"
     />
     <div
-      class="absolute left-0 top-0 flex h-full w-full items-center justify-center overflow-hidden border border-current bg-figma-gray-900/75 text-sm font-semibold opacity-0 transition-opacity ease-out group-hover:opacity-100"
+      class="absolute left-0 top-0 flex h-full w-full items-center justify-center overflow-hidden border border-current bg-black/75 text-sm font-semibold text-white opacity-0 transition-opacity ease-out group-hover:opacity-100"
     >
       Add Image
     </div>
-    <div class="absolute bottom-0 left-0 w-8 p-1.5 opacity-60 transition-opacity ease-out group-hover:opacity-100">
+    <div
+      class="absolute bottom-0 left-0 w-8 p-1.5 text-white opacity-60 transition-opacity ease-out group-hover:opacity-100"
+    >
       {@html watermark}
     </div>
   </button>

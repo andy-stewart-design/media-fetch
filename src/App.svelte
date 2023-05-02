@@ -6,6 +6,7 @@
   import loading from "./components/svg/loading.svg";
   import check from "./components/svg/check.svg";
   import chevrondown from "./components/svg/chevrondown.svg";
+  import shuffle from "./components/svg/shuffle.svg";
   import unsplashIcon from "./components/svg/unsplash.svg";
   import pexelsIcon from "./components/svg/pexels.svg";
   import pixabayIcon from "./components/svg/pixabay.svg";
@@ -87,48 +88,62 @@
     } else console.log("need a search query");
   };
 
-  const postLoadMore = () => parent.postMessage({ pluginMessage: { type: "LOADMORE" } }, "*");
-
-  const clearSearch = () => (query = "");
-
   const postCreate = (src: string, width: number, height: number) => {
     const pluginMessage: CreateMessage = { type: "CREATE", payload: { src, width, height } };
     console.log("posting create", pluginMessage);
     parent.postMessage({ pluginMessage }, "*");
   };
 
+  const postLoadMore = () => parent.postMessage({ pluginMessage: { type: "LOADMORE" } }, "*");
+
+  const postRandom = () => parent.postMessage({ pluginMessage: { type: "RANDOM" } }, "*");
+
   const handleClick = (e: KeyboardEvent) => e.key === "Enter" && postSearch();
+
+  const clearSearch = () => (query = "");
+
+  const resetSearch = () => {
+    query = "";
+    imageArray = undefined;
+    selectedServices = ["UNSPLASH", "PEXELS", "PIXABAY"];
+    selectedOrientation = "ALL";
+    selectedColor = "ALL";
+  };
 </script>
 
 <div class="relative flex min-h-[100%] flex-col">
-  <div class="sticky top-0 z-50 grid gap-2 border-b border-white/10 bg-figma-gray-800 px-6 py-3">
-    <div class="flex h-12 gap-3 border-b border-white/10 transition-colors ease-out [&:has(input:focus)]:border-white">
-      <button
-        class="flex items-center justify-center border border-transparent transition-colors ease-out focus:outline-none focus-visible:border-white disabled:opacity-50"
-        aria-label="Search"
-        disabled={!(query && query.replaceAll(" ", "") !== "")}
-        on:click={postSearch}
+  <div class="sticky top-0 z-50 grid gap-4 border-b border-foreground/10 bg-background">
+    <div class="px-6 pt-3">
+      <div
+        class="flex h-12 gap-3 border-b border-foreground/10 transition-colors ease-out [&:has(input:focus)]:border-foreground"
       >
-        {@html search}
-      </button>
-      <input
-        class="grow bg-transparent pb-2 pt-1.5 placeholder:text-white/50 focus:outline-none"
-        type="text"
-        bind:value={query}
-        placeholder={`Search for images`}
-        on:keydown={handleClick}
-        spellcheck="false"
-      />
-      <button
-        class="flex w-11 items-center justify-center border border-transparent opacity-60 outline-none transition-all ease-out hover:opacity-100 focus:outline-none focus-visible:border-white focus-visible:opacity-100 disabled:opacity-0"
-        aria-label="Clear search"
-        disabled={!(query && query.replaceAll(" ", "") !== "")}
-        on:click={clearSearch}
-      >
-        {@html close}
-      </button>
+        <button
+          class="flex items-center justify-center border border-transparent transition-colors ease-out focus:outline-none focus-visible:border-foreground disabled:opacity-50"
+          aria-label="Search"
+          disabled={!(query && query.replaceAll(" ", "") !== "")}
+          on:click={postSearch}
+        >
+          {@html search}
+        </button>
+        <input
+          class="grow bg-transparent pb-2 pt-1.5 placeholder:text-foreground/50 focus:outline-none"
+          type="text"
+          bind:value={query}
+          placeholder={`Search for images`}
+          on:keydown={handleClick}
+          spellcheck="false"
+        />
+        <button
+          class="flex w-11 items-center justify-center border border-transparent opacity-60 outline-none transition-all ease-out hover:opacity-100 focus:outline-none focus-visible:border-foreground focus-visible:opacity-100 disabled:opacity-0"
+          aria-label="Clear search"
+          disabled={!(query && query.replaceAll(" ", "") !== "")}
+          on:click={clearSearch}
+        >
+          {@html close}
+        </button>
+      </div>
     </div>
-    <div class="grid grid-cols-3 gap-3 py-3">
+    <div class="grid grid-cols-3 gap-3 px-6">
       <!-- SERVICE SELECT -->
       <ListboxBase multi bind:value={selectedServices}>
         <ListboxButtonBase>
@@ -143,10 +158,10 @@
           {#each services as service}
             <ListboxOptionBase value={service.name}>
               <span
-                class="inline-flex items-center gap-3 text-white/50 transition-colors ease-out group-data-[selected=true]:text-white"
+                class="inline-flex items-center gap-3 text-foreground/50 transition-colors ease-out group-data-[selected=true]:text-foreground"
               >
                 <span
-                  class="inline-block w-7 rounded-full border border-white/10 p-1 group-data-[selected=true]:bg-white/80 group-data-[selected=true]:text-black"
+                  class="inline-block w-7 rounded-full border border-foreground/10 p-1 group-data-[selected=true]:bg-foreground/90 group-data-[selected=true]:text-background"
                 >
                   {@html service.logo}
                 </span>
@@ -193,12 +208,12 @@
             </span>
             All Colors
           </ListboxOptionBase>
-          <div class="grid grid-cols-4 border-t border-white/10 px-2 py-1">
+          <div class="grid grid-cols-4 border-t border-foreground/10 px-2 py-1">
             {#each colors as color, index}
               {#if index > 0}
                 <ListboxOptionBase value={color.name} grid>
                   <span
-                    class="inline-block h-6 w-6 shrink-0 rounded-full border border-white/30 transition-colors group-data-[selected=true]:border-white"
+                    class="inline-block h-6 w-6 shrink-0 rounded-full border border-foreground/30 transition-colors group-data-[selected=true]:border-foreground"
                     style:background={color.hex}
                   />
                 </ListboxOptionBase>
@@ -208,27 +223,47 @@
         </ListboxOptionsBase>
       </ListboxBase>
     </div>
+    {#if imageArray}
+      <div class="flex justify-between border-t border-foreground/10 px-6 py-2 text-xs font-medium text-foreground/60">
+        <span>{imageArray.length} images</span>
+        <button on:click={resetSearch} class="transition-colors ease-out hover:text-foreground">Reset Search</button>
+      </div>
+    {:else}
+      <div class="pt-2" />
+    {/if}
   </div>
+
   {#if imageArray}
-    <div class="bg-figma-gray-900/60">
-      <div class="grid grid-cols-2 gap-4 p-4" in:fade>
+    <div class="bg-surface-low/60">
+      <div class="grid grid-cols-2 gap-4 p-6" in:fade>
         {#each imageArray as image}
           <ImageCard {image} on:click={() => postCreate(image.src, image.width, image.height)} />
         {/each}
       </div>
-      <div class="flex justify-center px-4 pb-8 pt-6">
-        <button on:click={postLoadMore} class="rounded border border-white px-4 pb-2 pt-1.5 font-medium">
+      <div class="flex justify-center px-6 pb-8 pt-4">
+        <button
+          on:click={postLoadMore}
+          class="rounded border border-foreground/10 px-4 pb-2 pt-1.5 font-medium transition-colors ease-out hover:border-foreground"
+        >
           Load More
         </button>
       </div>
     </div>
   {:else}
-    <div class="flex grow items-center justify-center bg-figma-gray-900/60">
+    <div class="flex grow flex-col items-center justify-center bg-surface-low/60">
       <p class="mb-4 opacity-50">Enter a search term</p>
+      <p class="mb-4 text-xs opacity-50">or</p>
+      <button
+        class="flex items-center gap-2 rounded border border-foreground/10 px-4 pb-2 pt-1.5 font-medium transition-colors ease-out hover:border-foreground"
+        on:click={postRandom}
+      >
+        {@html shuffle}
+        Get a random image
+      </button>
     </div>
   {/if}
   {#if isWorking}
-    <div class="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/70">
+    <div class="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-overlay/70">
       {@html loading}
     </div>
   {/if}

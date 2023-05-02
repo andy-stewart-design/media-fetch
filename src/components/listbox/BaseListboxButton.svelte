@@ -3,7 +3,7 @@
 </script>
 
 <ListboxButton
-  class="flex w-full items-center justify-between rounded border border-white/10 px-2 py-1.5 capitalize transition-colors ease-out hover:border-white focus:border-white focus:outline-none data-[state=true]:border-white"
+  class="flex w-full items-center justify-between rounded border border-foreground/10 px-2 py-1.5 capitalize transition-colors ease-out hover:border-foreground focus:border-foreground focus:outline-none data-[state=true]:border-foreground"
 >
   <slot />
 </ListboxButton>

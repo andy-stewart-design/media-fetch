@@ -9,8 +9,8 @@
 <ListboxOption
   {value}
   class={grid
-    ? "group flex items-center rounded-sm p-1.5 hover:bg-white/10 data-[active=true]:bg-white/10"
-    : "group relative flex select-none items-center gap-2 px-4 py-2 capitalize hover:bg-white/10 data-[active=true]:bg-white/10"}
+    ? "group flex items-center rounded-sm p-1.5 hover:bg-foreground/10 data-[active=true]:bg-foreground/10"
+    : "group relative flex select-none items-center gap-2 px-4 py-2 capitalize hover:bg-foreground/10 data-[active=true]:bg-foreground/10"}
 >
   <slot />
 </ListboxOption>

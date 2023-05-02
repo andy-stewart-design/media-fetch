@@ -11,6 +11,12 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
       colors: {
+        foreground: "rgb(var(--foreground) / <alpha-value>)",
+        "surface-high": "rgb(var(--surface-high) / <alpha-value>)",
+        "surface-low": "rgb(var(--surface-low) / <alpha-value>)",
+        background: "rgb(var(--background) / <alpha-value>)",
+        black: "rgb(var(--black) / <alpha-value>)",
+        overlay: "rgb(var(--overlay) / <alpha-value>)",
         figma: {
           blue: `#18a0fb`,
           purple: "#7b61ff",
