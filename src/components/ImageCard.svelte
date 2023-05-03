@@ -15,7 +15,7 @@
       : pexels;
 </script>
 
-<div class=" relative flex flex-col gap-1">
+<div class="relative flex flex-col gap-1">
   <button class="group relative grow overflow-hidden border border-foreground/10 bg-black/50" on:click>
     <img src={image.thumb} alt={image.creator} width={image.width} height={image.height} />
     <div
