@@ -5,7 +5,7 @@ function App() {
   const [value, setValue] = useState("");
 
   function handleCreate() {
-    console.log("testing app file");
+    console.log("hell yeah!");
 
     parent.postMessage(
       { pluginMessage: { type: "create-rectangles", count: Number(value) } },

@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "pnpm run build --watch",
     "build": "tsc && vite build && pnpm run build:code",
     "build:code": "esbuild src/plugin/code.ts --bundle --outfile=dist/code.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "concurrently \"tsc && vite build --watch\" \"pnpm run build:code --watch\""
   },
   "dependencies": {
+    "concurrently": "^8.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "vite-plugin-singlefile": "^0.13.5"
