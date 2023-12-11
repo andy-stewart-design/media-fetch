@@ -24,18 +24,39 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+h2 {
   line-height: 1.1;
+  margin: 0;
+  padding: 0;
+}
+
+label {
+  display: grid;
+  gap: 0.25rem;
+  text-align: left;
+  font-size: 0.75rem;
+}
+
+input[type="text"] {
+  min-height: 2.5rem;
+  padding-inline: 0.5rem;
+}
+
+.btn-group {
+  display: flex;
+  gap: 0.5rem;
 }
 
 button {
+  flex-grow: 1;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -46,9 +67,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;

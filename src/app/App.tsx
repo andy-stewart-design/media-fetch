@@ -8,7 +8,7 @@ function App() {
     console.log("hell yeah!");
 
     parent.postMessage(
-      { pluginMessage: { type: "create-rectangles", count: Number(value) } },
+      { pluginMessage: { type: "image-search", query: value } },
       "*"
     );
   }
@@ -18,15 +18,21 @@ function App() {
   }
 
   return (
-    <div>
-      <h2>Rectangle Generator</h2>
+    <main>
+      <h2>Image Search</h2>
       <label>
-        Countkjn:
-        <input value={value} onChange={(e) => setValue(e.target.value)} />
+        Search
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
       </label>
-      <button onClick={handleCreate}>Create</button>
-      <button onClick={handleCancel}>Cancel</button>
-    </div>
+      <div className="btn-group">
+        <button onClick={handleCreate}>Create</button>
+        <button onClick={handleCancel}>Cancel</button>
+      </div>
+    </main>
   );
 }
 

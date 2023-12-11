@@ -4,12 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build && pnpm run build:code",
     "build:code": "esbuild src/plugin/code.ts --bundle --outfile=dist/code.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "concurrently \"tsc && vite build --watch\" \"pnpm run build:code --watch\""
+    "dev": "concurrently \"tsc && vite build --watch\" \"pnpm run build:code --watch\""
   },
   "dependencies": {
     "concurrently": "^8.2.2",
