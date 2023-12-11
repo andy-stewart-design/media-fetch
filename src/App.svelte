@@ -112,7 +112,7 @@
 </script>
 
 <div class="relative flex min-h-[100%] flex-col">
-	<div class="sticky top-0 z-50 grid gap-4 border-b border-foreground/10 bg-background">
+	<div class="sticky top-0 z-50 grid gap-4 border-b border-foreground/10 bg-background text-foreground">
 		<div class="px-6 pt-3">
 			<div
 				class="flex h-12 gap-3 border-b border-foreground/10 transition-colors ease-out [&:has(input:focus)]:border-foreground"
@@ -129,7 +129,7 @@
 					class="grow bg-transparent pb-2 pt-1.5 placeholder:text-foreground/50 focus:outline-none"
 					type="text"
 					bind:value={query}
-					placeholder={`Search for images`}
+					placeholder="Enter a search term"
 					on:keydown={handleClick}
 					spellcheck="false"
 				/>
@@ -234,7 +234,7 @@
 	</div>
 
 	{#if imageArray}
-		<div class="bg-surface-low/60">
+		<div class="bg-surface-low/60 text-foreground">
 			<div class="grid grid-cols-2 gap-4 p-6" in:fade>
 				{#each imageArray as image}
 					<ImageCard {image} on:click={() => postCreate(image.src, image.width, image.height)} />
@@ -250,7 +250,7 @@
 			</div>
 		</div>
 	{:else}
-		<div class="flex grow flex-col items-center justify-center bg-surface-low/60">
+		<div class="flex grow flex-col items-center justify-center bg-surface-low/60 text-foreground">
 			<p class="mb-4 opacity-50">Enter a search term</p>
 			<p class="mb-4 text-xs opacity-50">or</p>
 			<button
@@ -263,7 +263,9 @@
 		</div>
 	{/if}
 	{#if isWorking}
-		<div class="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-overlay/70">
+		<div
+			class="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-overlay/70 text-foreground"
+		>
 			{@html loading}
 		</div>
 	{/if}

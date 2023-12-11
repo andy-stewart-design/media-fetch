@@ -3,40 +3,47 @@
 @tailwind utilities;
 
 :root {
-  --white: 255 255 255;
-  --figma-gray-100: 240 240 240;
-  --figma-gray-200: 229 229 229;
-  --figma-gray-300: 179 179 179;
-  --figma-gray-700: 56 56 56;
-  --figma-gray-800: 44 44 44;
-  --figma-gray-900: 30 30 30;
-  --black: 16 16 16;
+	--white: 255 255 255;
+	--figma-gray-100: 240 240 240;
+	--figma-gray-200: 229 229 229;
+	--figma-gray-300: 179 179 179;
+	--figma-gray-700: 56 56 56;
+	--figma-gray-800: 44 44 44;
+	--figma-gray-900: 30 30 30;
+	--black: 16 16 16;
 }
-
 html {
-  --foreground: var(--black);
-  --surface-high: var(--figma-gray-200);
-  /* --surface-mid: var(--figma-gray-700); */
-  --surface-low: var(--figma-gray-100);
-  --background: var(--white);
-  --overlay: var(--white);
+	--foreground: var(--black);
+	--surface-high: var(--figma-gray-200);
+	--surface-low: var(--figma-gray-100);
+	--background: var(--white);
+	--overlay: var(--white);
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    --foreground: var(--figma-gray-100);
-    --surface-high: var(--figma-gray-700);
-    /* --surface-mid: var(--figma-gray-700); */
-    --surface-low: var(--figma-gray-900);
-    --background: var(--figma-gray-800);
-    --overlay: var(--black);
-  }
+	html {
+		--foreground: var(--figma-gray-100);
+		--surface-high: var(--figma-gray-700);
+		--surface-low: var(--figma-gray-900);
+		--background: var(--figma-gray-800);
+		--overlay: var(--black);
+	}
 }
 
-body {
-  @apply antialiased;
+.figma-light {
+	--foreground: var(--black);
+	--surface-high: var(--figma-gray-200);
+	--surface-low: var(--figma-gray-100);
+	--background: var(--white);
+	--overlay: var(--white);
+
+	@apply bg-background text-foreground antialiased;
 }
 
 .figma-dark {
-  @apply bg-figma-gray-800 text-white;
+	--foreground: var(--figma-gray-100);
+	--surface-high: var(--figma-gray-700);
+	--surface-low: var(--figma-gray-900);
+	--background: var(--figma-gray-800);
+	--overlay: var(--black);
 }
