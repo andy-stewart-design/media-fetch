@@ -5,8 +5,6 @@ function App() {
   const [value, setValue] = useState("");
 
   function handleCreate() {
-    console.log("hell yeah!");
-
     parent.postMessage(
       { pluginMessage: { type: "image-search", query: value } },
       "*"
@@ -29,7 +27,7 @@ function App() {
         />
       </label>
       <div className="btn-group">
-        <button onClick={handleCreate}>Create</button>
+        <button onClick={handleCreate}>Search</button>
         <button onClick={handleCancel}>Cancel</button>
       </div>
     </main>
