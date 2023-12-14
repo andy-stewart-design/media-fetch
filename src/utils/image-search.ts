@@ -4,10 +4,13 @@ import {
   UnsplashAPIRespones,
 } from "../types/api-response";
 
-export interface Image {
-  thumbnailURL: string;
-  highResURL: string;
+export interface ImageData {
+  id: string;
+  image_thumbnail: string;
+  image_large: string;
+  image_link: string;
   photographer: string;
+  photographer_link: string;
   source: string;
 }
 
@@ -27,7 +30,7 @@ const UNSPLASH_API_KEY = "tAWVEwm8Gkhpp9r8wNTDyS_sgLptx6uEuqTm6_Hx6os";
 export async function searchUnsplash(
   query: string,
   amount = 10
-): Promise<Image[]> {
+): Promise<ImageData[]> {
   const apiKey = UNSPLASH_API_KEY;
   const apiUrl = `https://api.unsplash.com/search/photos?query=${query}&per_page=${amount}&client_id=${apiKey}`;
 
@@ -39,10 +42,13 @@ export async function searchUnsplash(
   const data: UnsplashAPIRespones = await response.json();
 
   // Parse the response to extract necessary data
-  const formattedData: Image[] = data.results.map((result) => ({
-    thumbnailURL: result.urls.thumb,
-    highResURL: result.urls.full,
+  const formattedData: ImageData[] = data.results.map((result) => ({
+    id: String(Math.random()),
+    image_thumbnail: result.urls.thumb,
+    image_large: result.urls.full,
+    image_link: result.links.html,
     photographer: result.user.name,
+    photographer_link: result.user.links.html,
     source: "Unsplash",
   }));
 
@@ -53,7 +59,7 @@ export async function searchUnsplash(
 //------------------------------------------------
 // PEXELS
 //------------------------------------------------
-async function searchPexels(query: string, amount = 10) {
+async function searchPexels(query: string, amount = 10): Promise<ImageData[]> {
   const apiKey = PEXELS_API_KEY;
   const apiUrl = `https://api.pexels.com/v1/search?query=${query}&per_page=${amount}`;
 
@@ -69,10 +75,13 @@ async function searchPexels(query: string, amount = 10) {
   const data: PexelsAPIResponse = await response.json();
 
   // Parse the response to extract necessary data
-  const formattedData = data.photos.map((photo) => ({
-    thumbnailURL: photo.src.tiny,
-    highResURL: photo.src.original,
+  const formattedData: ImageData[] = data.photos.map((photo) => ({
+    id: String(Math.random()),
+    image_thumbnail: photo.src.tiny,
+    image_large: photo.src.original,
+    image_link: photo.url,
     photographer: photo.photographer,
+    photographer_link: photo.photographer_url,
     source: "Pexels",
   }));
 
@@ -83,7 +92,7 @@ async function searchPexels(query: string, amount = 10) {
 //------------------------------------------------
 // PIXABAY
 //------------------------------------------------
-async function searchPixabay(query: string, amount = 10) {
+async function searchPixabay(query: string, amount = 10): Promise<ImageData[]> {
   const apiKey = PIXABAY_API_KEY;
   const apiUrl = `https://pixabay.com/api/?key=${apiKey}&q=${query}&per_page=${amount}`;
 
@@ -94,10 +103,13 @@ async function searchPixabay(query: string, amount = 10) {
   const data: PixabayAPIResponse = await response.json();
 
   // Extract necessary information from the response
-  const formattedData = data.hits.map((hit) => ({
-    thumbnailURL: hit.previewURL,
-    highResURL: hit.largeImageURL,
+  const formattedData: ImageData[] = data.hits.map((hit) => ({
+    id: String(Math.random()),
+    image_thumbnail: hit.previewURL,
+    image_large: hit.largeImageURL,
+    image_link: hit.pageURL,
     photographer: hit.user,
+    photographer_link: `https://pixabay.com/users/${hit.user}-${hit.user_id}`,
     source: "Pixabay",
   }));
 
@@ -108,7 +120,7 @@ async function searchPixabay(query: string, amount = 10) {
 // ORCHESTRATING FUNCTION
 //------------------------------------------------
 function fetchImages(query: string, services: Array<ImageService>) {
-  const responses: Array<Promise<Image[]>> = [];
+  const responses: Array<Promise<ImageData[]>> = [];
   const numImages = 30 / services.length;
 
   if (services.includes("unsplash"))
