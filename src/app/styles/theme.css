@@ -1,0 +1,22 @@
+@layer base {
+  :root {
+    --border-light: 1px solid oklch(var(--white-oklch) / 0.15);
+    --border-active: 1px solid oklch(var(--color-accent-oklch) / 1);
+    --brad: 8px;
+
+    color: oklch(var(--foreground-oklch) / 90%);
+    background-color: var(--background);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    @media (--is-light) {
+      & {
+        color: #213547;
+        background-color: #ffffff;
+      }
+    }
+  }
+}

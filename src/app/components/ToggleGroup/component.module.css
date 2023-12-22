@@ -1,0 +1,68 @@
+.toggle-group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  legend {
+    display: block;
+    float: left;
+  }
+
+  div[data-toggle-group] {
+    position: relative;
+    display: flex;
+    gap: var(--space-xs);
+
+    div[data-toggle-group-item] {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      padding: 8px;
+      background-color: var(--background);
+      border: var(--border-light);
+      border-radius: 8px;
+      overflow: hidden;
+
+      &:hover {
+        background-color: var(--depression-01);
+      }
+
+      &:has(input[type="checkbox"]:checked) {
+        background: radial-gradient(
+          oklch(var(--color-accent-oklch) / 10%),
+          oklch(var(--color-accent-oklch) / 30%)
+        );
+        border: 1px solid oklch(var(--color-accent-oklch) / 25%);
+        color: var(--color-accent);
+      }
+
+      &:has(input[type="checkbox"]:checked):hover {
+        background: oklch(var(--color-accent-oklch) / 15%);
+      }
+
+      &:has(input[type="checkbox"]:focus-visible) {
+        border: var(--border-active);
+      }
+
+      & > * {
+        cursor: pointer;
+      }
+
+      & > svg {
+        pointer-events: none;
+      }
+
+      & > :is(input[type="checkbox"], label) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}

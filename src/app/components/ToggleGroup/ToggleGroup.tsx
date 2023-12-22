@@ -1,5 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction, useId } from "react";
 import { ImageSource } from "@src/app/constants/image-sources";
+import classes from "./component.module.css";
 
 interface PropTypes {
   label: string;
@@ -26,7 +27,7 @@ export default function ToggleGroup({
   }
 
   return (
-    <fieldset className="input-group">
+    <fieldset className={`${classes["toggle-group"]} input-group`}>
       <legend className="label">{label}</legend>
       <div data-toggle-group>
         {sources.map((source) => (

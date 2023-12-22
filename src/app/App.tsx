@@ -1,9 +1,10 @@
 import { useState, useEffect, FormEvent } from "react";
+import SearchBar from "@components/SearchBar";
+import ToggleGroup from "@components/ToggleGroup";
+import ImageCard from "@components/ImageCard";
+import { IMAGE_SOURCES } from "./constants/image-sources";
 import type { ImageData } from "@src/utils/image-search";
 import "./styles/main.css";
-import SearchBar from "./components/SearchBar";
-import ToggleGroup from "./components/ToggleGroup";
-import { IMAGE_SOURCES } from "./constants/image-sources";
 
 function App() {
   const [value, setValue] = useState("");
@@ -58,12 +59,7 @@ function App() {
       {images && (
         <main className="img-gallery">
           {images.map((image) => (
-            <div key={image.id} className="img-card">
-              <img src={image.image_thumbnail} />
-              <p>
-                {image.source} · {image.photographer}
-              </p>
-            </div>
+            <ImageCard key={image.id} image={image} />
           ))}
         </main>
       )}

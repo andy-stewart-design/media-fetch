@@ -6,6 +6,9 @@
     --black-oklch: 0% 0 0;
     --black: oklch(var(--black-oklch));
 
+    --gray-950-oklch: 14% 0 0;
+    --gray-950: oklch(var(--gray-950-oklch));
+
     --gray-925-oklch: 20% 0 0;
     --gray-925: oklch(var(--gray-925-oklch));
 
@@ -35,5 +38,8 @@
 
     --depression-01-oklch: var(--gray-925-oklch);
     --depression-01: oklch(var(--depression-01-oklch));
+
+    --depression-02-oklch: var(--gray-950-oklch);
+    --depression-02: oklch(var(--depression-01-oklch));
   }
 }

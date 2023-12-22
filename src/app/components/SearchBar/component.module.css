@@ -11,6 +11,21 @@
     width: 100%;
     padding-inline-start: 44px;
     padding-inline-end: 0.5px;
+
+    background-color: var(--background);
+    border: var(--border-light);
+    border-radius: var(--brad);
+
+    transition: border 100ms ease-out;
+
+    &::placeholder {
+      color: oklch(var(--foreground-oklch) / 33.33%);
+    }
+
+    &:focus-visible {
+      outline: none;
+      border: var(--border-active);
+    }
   }
 
   button {
