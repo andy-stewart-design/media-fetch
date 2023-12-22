@@ -1,0 +1,2 @@
+@custom-media --is-dark (prefers-color-scheme: dark);
+@custom-media --is-light (prefers-color-scheme: light);

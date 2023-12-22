@@ -1,0 +1,9 @@
+@layer base {
+  .flex {
+    display: flex;
+  }
+
+  .gap-4px {
+    gap: 4px;
+  }
+}

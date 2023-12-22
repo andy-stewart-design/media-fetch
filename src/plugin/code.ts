@@ -1,23 +1,20 @@
 // TODO: return errors to the UI
 // postMessage types: initialResults, additionalResults, error
 
-import { searchImages, type ImageService } from "@src/utils/image-search";
+import { searchImages } from "@src/utils/image-search";
 import { shuffle } from "@src/utils/shuffle";
-
-const services: Array<ImageService> = ["unsplash", "pexels"];
 
 figma.showUI(__html__, {
   height: 640,
-  width: 480,
+  width: 520,
 });
 
 figma.ui.onmessage = async (message) => {
   if (message.type === "image-search") {
-    const { query } = message;
-    // figma.notify(`You searched for ${query}`);
+    const { query, sources } = message.data;
 
     try {
-      const imageData = await searchImages(query, services);
+      const imageData = await searchImages(query, sources);
 
       figma.ui.postMessage({
         type: "initialResults",

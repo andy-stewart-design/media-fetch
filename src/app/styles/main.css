@@ -1,16 +1,37 @@
-@custom-media --is-dark (prefers-color-scheme: dark);
-@custom-media --is-light (prefers-color-scheme: light);
+@layer base, component, override;
+
+@import "./base/color.css";
+@import "./base/inputs.css";
+@import "./base/media-queries.css";
+@import "./base/utilities.css";
 
 :root {
   --font-medium: 525;
 
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --border-light: 1px solid oklch(var(--white-oklch) / 0.15);
+  --border-active: 1px solid oklch(var(--color-accent-oklch) / 1);
+  --brad: 8px;
+
+  --shadow-color: var(--black-oklch);
+  --shadow-strength: 1%;
+  --shadow-elevation-high: 0 -1px 2px 0 oklch(var(--shadow-color) /
+          calc(var(--shadow-strength) + 2%)),
+    0 2px 1px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
+    0 5px 5px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 4%)),
+    0 10px 10px -2px oklch(var(--shadow-color) /
+          calc(var(--shadow-strength) + 5%)),
+    0 20px 20px -2px oklch(var(--shadow-color) /
+          calc(var(--shadow-strength) + 6%)),
+    0 40px 40px -2px oklch(var(--shadow-color) /
+          calc(var(--shadow-strength) + 8%));
+
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: oklch(var(--foreground-oklch) / 90%);
+  background-color: var(--background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -25,8 +46,31 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
+}
+
+header {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  gap: 16px;
+  width: calc(100% - 48px);
+  margin-inline-start: 24px;
+  margin-block: 24px;
+
+  background: oklch(var(--elevation-02-oklch) / 80%);
+  border: 1px solid oklch(var(--white-oklch) / 0.1);
+  border-radius: 24px;
+  box-shadow: var(--shadow-elevation-high);
+
+  padding-inline: 16px;
+  padding-block: 16px;
+  backdrop-filter: blur(10px);
 }
 
 main {
@@ -34,62 +78,20 @@ main {
   flex-direction: column;
   gap: 16px;
   padding-inline: 16px;
-  padding-block: 24px;
+  padding-block-end: 24px;
 }
 
-form {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  button {
-    position: absolute;
-    bottom: 0;
-    height: 3rem;
-    width: 3rem;
-
-    &:first-of-type {
-      left: 0;
-    }
-
-    &:last-of-type {
-      right: 0;
-    }
-  }
-}
-
-label {
-  display: grid;
-  gap: 0.25rem;
+label,
+.label {
   text-align: left;
   font-size: 0.75rem;
   font-weight: var(--font-medium);
-}
+  cursor: default;
+  user-select: none;
 
-input[type="text"] {
-  height: 3rem;
-  background-color: rgb(0 0 0 / 0.25);
-  border: 1px solid rgb(255 255 255 / 0.075);
-  border-radius: 6px;
-  padding-inline-start: 52px;
-  padding-inline-end: 0.5px;
-  font-size: 1rem;
-  transition: border 100ms ease-out;
-
-  &::placeholder {
-    color: rgb(255 255 255 / 0.333);
+  &[for] {
+    cursor: pointer;
   }
-
-  &:focus-visible {
-    outline: none;
-    border: 1px solid rgb(255 255 255 / 0.5);
-  }
-}
-
-.btn-group {
-  display: flex;
-  gap: 0.5rem;
 }
 
 button {
@@ -103,10 +105,6 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
-
-  /* &:hover {
-    border-color: #646cff;
-  } */
 
   &:focus,
   &:focus-visible {
@@ -129,10 +127,12 @@ p {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  aspect-ratio: 1/1;
 
   img {
     flex-grow: 1;
     width: 100%;
+    height: 100%;
     object-fit: contain;
     background-color: rgb(0 0 0 / 0.2);
     border: 1px solid rgb(255 255 255 / 0.1);

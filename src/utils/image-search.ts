@@ -117,7 +117,7 @@ async function searchPixabay(query: string, amount = 10): Promise<ImageData[]> {
 }
 
 //------------------------------------------------
-// ORCHESTRATING FUNCTION
+// ORCHESTRATING FUNCTIONS
 //------------------------------------------------
 function fetchImages(query: string, services: Array<ImageService>) {
   const responses: Array<Promise<ImageData[]>> = [];

@@ -23,15 +23,16 @@ export default defineConfig({
   css: {
     transformer: "lightningcss",
     lightningcss: {
-      include: Features.Nesting,
       drafts: {
         customMedia: true,
       },
+      include: Features.Nesting,
     },
   },
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
+      "@components": resolve(__dirname, "src", "app", "components"),
     },
   },
 });

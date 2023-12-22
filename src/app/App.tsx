@@ -1,23 +1,31 @@
 import { useState, useEffect, FormEvent } from "react";
 import type { ImageData } from "@src/utils/image-search";
-import { Search } from "./components/icons/24/Search/Search";
 import "./styles/main.css";
+import SearchBar from "./components/SearchBar";
+import ToggleGroup from "./components/ToggleGroup";
+import { IMAGE_SOURCES } from "./constants/image-sources";
 
 function App() {
   const [value, setValue] = useState("");
+  const [sources, setSources] = useState<Array<string>>([
+    "unsplash",
+    "pexels",
+    "pixabay",
+  ]);
   const [images, setImages] = useState<ImageData[] | null>(null);
 
   function handleCreate(e: FormEvent) {
     e.preventDefault();
 
     parent.postMessage(
-      { pluginMessage: { type: "image-search", query: value } },
+      {
+        pluginMessage: {
+          type: "image-search",
+          data: { query: value, sources },
+        },
+      },
       "*"
     );
-  }
-
-  function handleCancel() {
-    parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
   }
 
   useEffect(() => {
@@ -33,27 +41,22 @@ function App() {
   }, []);
 
   return (
-    <main>
-      <form onSubmit={handleCreate}>
-        <label>
-          Search
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder="Enter a search term"
-          />
-        </label>
-        <button type="submit">
-          <span className="sr-only">Search</span>
-          <Search />
-        </button>
-        <button onClick={handleCancel}>
-          <span className="sr-only">Cancel</span>
-        </button>
-      </form>
+    <>
+      <header>
+        <SearchBar
+          value={value}
+          setValue={setValue}
+          handleCreate={handleCreate}
+        />
+        <ToggleGroup
+          label="Sources"
+          sources={IMAGE_SOURCES}
+          activeSources={sources}
+          setSources={setSources}
+        />
+      </header>
       {images && (
-        <div className="img-gallery">
+        <main className="img-gallery">
           {images.map((image) => (
             <div key={image.id} className="img-card">
               <img src={image.image_thumbnail} />
@@ -62,9 +65,9 @@ function App() {
               </p>
             </div>
           ))}
-        </div>
+        </main>
       )}
-    </main>
+    </>
   );
 }
 
