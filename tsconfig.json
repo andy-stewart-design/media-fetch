@@ -25,6 +25,7 @@
       "@src/*": ["src/*"],
       "@plugin/*": ["src/plugin/*"],
       "@utils/*": ["src/utils/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@types/*": ["src/types/*"],
       "@app/*": ["src/app/*"],
       "@components/*": ["src/app/components/*"],

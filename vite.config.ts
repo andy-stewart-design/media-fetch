@@ -34,6 +34,7 @@ export default defineConfig({
       "@src": resolve(__dirname, "src"),
       "@plugin": resolve(__dirname, "src", "plugin"),
       "@utils": resolve(__dirname, "src", "utils"),
+      "@hooks": resolve(__dirname, "src", "hooks"),
       "@types": resolve(__dirname, "src", "types"),
       "@app": resolve(__dirname, "src", "app"),
       "@components": resolve(__dirname, "src", "app", "components"),

@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import ImageGallery from "@components/ImageGallery";
+import FilterDialogDisplayProvider from "@components/Providers/FilterDialogDisplayProvider";
 import Header from "@components/Header";
 import Footer from "@components/Footer";
+import FilterDialog from "@components/FilterDialog";
 import type { ImageData } from "@utils/image-search";
 import type { PluginPostMessage } from "@src/types/post-messages";
 import "./styles/main.css";
@@ -31,15 +33,18 @@ function App() {
   }, []);
 
   return (
-    <main>
-      <Header setStatus={setStatus} setImages={setImages} />
-      {status === "searching" ? (
-        <div className="flex-grow" />
-      ) : (
-        <ImageGallery images={images} setImages={setImages} />
-      )}
-      <Footer setImages={setImages} numImages={images?.length ?? 0} />
-    </main>
+    <FilterDialogDisplayProvider>
+      <main>
+        <Header setStatus={setStatus} setImages={setImages} />
+        {status === "searching" ? (
+          <div className="flex-grow" />
+        ) : (
+          <ImageGallery images={images} setImages={setImages} />
+        )}
+        <Footer setImages={setImages} numImages={images?.length ?? 0} />
+      </main>
+      <FilterDialog />
+    </FilterDialogDisplayProvider>
   );
 }
 

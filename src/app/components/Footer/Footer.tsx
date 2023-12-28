@@ -1,6 +1,7 @@
-import type { Dispatch, SetStateAction } from "react";
+import { useContext, type Dispatch, type SetStateAction } from "react";
 import type { ImageData } from "@utils/image-search";
 import classes from "./component.module.css";
+import { FilterDialogDisplayContext } from "@components/Providers/FilterDialogDisplayProvider";
 
 interface PropTypes {
   setImages: Dispatch<SetStateAction<ImageData[] | null>>;
@@ -8,6 +9,8 @@ interface PropTypes {
 }
 
 export default function Footer({ setImages, numImages }: PropTypes) {
+  const { setShowDialog } = useContext(FilterDialogDisplayContext);
+
   function clearResults() {
     setImages(null);
   }
@@ -19,7 +22,7 @@ export default function Footer({ setImages, numImages }: PropTypes) {
         <button onClick={clearResults}>Clear Results</button>
       </div>
 
-      <button>Filters</button>
+      <button onClick={setShowDialog}>Filters</button>
     </footer>
   );
 }
