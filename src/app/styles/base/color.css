@@ -18,7 +18,7 @@
     --gray-800-oklch: 29.3% 0 0; /* This is Figma's gray */
     --gray-800: oklch(var(--gray-800-oklch));
 
-    --gray-775-oklch: 30.5% 0 0;
+    --gray-775-oklch: 35% 0 0;
     --gray-775: oklch(var(--gray-775-oklch));
 
     --color-accent-oklch: 100% 0.3 160;

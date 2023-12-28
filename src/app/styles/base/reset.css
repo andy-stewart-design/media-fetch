@@ -169,6 +169,10 @@
     padding: 0; /* 3 */
   }
 
+  form {
+    margin: 0;
+  }
+
   /* Remove the inheritance of text transform in Edge and Firefox. */
 
   button,

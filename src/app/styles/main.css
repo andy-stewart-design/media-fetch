@@ -8,6 +8,7 @@
 @import "./base/space.css";
 @import "./base/shadows.css";
 @import "./base/utilities.css";
+@import "./base/mixins.css";
 @import "./base/generics.css";
 
 @import "./theme.css";

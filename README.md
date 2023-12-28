@@ -1,30 +1,38 @@
-# React + TypeScript + Vite
+You are an expert Typescript developer. I am building an application in Typescript and need help. Given the following type structure/requirements, can you help me figure out the simplest and most flexible way to set up the Interfaces for this application?
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+We have two types of messages, `Plugin Messages` (i.e., from the back end plugin) and `Client Messages` (i.e., from the front end UI).
 
-Currently, two official plugins are available:
+All message types will include the following properties:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- type: i.e., `IMAGE_QUERY_INIT` or `UI_ERROR_MESSAGE`, to identify the type of message being sent
+- payload: an object conataining any data associated with the message.
 
-## Expanding the ESLint configuration
+The types of `Plugin Messages` include:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Initial Results (`ImageResultsInitial`), which includes:
+  - type: `RESULTS_INIT`
+  - payload:
+    - images: an Array or ImageData
+- Additional Results (`ImageResultsAdditional`), which includes:
+  - type: `RESULTS_ADD`
+  - payload:
+    - images: an Array or ImageData
+- Error (`PluginErrorMessage`), which includes:
+  - type: `ERROR`
+  - payload:
+    - message: a string, to be displayed in the UI
 
-- Configure the top-level `parserOptions` property like this:
+The types of `Client Messages` include:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Initial Query (`ImageQueryInitial`)
+  - type: `QUERY_INIT`
+  - payload:
+    - query: string, a term to be used to query the image databases
+- Additional Queries (`ImageQueryAdditional`)
+  - type: `QUERY_ADD`
+  - payload:
+    - query: string, a term to be used to query the image databases
+- Error (`UIErrorMessage`)
+  - type: `ERROR`
+  - payload:
+    - message: a string, to be displayed in a toast message

@@ -6,6 +6,8 @@ import {
 
 export interface ImageData {
   id: string;
+  width: number;
+  height: number;
   image_thumbnail: string;
   image_large: string;
   image_link: string;
@@ -44,6 +46,8 @@ export async function searchUnsplash(
   // Parse the response to extract necessary data
   const formattedData: ImageData[] = data.results.map((result) => ({
     id: String(Math.random()),
+    width: result.width,
+    height: result.height,
     image_thumbnail: result.urls.thumb,
     image_large: result.urls.full,
     image_link: result.links.html,
@@ -77,6 +81,8 @@ async function searchPexels(query: string, amount = 10): Promise<ImageData[]> {
   // Parse the response to extract necessary data
   const formattedData: ImageData[] = data.photos.map((photo) => ({
     id: String(Math.random()),
+    width: photo.width,
+    height: photo.height,
     image_thumbnail: photo.src.tiny,
     image_large: photo.src.original,
     image_link: photo.url,
@@ -106,6 +112,8 @@ async function searchPixabay(query: string, amount = 10): Promise<ImageData[]> {
   const formattedData: ImageData[] = data.hits.map((hit) => ({
     id: String(Math.random()),
     image_thumbnail: hit.previewURL,
+    width: hit.imageWidth,
+    height: hit.imageHeight,
     image_large: hit.largeImageURL,
     image_link: hit.pageURL,
     photographer: hit.user,

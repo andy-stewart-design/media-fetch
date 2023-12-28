@@ -10,13 +10,13 @@ import classes from "./component.module.css";
 interface SearchBarProps {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
-  handleCreate: (e: FormEvent) => void;
+  onSubmit: (e: FormEvent) => void;
 }
 
 export default function SearchBar({
   value,
   setValue,
-  handleCreate,
+  onSubmit,
 }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   function handleClearInput() {
@@ -25,17 +25,18 @@ export default function SearchBar({
   }
 
   return (
-    <form onSubmit={handleCreate} className={`${classes.search} input-group`}>
+    <form onSubmit={onSubmit} className="input-group flex-grow">
       <label htmlFor="search-bar">Search</label>
-      <div>
+      <div className={`${classes.search}`}>
         <input
           type="text"
           id="search-bar"
           ref={inputRef}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Enter a search term"
+          placeholder="Search for free images"
           spellCheck="false"
+          autoFocus
         />
         <button type="submit" disabled={value === ""}>
           <span className="sr-only">Search</span>

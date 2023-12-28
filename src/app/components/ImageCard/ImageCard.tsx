@@ -1,8 +1,10 @@
-import type { ImageData } from "@src/utils/image-search";
+import { useEffect, useRef, useState } from "react";
 import Unsplash from "@components/logos/Unsplash";
 import Pexels from "@components/logos/Pexels";
 import Pixabay from "@components/logos/Pixabay";
+import type { ImageData } from "@src/utils/image-search";
 import classes from "./component.module.css";
+import { UIPostMessage } from "@src/types/post-messages";
 
 interface PropTypes {
   image: ImageData;
@@ -11,7 +13,10 @@ interface PropTypes {
 export default function ImageCard({ image }: PropTypes) {
   const {
     source,
+    width,
+    height,
     image_thumbnail,
+    image_large,
     image_link,
     photographer,
     photographer_link,
@@ -24,9 +29,28 @@ export default function ImageCard({ image }: PropTypes) {
       ? Pexels
       : Pixabay;
 
+  function handlePlaceImage() {
+    const pluginMessage: UIPostMessage = {
+      type: "PLACE_IMAGE",
+      payload: { src: image_large, width, height },
+    };
+
+    parent.postMessage({ pluginMessage }, "*");
+  }
+
   return (
     <div className={classes["img-card"]}>
-      <img src={image_thumbnail} />
+      <div className={classes["img-container"]}>
+        <Img src={image_thumbnail} />
+        <div className={classes["btn-group"]}>
+          <button onClick={handlePlaceImage}>
+            <span>Place on Canvas</span>
+          </button>
+          <button>
+            <span>View Larger</span>
+          </button>
+        </div>
+      </div>
       <p>
         <a href={image_link} target="_blank">
           <Icon />
@@ -39,4 +63,35 @@ export default function ImageCard({ image }: PropTypes) {
       </p>
     </div>
   );
+}
+
+interface ImageProps {
+  src: string;
+}
+
+function Img({ src }: ImageProps) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (!imgRef.current) return;
+
+    const image = imgRef.current;
+
+    function loaded() {
+      setIsLoaded(true);
+    }
+
+    if (image.complete) {
+      loaded();
+    } else {
+      image.addEventListener("load", loaded);
+    }
+
+    return () => {
+      image.removeEventListener("load", loaded);
+    };
+  }, []);
+
+  return <img ref={imgRef} src={src} data-loaded={isLoaded} />;
 }

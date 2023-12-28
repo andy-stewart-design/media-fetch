@@ -1,69 +1,45 @@
-import { useState, useEffect, FormEvent } from "react";
-import SearchBar from "@components/SearchBar";
-import ToggleGroup from "@components/ToggleGroup";
-import ImageCard from "@components/ImageCard";
-import { IMAGE_SOURCES } from "./constants/image-sources";
-import type { ImageData } from "@src/utils/image-search";
+// TODO: figure out strtaegy for loading screen
+
+import { useState, useEffect } from "react";
+import ImageGallery from "@components/ImageGallery";
+import Header from "@components/Header";
+import Footer from "@components/Footer";
+import type { ImageData } from "@utils/image-search";
+import type { PluginPostMessage } from "@src/types/post-messages";
 import "./styles/main.css";
 
 function App() {
-  const [value, setValue] = useState("");
-  const [sources, setSources] = useState<Array<string>>([
-    "unsplash",
-    "pexels",
-    "pixabay",
-  ]);
+  const [status, setStatus] = useState("idle"); // idle, searching, inserting
   const [images, setImages] = useState<ImageData[] | null>(null);
 
-  function handleCreate(e: FormEvent) {
-    e.preventDefault();
-
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: "image-search",
-          data: { query: value, sources },
-        },
-      },
-      "*"
-    );
-  }
-
   useEffect(() => {
-    window.addEventListener("message", (event) => {
-      const { type } = event.data.pluginMessage;
+    function handleMessage({ data }: MessageEvent<PluginPostMessage>) {
+      const { type } = data.pluginMessage;
 
-      if (type === "initialResults") {
-        const { data } = event.data.pluginMessage;
-        console.log(data);
-        setImages(data);
+      if (type === "RESULTS_INIT") {
+        const { payload } = data.pluginMessage;
+        setImages(payload.images);
+        setStatus("idle");
       }
-    });
+    }
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
   }, []);
 
   return (
-    <>
-      <header>
-        <SearchBar
-          value={value}
-          setValue={setValue}
-          handleCreate={handleCreate}
-        />
-        <ToggleGroup
-          label="Sources"
-          sources={IMAGE_SOURCES}
-          activeSources={sources}
-          setSources={setSources}
-        />
-      </header>
-      {images && (
-        <main className="img-gallery">
-          {images.map((image) => (
-            <ImageCard key={image.id} image={image} />
-          ))}
-        </main>
+    <main>
+      <Header setStatus={setStatus} setImages={setImages} />
+      {status === "searching" ? (
+        <div className="flex-grow" />
+      ) : (
+        <ImageGallery images={images} setImages={setImages} />
       )}
-    </>
+      <Footer setImages={setImages} numImages={images?.length ?? 0} />
+    </main>
   );
 }
 

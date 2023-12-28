@@ -31,8 +31,13 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src"),
+      "@src": resolve(__dirname, "src"),
+      "@plugin": resolve(__dirname, "src", "plugin"),
+      "@utils": resolve(__dirname, "src", "utils"),
+      "@types": resolve(__dirname, "src", "types"),
+      "@app": resolve(__dirname, "src", "app"),
       "@components": resolve(__dirname, "src", "app", "components"),
+      "@styles": resolve(__dirname, "src", "app", "styles"),
     },
   },
 });

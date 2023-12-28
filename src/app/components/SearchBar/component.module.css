@@ -1,10 +1,5 @@
 .search {
-  flex-grow: 1;
-  margin: 0;
-
-  & > div {
-    position: relative;
-  }
+  position: relative;
 
   input[type="text"] {
     height: 3rem;
@@ -19,25 +14,38 @@
     transition: border 100ms ease-out;
 
     &::placeholder {
-      color: oklch(var(--foreground-oklch) / 33.33%);
+      color: oklch(var(--foreground-oklch) / 40%);
     }
 
     &:focus-visible {
       outline: none;
       border: var(--border-active);
     }
+
+    &::selection {
+      background: oklch(var(--color-accent-oklch) / 30%);
+    }
   }
 
   button {
     position: absolute;
     bottom: 0.5rem;
+
+    display: grid;
+    place-items: center;
+
     height: 2rem;
     width: 2rem;
+    border-radius: 3px;
     transition: opacity 150ms ease-out, border 100ms ease-out,
       color 100ms ease-out;
 
     &:disabled {
       cursor: default;
+    }
+
+    &:not(:disabled):hover {
+      color: var(--color-accent);
     }
 
     &:first-of-type {
@@ -47,19 +55,11 @@
         color: var(--foreground);
         opacity: 0.5;
       }
-
-      &:not(:disabled):hover {
-        color: var(--color-accent);
-      }
     }
 
     &:last-of-type {
       right: 0.5rem;
-      color: rgb(255 255 255 / 0.3);
-
-      &:not(:disabled):hover {
-        color: var(--color-accent);
-      }
+      color: oklch(var(--foreground-oklch) / 40%);
 
       &:disabled {
         opacity: 0;
@@ -69,6 +69,7 @@
     &:focus-visible {
       color: var(--color-accent);
       border: var(--border-active);
+      outline: none;
     }
   }
 
