@@ -1,21 +1,21 @@
 .header {
-  --offset: var(--space-lg);
+  --offset: var(--space-xl);
 
   position: sticky;
   top: var(--offset);
   display: flex;
-  gap: var(--space-md);
+  gap: var(--space-lg);
   width: calc(100% - var(--offset) - var(--offset));
   margin-inline-start: var(--offset);
   margin-block-end: calc(var(--offset) * 2);
 
   background: oklch(var(--elevation-02-oklch) / 80%);
-  border: 1px solid oklch(var(--white-oklch) / 0.1);
+  border: var(--border-light);
   border-radius: 24px;
-  box-shadow: var(--shadow-elevation-high);
+  box-shadow: var(--shadow-below-5);
 
-  padding: var(--space-md);
+  padding: var(--space-lg);
   backdrop-filter: blur(10px);
 
-  z-index: 1000;
+  z-index: var(--z-2);
 }

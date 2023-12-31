@@ -1,0 +1,13 @@
+.wrapper {
+  display: flex;
+  gap: var(--space-lg);
+  padding-inline-start: var(--space-md);
+
+  input[type="range"] {
+    flex-grow: 1;
+  }
+
+  input[type="number"] {
+    width: 64px;
+  }
+}

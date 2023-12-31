@@ -2,28 +2,30 @@
   position: relative;
 
   input[type="text"] {
-    height: 3rem;
+    height: var(--input-height);
     width: 100%;
     padding-inline-start: 44px;
     padding-inline-end: 0.5px;
 
-    background-color: var(--background);
-    border: var(--border-light);
-    border-radius: var(--brad);
+    background-color: var(--input-background);
+    background-clip: padding-box;
+    border: var(--input-border-default);
+    border-radius: var(--input-border-radius);
 
-    transition: border 100ms ease-out;
+    transition: border var(--input-transition-timing)
+      var(--input-transition-ease);
 
     &::placeholder {
-      color: oklch(var(--foreground-oklch) / 40%);
+      color: var(--input-placeholder-color);
     }
 
     &:focus-visible {
       outline: none;
-      border: var(--border-active);
+      border: var(--input-border-focused);
     }
 
     &::selection {
-      background: oklch(var(--color-accent-oklch) / 30%);
+      background: var(--input-selection-color);
     }
   }
 

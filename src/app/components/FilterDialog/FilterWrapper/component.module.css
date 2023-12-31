@@ -1,0 +1,6 @@
+.wrapper {
+  padding: var(--space-sm);
+  background-color: var(--elevation-02);
+  border-radius: calc(var(--brad) + var(--space-sm));
+  box-shadow: var(--shadow-below-2);
+}

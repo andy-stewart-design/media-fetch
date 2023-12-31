@@ -1,0 +1,56 @@
+.wrapper {
+  position: relative;
+}
+
+.number-input {
+  height: var(--input-height);
+  width: 100%;
+  padding-inline: var(--input-padding-inline);
+
+  background-color: var(--input-background);
+  background-clip: padding-box;
+  border: var(--input-border-default);
+  border-radius: var(--input-border-radius);
+  font-variant-numeric: tabular-nums;
+
+  transition: border var(--input-transition-timing) var(--input-transition-ease);
+
+  &:focus-visible {
+    outline: none;
+    border: var(--input-border-focused);
+  }
+
+  &::selection {
+    background: var(--input-selection-color);
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.button-group {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 3rem;
+
+  display: flex;
+  flex-direction: column;
+
+  button {
+    flex-grow: 1;
+    padding-inline: var(--space-lg);
+    user-select: none;
+
+    &:first-of-type {
+      padding-block-start: 4px;
+    }
+
+    &:last-of-type {
+      padding-block-end: 4px;
+    }
+  }
+}

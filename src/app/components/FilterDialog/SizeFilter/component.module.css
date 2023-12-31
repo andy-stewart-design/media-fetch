@@ -1,0 +1,4 @@
+.group {
+  flex-basis: 8rem;
+  flex-shrink: 0;
+}

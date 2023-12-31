@@ -276,6 +276,8 @@
 
   legend {
     padding: 0;
+    display: block;
+    float: left;
   }
 
   ol,

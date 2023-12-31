@@ -1,0 +1,12 @@
+.radio-group-item {
+  display: inline grid;
+  grid-area: var(--space-sm);
+
+  & > * {
+    grid-area: 1/1;
+  }
+
+  input[type="radio"] {
+    all: unset;
+  }
+}

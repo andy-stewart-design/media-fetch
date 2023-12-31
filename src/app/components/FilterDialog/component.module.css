@@ -1,15 +1,16 @@
 .dialog {
-  bottom: 0;
-
   width: 100vw;
   height: 70vh;
-  border-radius: var(--space-lg) var(--space-lg) 0 0;
-  background: var(--elevation-02);
+  border-radius: var(--space-xl) var(--space-xl) 0 0;
+  background: var(--elevation-01);
   color: var(--foreground);
   border-top: var(--border-light);
+  box-shadow: var(--shadow-above-5);
   visibility: visible;
-  z-index: 10000000;
+
+  bottom: 0;
   margin-bottom: 0;
+  z-index: var(--z-3);
 
   /* REQUIRED TO OVERRIDE BROWSER STYLE SHEETS */
   &:modal {
@@ -22,11 +23,13 @@
   }
 
   &[data-state="opening"] {
-    animation: dialog-animate-in 300ms ease-out forwards;
+    animation: dialog-animate-in 300ms forwards;
+    animation-timing-function: var(--ease-out-3);
   }
 
   &[data-state="closing"] {
-    animation: dialog-animate-out 300ms ease-out forwards;
+    animation: dialog-animate-out 300ms forwards;
+    animation-timing-function: var(--ease-in-3);
   }
 
   &[data-state="closed"] {
@@ -36,13 +39,31 @@
   }
 
   & > section {
-    padding: var(--space-lg);
+    padding-inline: var(--space-xl);
+    padding-block-start: var(--space-xl);
+
+    &:first-of-type {
+      padding-block-end: var(--space-xl);
+    }
   }
 }
 
 .header {
   display: flex;
   border-bottom: var(--border-light);
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--space-xl);
+    height: var(--space-xl);
+  }
+}
+
+.number-input {
+  flex-basis: 8rem;
+  flex-shrink: 0;
 }
 
 @keyframes dialog-animate-in {
