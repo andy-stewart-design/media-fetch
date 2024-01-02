@@ -1,6 +1,6 @@
 .dialog {
   width: 100vw;
-  height: 70vh;
+  /* height: 70vh; */
   border-radius: var(--space-xl) var(--space-xl) 0 0;
   background: var(--elevation-01);
   color: var(--foreground);
@@ -40,30 +40,14 @@
 
   & > section {
     padding-inline: var(--space-xl);
-    padding-block-start: var(--space-xl);
+    margin-block: var(--space-xl);
 
     &:first-of-type {
-      padding-block-end: var(--space-xl);
+      padding-block: var(--space-xl);
+      border-bottom: var(--border-light);
+      margin: 0;
     }
   }
-}
-
-.header {
-  display: flex;
-  border-bottom: var(--border-light);
-
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: var(--space-xl);
-    height: var(--space-xl);
-  }
-}
-
-.number-input {
-  flex-basis: 8rem;
-  flex-shrink: 0;
 }
 
 @keyframes dialog-animate-in {

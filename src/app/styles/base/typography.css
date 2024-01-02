@@ -1,5 +1,8 @@
 @layer base {
   :root {
     --font-medium: 525;
+
+    --font-base: 1.125rem;
+    --font-lg: 1.125rem;
   }
 }

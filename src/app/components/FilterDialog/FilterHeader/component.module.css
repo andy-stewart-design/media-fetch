@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+
+  p {
+    font-size: var(--font-lg);
+    font-weight: var(--font-medium);
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--space-xl);
+    height: var(--space-xl);
+  }
+}

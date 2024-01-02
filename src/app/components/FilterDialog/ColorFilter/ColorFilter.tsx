@@ -1,13 +1,14 @@
 import { RadioGroupAction } from "@src/hooks/use-input";
 import {
   RadioGroup,
-  RadioGroupItem,
   RadioGroupLabel,
-  RadioItemInput,
+  RadioGroupItem,
   RadioItemLabel,
+  RadioItemInput,
 } from "@components/RadioGroup";
 import classes from "./component.module.css";
 import FilterWrapper from "../FilterWrapper";
+import VisuallyHidden from "../../VisuallyHidden";
 
 interface PropTypes {
   value: string;
@@ -16,7 +17,7 @@ interface PropTypes {
   options: Array<{ value: string; label: string }>;
 }
 
-export default function OrientationFilter({
+export default function ColorFilter({
   value: groupValue,
   onChange,
   options,
@@ -37,9 +38,9 @@ export default function OrientationFilter({
               onChange={onChange}
               checked={groupValue === value}
             />
-            <RadioItemLabel htmlFor={value} className={classes.label}>
-              {label}
-            </RadioItemLabel>
+            <VisuallyHidden>
+              <RadioItemLabel htmlFor={value}>{label}</RadioItemLabel>
+            </VisuallyHidden>
           </RadioGroupItem>
         ))}
       </FilterWrapper>

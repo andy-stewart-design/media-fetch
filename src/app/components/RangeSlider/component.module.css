@@ -1,5 +1,5 @@
 .range-group {
-  --track-height: var(--space-sm);
+  --track-height: var(--space-xs);
   --track-border-radius: var(--space-sm);
   --track-background: linear-gradient(
     to right,

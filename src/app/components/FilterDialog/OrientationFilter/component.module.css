@@ -1,35 +1,34 @@
 .wrapper {
   display: flex;
-  /* gap: var(--space-sm); */
 }
 
-.radio {
+.item {
   flex: 1 0 0;
+}
 
-  label {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: var(--input-height);
+.label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--input-height);
 
-    line-height: 0.95;
-    text-align: center;
+  line-height: 0.95;
+  text-align: center;
 
-    border: var(--input-border-default);
-    border-right: var(--input-border-transparent);
+  border: var(--input-border-default);
+  border-right: var(--input-border-transparent);
 
-    span:first-of-type & {
-      border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
-    }
+  span:first-of-type & {
+    border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+  }
 
-    span:last-of-type & {
-      border-right: var(--input-border-default);
-      border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
-    }
+  span:last-of-type & {
+    border-right: var(--input-border-default);
+    border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
+  }
 
-    input:checked + & {
-      background: oklch(var(--color-accent-oklch) / 20%);
-      border: var(--input-border-focused);
-    }
+  input:checked + & {
+    background: oklch(var(--color-accent-oklch) / 20%);
+    border: var(--input-border-focused);
   }
 }

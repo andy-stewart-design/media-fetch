@@ -5,8 +5,13 @@
   & > * {
     grid-area: 1/1;
   }
+}
 
-  input[type="radio"] {
-    all: unset;
-  }
+.input {
+  appearance: none;
+  cursor: pointer;
+}
+
+.label {
+  cursor: pointer;
 }

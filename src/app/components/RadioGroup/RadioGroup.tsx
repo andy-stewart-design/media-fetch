@@ -16,27 +16,53 @@ export function RadioGroup({ children, className }: RadioGroupProps) {
 }
 
 export function RadioGroupLabel({
+  className,
   children,
   ...delegated
-}: ComponentProps<"label">) {
-  return <label {...delegated}>{children}</label>;
-}
-
-interface RadioGroupItemProps extends ComponentProps<"input"> {
-  value: string;
-  label: string;
+}: ComponentProps<"legend">) {
+  return (
+    <legend {...delegated} className={`${classes["label"]} label ${className}`}>
+      {children}
+    </legend>
+  );
 }
 
 export function RadioGroupItem({
-  value,
-  label,
+  className,
+  children,
+  ...delegated
+}: ComponentProps<"span">) {
+  return (
+    <span
+      {...delegated}
+      className={`${classes["radio-group-item"]} ${className}`}
+    >
+      {children}
+    </span>
+  );
+}
+
+export function RadioItemInput({
   className,
   ...delegated
-}: RadioGroupItemProps) {
+}: ComponentProps<"input">) {
   return (
-    <span className={`${classes["radio-group-item"]} ${className}`}>
-      <input {...delegated} type="radio" value={value} id={value} />
-      <label htmlFor={value}>{label}</label>
-    </span>
+    <input
+      {...delegated}
+      type="radio"
+      className={`${classes["input"]} ${className}`}
+    />
+  );
+}
+
+export function RadioItemLabel({
+  className,
+  children,
+  ...delegated
+}: ComponentProps<"label">) {
+  return (
+    <label {...delegated} className={`${classes["label"]} ${className}`}>
+      {children}
+    </label>
   );
 }
