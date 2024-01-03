@@ -6,12 +6,23 @@ import SizeFilter from "./SizeFilter";
 import OrientationFilter from "./OrientationFilter/";
 import ColorFilter from "./ColorFilter";
 import { FilterDialogDisplayContext } from "@components/Providers/FilterDialogDisplayProvider";
+import { SearchFilterContext } from "@components/Providers/SearchFilterProvider";
+import { ExportSettingsContext } from "@components/Providers/ExportSettingsProvider";
 import { useNumberInput, useRadio } from "@hooks/use-input";
 import { COLOR_OPTIONS, ORIENTATION_OPTIONS } from "@src/app/constants/filters";
 import classes from "./component.module.css";
 
 export default function FilterDialog() {
+  // GLOBAL STATE
   const { showDialog, setShowDialog } = useContext(FilterDialogDisplayContext);
+  const { searchFilters, setSearchFilters } = useContext(SearchFilterContext);
+  const { exportSettings, setExportSettings } = useContext(
+    ExportSettingsContext
+  );
+
+  // LOCAL STATE
+  const [orientation, setOrientation] = useRadio("all");
+  const [primaryColor, setPrimaryColor] = useRadio("any");
   const [exportQuality, setExportQuality, restExportQualityProps] =
     useNumberInput(60, 1, 100, 1);
   const [exportSize, setExportSize, restExportSizeProps] = useNumberInput(
@@ -20,8 +31,37 @@ export default function FilterDialog() {
     3200,
     100
   );
-  const [orientation, setOrientation] = useRadio("all");
-  const [primaryColor, setPrimaryColor] = useRadio("any");
+
+  const disableApplyFilters =
+    orientation === searchFilters.orientation &&
+    primaryColor === searchFilters.primaryColor &&
+    exportQuality === exportSettings.quality &&
+    exportSize === exportSettings.size;
+
+  function applyFilters() {
+    if (
+      orientation !== searchFilters.orientation ||
+      primaryColor !== searchFilters.primaryColor
+    ) {
+      setSearchFilters({ orientation, primaryColor });
+    }
+
+    if (
+      exportQuality !== exportSettings.quality ||
+      exportSize !== exportSettings.size
+    ) {
+      setExportSettings({ quality: exportQuality, size: exportSize });
+    }
+
+    setShowDialog();
+  }
+
+  function handleCancel() {
+    setOrientation(searchFilters.orientation);
+    setPrimaryColor(searchFilters.primaryColor);
+
+    setShowDialog();
+  }
 
   return (
     <Dialog
@@ -30,7 +70,7 @@ export default function FilterDialog() {
       setShowDialog={setShowDialog}
     >
       <section>
-        <FilterHeader setShowDialog={setShowDialog} />
+        <FilterHeader setShowDialog={handleCancel} />
       </section>
       <section>
         <OrientationFilter
@@ -59,6 +99,12 @@ export default function FilterDialog() {
           onChange={setExportSize}
           {...restExportSizeProps}
         />
+      </section>
+      <section>
+        <button onClick={handleCancel}>Cancel</button>
+        <button onClick={applyFilters} disabled={disableApplyFilters}>
+          Apply Filters
+        </button>
       </section>
     </Dialog>
   );

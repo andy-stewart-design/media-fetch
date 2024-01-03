@@ -60,7 +60,7 @@ export default function ColorFilter({
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M2 11L9 18L22 5"
+                      d="M3 12 L9 18 L21 6"
                       stroke="currentColor"
                       stroke-width="3"
                       stroke-linejoin="round"

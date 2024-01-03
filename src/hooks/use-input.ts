@@ -59,7 +59,7 @@ export const useNumberInput: NumberSetupHook = (
 // Input: RadioGroup ------------------------------------
 // ------------------------------------------------------
 
-export type RadioGroupAction = (event: InputChangeEvent) => void;
+export type RadioGroupAction = (event: InputChangeEvent | string) => void;
 
 export type UseRadioReturn = [string, RadioGroupAction];
 
@@ -68,9 +68,13 @@ type RadioSetupHook = (initialValue: string) => UseRadioReturn;
 export const useRadio: RadioSetupHook = (initialValue) => {
   const [value, setValue] = useState(initialValue);
 
-  function onChange(event: InputChangeEvent) {
-    setValue(event.target.value);
-  }
+  const onChange = useCallback<RadioGroupAction>(function (event) {
+    if (typeof event === "string") {
+      setValue(event);
+    } else {
+      setValue(event.target.value);
+    }
+  }, []);
 
   return [value, onChange];
 };

@@ -13,7 +13,7 @@ export default function FilterHeader({
       <button onClick={closeDialog}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path
-            d="M3 3L17 17M17 3L10 10L3 17"
+            d="M4 4 L16 16 M16 4 L4 16"
             stroke="currentColor"
             stroke-width="1.5"
           />

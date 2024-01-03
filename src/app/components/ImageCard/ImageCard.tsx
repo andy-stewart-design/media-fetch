@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Unsplash from "@components/logos/Unsplash";
 import Pexels from "@components/logos/Pexels";
 import Pixabay from "@components/logos/Pixabay";
+import { ExportSettingsContext } from "@components/Providers/ExportSettingsProvider";
 import type { ImageData } from "@src/utils/image-search";
 import classes from "./component.module.css";
 import { UIPostMessage } from "@src/types/post-messages";
@@ -22,6 +23,8 @@ export default function ImageCard({ image }: PropTypes) {
     photographer_link,
   } = image;
 
+  const { exportSettings } = useContext(ExportSettingsContext);
+
   const Icon =
     source.toLocaleLowerCase() === "unsplash"
       ? Unsplash
@@ -32,7 +35,13 @@ export default function ImageCard({ image }: PropTypes) {
   function handlePlaceImage() {
     const pluginMessage: UIPostMessage = {
       type: "PLACE_IMAGE",
-      payload: { src: image_large, width, height },
+      payload: {
+        src: image_large,
+        width,
+        height,
+        quality: exportSettings.quality,
+        exportSize: exportSettings.size,
+      },
     };
 
     parent.postMessage({ pluginMessage }, "*");

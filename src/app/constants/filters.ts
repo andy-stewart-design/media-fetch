@@ -1,3 +1,17 @@
+export type PrimaryColorValue =
+  | "any"
+  | "grayscale"
+  | "black"
+  | "white"
+  | "green"
+  | "teal"
+  | "blue"
+  | "purple"
+  | "pink"
+  | "red"
+  | "orange"
+  | "yellow";
+
 export const COLOR_OPTIONS = [
   {
     label: "Any",
@@ -20,11 +34,6 @@ export const COLOR_OPTIONS = [
     label: "White",
     value: "white",
     background: "oklch(100% 0 0)",
-  },
-  {
-    label: "Gray",
-    value: "gray",
-    background: "oklch(60% 0 0)",
   },
   {
     label: "Green",
@@ -66,16 +75,11 @@ export const COLOR_OPTIONS = [
     value: "yellow",
     background: "oklch(80% 0.4 100)",
   },
-  {
-    label: "Brown",
-    value: "brown",
-    background: "oklch(45% 0.07 60)",
-  },
 ];
 
 export const ORIENTATION_OPTIONS = [
   { label: "All", value: "all" },
-  { label: "Horizontal", value: "horizontal" },
-  { label: "Vertical", value: "vertical" },
+  { label: "Landscape", value: "landscape" },
+  { label: "Portrait", value: "portrait" },
   { label: "Square", value: "square" },
 ];

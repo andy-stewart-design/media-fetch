@@ -16,10 +16,15 @@ figma.showUI(__html__, {
 // MESSAGE HANDLER
 figma.ui.onmessage = async (message: UIPostMessage) => {
   if (message.type === "QUERY_INIT") {
-    const { query, sources } = message.payload;
+    const { query, sources, orientation, primaryColor } = message.payload;
 
     try {
-      const imageData = await searchImages(query, sources);
+      const imageData = await searchImages(
+        query,
+        sources,
+        orientation,
+        primaryColor
+      );
 
       const data: ImageResultsInitial = {
         type: "RESULTS_INIT",
@@ -33,9 +38,15 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
       handleError(error);
     }
   } else if (message.type === "PLACE_IMAGE") {
-    const { src, width, height } = message.payload;
+    const { src, width, height, quality, exportSize } = message.payload;
 
-    const imageResult = await placeImage(src, width, height);
+    const imageResult = await placeImage(
+      src,
+      width,
+      height,
+      quality,
+      exportSize
+    );
 
     if (imageResult.ok) figma.notify("Placed image successful");
   } else if (message.type === "ERROR") {

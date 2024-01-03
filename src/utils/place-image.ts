@@ -2,16 +2,22 @@ import { handleError } from "./handle-error";
 
 const IMAGE_KIT_SECRET_KEY = "oxo8xdmts";
 
-export async function placeImage(src: string, width: number, height: number) {
-  let resizedWidth = width > height ? 2400 : 1600;
-  let resizedHeight = height * (resizedWidth / width);
+export async function placeImage(
+  src: string,
+  width: number,
+  height: number,
+  quality: number,
+  exportSize: number
+) {
+  let resizedWidth = exportSize;
+  let resizedHeight = height * (exportSize / width);
 
-  if (resizedHeight > 2400) {
-    resizedHeight = 2400;
+  if (resizedHeight > exportSize) {
+    resizedHeight = exportSize;
     resizedWidth = width * (resizedHeight / height);
   }
 
-  const imageKitURL = `https://ik.imagekit.io/${IMAGE_KIT_SECRET_KEY}/tr:w-${resizedWidth},h-${resizedHeight},q-60/${src}`;
+  const imageKitURL = `https://ik.imagekit.io/${IMAGE_KIT_SECRET_KEY}/tr:w-${resizedWidth},h-${resizedHeight},q-${quality}/${src}`;
 
   try {
     const imgData = await figma.createImageAsync(imageKitURL);

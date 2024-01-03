@@ -12,12 +12,16 @@ interface ErrorPayload {
 interface QueryPayload {
   query: string;
   sources: Array<ImageService>;
+  orientation: string;
+  primaryColor: string;
 }
 
 interface PlaceImagePayload {
   src: string;
   width: number;
   height: number;
+  exportSize: number;
+  quality: number;
 }
 
 // PLUGIN MESSAGES
