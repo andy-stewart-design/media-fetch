@@ -14,7 +14,11 @@ interface PropTypes {
   value: string;
   onChange: RadioGroupAction;
   label: string;
-  options: Array<{ value: string; label: string }>;
+  options: Array<{
+    value: string;
+    label: string;
+    background: string;
+  }>;
 }
 
 export default function ColorFilter({
@@ -26,23 +30,47 @@ export default function ColorFilter({
   const name = groupLabel.toLocaleLowerCase().split(" ").join("-");
 
   return (
-    <RadioGroup className={classes["group"]}>
+    <RadioGroup>
       <RadioGroupLabel>{groupLabel}</RadioGroupLabel>
       <FilterWrapper role="radiogroup" className={classes["wrapper"]}>
-        {options.map(({ value, label }) => (
-          <RadioGroupItem key={value} className={classes["item"]}>
-            <RadioItemInput
-              id={value}
-              name={name}
-              value={value}
-              onChange={onChange}
-              checked={groupValue === value}
-            />
-            <VisuallyHidden>
-              <RadioItemLabel htmlFor={value}>{label}</RadioItemLabel>
-            </VisuallyHidden>
-          </RadioGroupItem>
-        ))}
+        {options.map(({ value, label, background }) => {
+          const checked = groupValue === value;
+          const color = value === "white" ? "black" : "white";
+          return (
+            <RadioGroupItem key={value} className={classes["item"]}>
+              <RadioItemInput
+                id={value}
+                name={name}
+                value={value}
+                onChange={onChange}
+                checked={checked}
+                className={classes["input"]}
+                style={{ background }}
+              />
+              <VisuallyHidden>
+                <RadioItemLabel htmlFor={value}>{label}</RadioItemLabel>
+              </VisuallyHidden>
+              {checked && (
+                <span className={classes.iconWrapper} style={{ color }}>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M2 11L9 18L22 5"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              )}
+            </RadioGroupItem>
+          );
+        })}
       </FilterWrapper>
     </RadioGroup>
   );

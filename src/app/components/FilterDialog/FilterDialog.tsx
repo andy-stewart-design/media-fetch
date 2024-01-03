@@ -7,6 +7,7 @@ import OrientationFilter from "./OrientationFilter/";
 import ColorFilter from "./ColorFilter";
 import { FilterDialogDisplayContext } from "@components/Providers/FilterDialogDisplayProvider";
 import { useNumberInput, useRadio } from "@hooks/use-input";
+import { COLOR_OPTIONS, ORIENTATION_OPTIONS } from "@src/app/constants/filters";
 import classes from "./component.module.css";
 
 export default function FilterDialog() {
@@ -36,12 +37,7 @@ export default function FilterDialog() {
           label="Orientation"
           value={orientation}
           onChange={setOrientation}
-          options={[
-            { label: "All", value: "all" },
-            { label: "Horizontal", value: "horizontal" },
-            { label: "Vertical", value: "vertical" },
-            { label: "Square", value: "square" },
-          ]}
+          options={ORIENTATION_OPTIONS}
         />
       </section>
       <section>
@@ -49,12 +45,7 @@ export default function FilterDialog() {
           label="Primary Color"
           value={primaryColor}
           onChange={setPrimaryColor}
-          options={[
-            { label: "Any", value: "any" },
-            { label: "Black", value: "black" },
-            { label: "White", value: "white" },
-            { label: "Blue", value: "blue" },
-          ]}
+          options={COLOR_OPTIONS}
         />
       </section>
       <section className="flex gap-xs">

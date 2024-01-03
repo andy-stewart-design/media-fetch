@@ -1,18 +1,37 @@
 .wrapper {
   display: flex;
   gap: var(--space-sm);
+  overflow-x: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .item {
+  flex-shrink: 0;
   height: var(--input-height);
   width: var(--input-height);
+  border: var(--border-transparent-2);
   border-radius: var(--input-height);
-  border: var(--border-light);
-  background: blue;
-  background-clip: padding-box;
+  overflow: hidden;
 
   &:has(input:checked) {
-    background: green;
-    background-clip: padding-box;
+    border: var(--border-background-2);
+    outline: var(--border-active);
+  }
+}
+
+.input {
+  scale: 1.2;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    filter: drop-shadow(0px 0px 4px oklch(var(--black-oklch) / 0.5));
   }
 }

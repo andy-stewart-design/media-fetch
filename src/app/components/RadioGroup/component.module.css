@@ -4,6 +4,7 @@
 
   & > * {
     grid-area: 1/1;
+    position: relative;
   }
 }
 

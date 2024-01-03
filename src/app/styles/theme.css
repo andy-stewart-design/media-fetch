@@ -1,8 +1,12 @@
 @layer base {
   :root {
     --border-light: 1px solid oklch(var(--white-oklch) / 0.13);
+    --border-light-2: 2px solid oklch(var(--white-oklch) / 0.13);
+    --border-foreground: 1px solid var(--foreground);
+    --border-background-2: 2px solid var(--background);
     --border-active: 1px solid oklch(var(--color-accent-oklch) / 1);
     --border-transparent: 1px solid transparent;
+    --border-transparent-2: 2px solid transparent;
     --brad: 8px;
 
     color: oklch(var(--foreground-oklch) / 90%);
