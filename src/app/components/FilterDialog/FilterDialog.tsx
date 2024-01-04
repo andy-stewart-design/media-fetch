@@ -5,6 +5,7 @@ import QualityFilter from "./QualityFilter";
 import SizeFilter from "./SizeFilter";
 import OrientationFilter from "./OrientationFilter/";
 import ColorFilter from "./ColorFilter";
+import FilterFooter from "./FilterFooter/";
 import { FilterDialogDisplayContext } from "@components/Providers/FilterDialogDisplayProvider";
 import { SearchFilterContext } from "@components/Providers/SearchFilterProvider";
 import { ExportSettingsContext } from "@components/Providers/ExportSettingsProvider";
@@ -101,10 +102,11 @@ export default function FilterDialog() {
         />
       </section>
       <section>
-        <button onClick={handleCancel}>Cancel</button>
-        <button onClick={applyFilters} disabled={disableApplyFilters}>
-          Apply Filters
-        </button>
+        <FilterFooter
+          handleCancel={handleCancel}
+          applyFilters={applyFilters}
+          disableApplyFilters={disableApplyFilters}
+        />
       </section>
     </Dialog>
   );

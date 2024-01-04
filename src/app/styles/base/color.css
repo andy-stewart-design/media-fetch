@@ -30,16 +30,16 @@
     --background-oklch: var(--gray-900-oklch);
     --background: oklch(var(--background-oklch));
 
-    --elevation-01-oklch: var(--gray-800-oklch);
-    --elevation-01: oklch(var(--elevation-01-oklch));
+    --elevation-1-oklch: var(--gray-800-oklch);
+    --elevation-1: oklch(var(--elevation-1-oklch));
 
-    --elevation-02-oklch: var(--gray-775-oklch);
-    --elevation-02: oklch(var(--elevation-02-oklch));
+    --elevation-2-oklch: var(--gray-775-oklch);
+    --elevation-2: oklch(var(--elevation-2-oklch));
 
-    --depression-01-oklch: var(--gray-925-oklch);
-    --depression-01: oklch(var(--depression-01-oklch));
+    --depression-1-oklch: var(--gray-925-oklch);
+    --depression-1: oklch(var(--depression-1-oklch));
 
-    --depression-02-oklch: var(--gray-950-oklch);
-    --depression-02: oklch(var(--depression-01-oklch));
+    --depression-2-oklch: var(--gray-950-oklch);
+    --depression-2: oklch(var(--depression-1-oklch));
   }
 }

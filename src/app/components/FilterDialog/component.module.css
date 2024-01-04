@@ -2,7 +2,7 @@
   width: 100vw;
   /* height: 70vh; */
   border-radius: var(--space-xl) var(--space-xl) 0 0;
-  background: var(--elevation-01);
+  background: var(--elevation-1);
   color: var(--foreground);
   border-top: var(--border-light);
   box-shadow: var(--shadow-above-5);
@@ -50,9 +50,6 @@
     }
 
     &:last-of-type {
-      display: flex;
-      justify-content: flex-end;
-      gap: var(--space-lg);
       padding-block: var(--space-xl);
       border-top: var(--border-light);
       margin: 0;

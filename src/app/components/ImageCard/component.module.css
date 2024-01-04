@@ -35,7 +35,7 @@
 .img-container {
   position: relative;
   aspect-ratio: 1/1;
-  background-color: var(--depression-02);
+  background-color: var(--depression-2);
   border: var(--border-light);
   border-radius: var(--brad);
   overflow: hidden;
@@ -65,7 +65,7 @@
 
   display: flex;
   flex-direction: column;
-  background: oklch(var(--depression-02-oklch) / 50%);
+  background: oklch(var(--depression-2-oklch) / 50%);
   backdrop-filter: blur(10px);
   opacity: 0;
   transition: opacity 150ms ease-out;

@@ -20,7 +20,7 @@
       overflow: hidden;
 
       &:hover {
-        background-color: var(--depression-01);
+        background-color: var(--depression-1);
       }
 
       &:has(input[type="checkbox"]:checked) {

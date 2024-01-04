@@ -9,7 +9,7 @@
   font-weight: var(--font-medium);
   font-size: 0.875rem;
 
-  background: oklch(var(--elevation-02-oklch) / 80%);
+  background: oklch(var(--elevation-2-oklch) / 80%);
   border-top: 1px solid oklch(var(--white-oklch) / 0.1);
   backdrop-filter: blur(10px);
 
