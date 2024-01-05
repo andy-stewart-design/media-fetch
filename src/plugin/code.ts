@@ -1,11 +1,11 @@
 import { searchImages } from "@utils/image-search";
 import { shuffle } from "@utils/shuffle";
+import { placeImage } from "@src/utils/place-image";
+import { handleError } from "@src/utils/handle-error";
 import type {
   UIPostMessage,
   ImageResultsInitial,
 } from "@src/types/post-messages";
-import { placeImage } from "@src/utils/place-image";
-import { handleError } from "@src/utils/handle-error";
 
 // BOILERPLATE CODE TO DISPLAY THE UI WHEN THE PLUGIN IS RUN
 figma.showUI(__html__, {

@@ -1,5 +1,3 @@
-// TODO: style filter footer
-// TODO: protect secret keys
 // TODO: load more functionality
 // TODO: Error Handling
 // TODO: figure out strategy for loading screen

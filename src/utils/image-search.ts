@@ -1,9 +1,3 @@
-import {
-  PexelsAPIResponse,
-  PixabayAPIResponse,
-  UnsplashAPIRespones,
-} from "../types/api-response";
-
 export interface ImageData {
   id: string;
   width: number;
@@ -19,14 +13,6 @@ export interface ImageData {
 export type ImageService = "unsplash" | "pexels" | "pixabay";
 
 //------------------------------------------------
-// API KEYS — NEED TO REMOVE
-//------------------------------------------------
-const PEXELS_API_KEY =
-  "6g13kUgrPvTdfvJ0TfNQS2QXzVBLFqO0tu5gMQTCaIOQCGYWISSckCPs";
-const PIXABAY_API_KEY = "35568846-b12b8564471b5e493ec192e02";
-const UNSPLASH_API_KEY = "tAWVEwm8Gkhpp9r8wNTDyS_sgLptx6uEuqTm6_Hx6os";
-
-//------------------------------------------------
 // UNSPLASH
 //------------------------------------------------
 export async function searchUnsplash(
@@ -35,59 +21,15 @@ export async function searchUnsplash(
   primaryColor: string,
   amount = 10
 ): Promise<ImageData[]> {
-  const baseURL = "https://api.unsplash.com/search/photos";
-  const queryParam = `?query=${query}`;
-  const amountParam = `&per_page=${amount}`;
-  const orientationParam = getUnsplashOrientationFilter(orientation);
-  const colorParam = getUnsplashColorFilter(primaryColor);
-  const apiKeyParam = `&client_id=${UNSPLASH_API_KEY}`;
+  const apiURL = `https://media-fetch-hono.vercel.app/unsplash?query=${query}&per_page=${amount}&orientation=${orientation}&color=${primaryColor}`;
 
-  const apiUrl = [
-    baseURL,
-    queryParam,
-    amountParam,
-    orientationParam,
-    colorParam,
-    apiKeyParam,
-  ].join("");
-
-  // Make an API request using the API key and query
-  const response = await fetch(apiUrl);
+  const response = await fetch(apiURL);
 
   if (!response.ok) throw new Error("Failed to fetch data from Unsplash");
 
-  const data: UnsplashAPIRespones = await response.json();
+  const data: ImageData[] = await response.json();
 
-  // Parse the response to extract necessary data
-  const formattedData: ImageData[] = data.results.map((result) => ({
-    id: String(Math.random()),
-    width: result.width,
-    height: result.height,
-    image_thumbnail: result.urls.thumb,
-    image_large: result.urls.full,
-    image_link: result.links.html,
-    photographer: result.user.name,
-    photographer_link: result.user.links.html,
-    source: "Unsplash",
-  }));
-
-  // Return formatted data
-  return formattedData;
-}
-
-function getUnsplashOrientationFilter(value: string) {
-  const param = "&orientation=";
-  if (value === "all") return undefined;
-  else if (value === "square") return `${param}squarish`;
-  else return `${param}${value}`;
-}
-
-function getUnsplashColorFilter(value: string) {
-  const param = "&color=";
-  if (value === "any") return undefined;
-  else if (value === "grayscale") return `${param}black_and_white`;
-  else if (value === "pink") return `${param}magenta`;
-  else return `${param}${value}`;
+  return data;
 }
 
 //------------------------------------------------
@@ -99,62 +41,17 @@ async function searchPexels(
   primaryColor: string,
   amount = 10
 ): Promise<ImageData[]> {
-  const baseURL = "https://api.pexels.com/v1/search";
-  const queryParam = `?query=${query}`;
-  const amountParam = `&per_page=${amount}`;
-  const orientationParam = getPexelsOrientationFilter(orientation);
-  const colorParam = getPexelsColorFilter(primaryColor);
+  const apiURL = `https://media-fetch-hono.vercel.app/pexels?query=${query}&per_page=${amount}&orientation=${orientation}&color=${primaryColor}`;
 
-  const apiKey = PEXELS_API_KEY;
-  const apiUrl = [
-    baseURL,
-    queryParam,
-    amountParam,
-    orientationParam,
-    colorParam,
-  ].join("");
+  const response = await fetch(apiURL);
 
-  // Make an API request using the API key and query
-  const response = await fetch(apiUrl, {
-    headers: {
-      Authorization: apiKey,
-    },
-  });
+  if (!response.ok) throw new Error("Failed to fetch data from Unsplash");
 
-  if (!response.ok) throw new Error("Failed to fetch data from Pexels");
+  const data: ImageData[] = await response.json();
 
-  const data: PexelsAPIResponse = await response.json();
+  console.log("pexels", data);
 
-  // Parse the response to extract necessary data
-  const formattedData: ImageData[] = data.photos.map((photo) => ({
-    id: String(Math.random()),
-    width: photo.width,
-    height: photo.height,
-    image_thumbnail: photo.src.tiny,
-    image_large: photo.src.original,
-    image_link: photo.url,
-    photographer: photo.photographer,
-    photographer_link: photo.photographer_url,
-    source: "Pexels",
-  }));
-
-  // Return formatted data
-  return formattedData;
-}
-
-function getPexelsOrientationFilter(value: string) {
-  const param = "&orientation=";
-  if (value === "all") return undefined;
-  else return `${param}${value}`;
-}
-
-function getPexelsColorFilter(value: string) {
-  const param = "&color=";
-  if (value === "any") return undefined;
-  else if (value === "grayscale") return `${param}gray`;
-  else if (value === "teal") return `${param}turquoise`;
-  else if (value === "purple") return `${param}#800080`;
-  else return `${param}${value}`;
+  return data;
 }
 
 //------------------------------------------------
@@ -166,59 +63,17 @@ async function searchPixabay(
   primaryColor: string,
   amount = 10
 ): Promise<ImageData[]> {
-  const baseURL = "https://pixabay.com/api/";
-  const apiKeyParam = `?key=${PIXABAY_API_KEY}`;
-  const queryParam = `&q=${query}`;
-  const amountParam = `&per_page=${amount}`;
-  const orientationParam = getPixabayOrientationFilter(orientation);
-  const colorParam = getPixabayColorFilter(primaryColor);
+  const apiURL = `https://media-fetch-hono.vercel.app/pixabay?query=${query}&per_page=${amount}&orientation=${orientation}&color=${primaryColor}`;
 
-  const apiUrl = [
-    baseURL,
-    apiKeyParam,
-    queryParam,
-    amountParam,
-    orientationParam,
-    colorParam,
-  ].join("");
+  const response = await fetch(apiURL);
 
-  console.log(apiUrl);
+  if (!response.ok) throw new Error("Failed to fetch data from Unsplash");
 
-  const response = await fetch(apiUrl);
+  const data: ImageData[] = await response.json();
 
-  if (!response.ok) throw new Error("Failed to fetch data from Pixabay");
+  console.log("pixabay", data);
 
-  const data: PixabayAPIResponse = await response.json();
-
-  // Extract necessary information from the response
-  const formattedData: ImageData[] = data.hits.map((hit) => ({
-    id: String(Math.random()),
-    image_thumbnail: hit.previewURL,
-    width: hit.imageWidth,
-    height: hit.imageHeight,
-    image_large: hit.largeImageURL,
-    image_link: hit.pageURL,
-    photographer: hit.user,
-    photographer_link: `https://pixabay.com/users/${hit.user}-${hit.user_id}`,
-    source: "Pixabay",
-  }));
-
-  return formattedData;
-}
-
-function getPixabayOrientationFilter(value: string) {
-  const param = "&orientation=";
-  if (value === "all" || value === "square") return undefined;
-  else if (value === "landscape") return `${param}horizontal`;
-  else if (value === "portrait") return `${param}vertical`;
-}
-
-function getPixabayColorFilter(value: string) {
-  const param = "&colors=";
-  if (value === "any") return undefined;
-  else if (value === "teal") return `${param}turquoise`;
-  else if (value === "purple") return `${param}lilac`;
-  else return `${param}${value}`;
+  return data;
 }
 
 //------------------------------------------------
