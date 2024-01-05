@@ -1,15 +1,10 @@
-import {
-  createContext,
-  useState,
-  type ReactNode,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
-import { ImageService } from "@src/utils/image-search";
+import { createContext, useState, type ReactNode, type Dispatch, type SetStateAction } from 'react';
+import { ImageService } from '@src/utils/image-search';
 
 interface SearchQuery {
   value: string;
   sources: Array<ImageService>;
+  imagesPerService: number;
 }
 
 interface QueryContext {
@@ -19,8 +14,9 @@ interface QueryContext {
 
 export const SearchQueryContext = createContext<QueryContext>({
   searchQuery: {
-    value: "",
+    value: '',
     sources: [],
+    imagesPerService: 0,
   },
   setSearchQuery: () => {},
 });
@@ -29,12 +25,11 @@ interface ProviderProps {
   children: ReactNode;
 }
 
-export default function FilterDialogDisplayProvider({
-  children,
-}: ProviderProps) {
+export default function FilterDialogDisplayProvider({ children }: ProviderProps) {
   const [searchQuery, setSearchQuery] = useState<SearchQuery>({
-    value: "",
-    sources: [],
+    value: '',
+    sources: ['unsplash', 'pexels', 'pixabay'],
+    imagesPerService: 10,
   });
 
   return (

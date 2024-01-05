@@ -1,11 +1,12 @@
-import { searchImages } from "@utils/image-search";
-import { shuffle } from "@utils/shuffle";
-import { placeImage } from "@src/utils/place-image";
-import { handleError } from "@src/utils/handle-error";
+import { searchImages } from '@utils/image-search';
+import { shuffle } from '@utils/shuffle';
+import { placeImage } from '@src/utils/place-image';
+import { handleError } from '@src/utils/handle-error';
 import type {
   UIPostMessage,
   ImageResultsInitial,
-} from "@src/types/post-messages";
+  ImageResultsAdditional,
+} from '@src/types/post-messages';
 
 // BOILERPLATE CODE TO DISPLAY THE UI WHEN THE PLUGIN IS RUN
 figma.showUI(__html__, {
@@ -15,19 +16,15 @@ figma.showUI(__html__, {
 
 // MESSAGE HANDLER
 figma.ui.onmessage = async (message: UIPostMessage) => {
-  if (message.type === "QUERY_INIT") {
-    const { query, sources, orientation, primaryColor } = message.payload;
+  if (message.type === 'QUERY_INIT' || message.type === 'QUERY_ADD') {
+    const { payload } = message;
 
     try {
-      const imageData = await searchImages(
-        query,
-        sources,
-        orientation,
-        primaryColor
-      );
+      const imageData = await searchImages(payload);
+      const type = message.type === 'QUERY_INIT' ? 'RESULTS_INIT' : 'RESULTS_ADD';
 
-      const data: ImageResultsInitial = {
-        type: "RESULTS_INIT",
+      const data: ImageResultsInitial | ImageResultsAdditional = {
+        type,
         payload: {
           images: shuffle(imageData),
         },
@@ -37,19 +34,13 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
     } catch (error) {
       handleError(error);
     }
-  } else if (message.type === "PLACE_IMAGE") {
+  } else if (message.type === 'PLACE_IMAGE') {
     const { src, width, height, quality, exportSize } = message.payload;
 
-    const imageResult = await placeImage(
-      src,
-      width,
-      height,
-      quality,
-      exportSize
-    );
+    const imageResult = await placeImage(src, width, height, quality, exportSize);
 
-    if (imageResult.ok) figma.notify("Placed image successful");
-  } else if (message.type === "ERROR") {
+    if (imageResult.ok) figma.notify('Placed image successful');
+  } else if (message.type === 'ERROR') {
     figma.notify(message.payload.message, { error: true });
   }
 };

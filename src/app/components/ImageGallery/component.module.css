@@ -10,6 +10,24 @@
   animation-delay: 200ms;
 }
 
+.loadMore {
+  grid-column: 1 / -1;
+
+  button {
+    width: 100%;
+    font-weight: var(--font-medium);
+    border: var(--border-foreground);
+    padding-inline: var(--space-lg);
+    padding-block: var(--space-md);
+    transition: color 150ms var(--ease-out-3), border 150ms var(--ease-out-3);
+
+    &:hover {
+      border: var(--border-active);
+      color: var(--color-accent);
+    }
+  }
+}
+
 .placeholder {
   flex-grow: 1;
   display: grid;

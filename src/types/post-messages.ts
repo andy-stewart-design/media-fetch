@@ -1,4 +1,4 @@
-import type { ImageData, ImageService } from "@utils/image-search";
+import type { ImageData, ImageService } from '@utils/image-search';
 
 // PAYLOAD TYPES
 interface ImageDataPayload {
@@ -11,9 +11,11 @@ interface ErrorPayload {
 
 interface QueryPayload {
   query: string;
-  sources: Array<ImageService>;
+  services: Array<ImageService>;
   orientation: string;
   primaryColor: string;
+  page: number;
+  imagesPerService: number;
 }
 
 interface PlaceImagePayload {
@@ -26,42 +28,42 @@ interface PlaceImagePayload {
 
 // PLUGIN MESSAGES
 export interface ImageResultsInitial {
-  type: "RESULTS_INIT";
+  type: 'RESULTS_INIT';
   payload: ImageDataPayload;
 }
 
 export interface ImageResultsAdditional {
-  type: "RESULTS_ADD";
+  type: 'RESULTS_ADD';
   payload: ImageDataPayload;
 }
 
 export interface PluginErrorMessage {
-  type: "ERROR";
+  type: 'ERROR';
   payload: ErrorPayload;
 }
 
 export interface PluginPostMessage {
-  pluginMessage: ImageResultsInitial | PluginErrorMessage;
+  pluginMessage: ImageResultsInitial | ImageResultsAdditional | PluginErrorMessage;
 }
 
 // UI MESSAGES
 export interface ImageQueryInitial {
-  type: "QUERY_INIT";
+  type: 'QUERY_INIT';
   payload: QueryPayload;
 }
 
 export interface ImageQueryAdditional {
-  type: "QUERY_ADD";
+  type: 'QUERY_ADD';
   payload: QueryPayload;
 }
 
 export interface PlaceImageRequest {
-  type: "PLACE_IMAGE";
+  type: 'PLACE_IMAGE';
   payload: PlaceImagePayload;
 }
 
 export interface UIErrorMessage {
-  type: "ERROR";
+  type: 'ERROR';
   payload: ErrorPayload;
 }
 

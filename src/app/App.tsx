@@ -1,15 +1,14 @@
-// TODO: load more functionality
+// TODO: light mode
 // TODO: Error Handling
 // TODO: figure out strategy for loading screen
-// TODO: light mode
 // POST LAUNCH
 // TODO: tooltips
 // TODO: view image dialog
 
-import Providers from "@components/Providers";
-import FilterDialog from "@components/FilterDialog";
-import "./styles/main.css";
-import Main from "./Main/Main";
+import Providers from '@components/Providers';
+import FilterDialog from '@components/FilterDialog';
+import './styles/main.css';
+import Main from './Main/Main';
 
 function App() {
   return (
