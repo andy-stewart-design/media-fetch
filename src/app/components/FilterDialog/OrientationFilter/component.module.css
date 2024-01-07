@@ -14,9 +14,13 @@
 
   line-height: 0.95;
   text-align: center;
+  color: oklch(var(--foreground-oklch) / 60%);
 
   border: var(--input-border-default);
   border-right: var(--input-border-transparent);
+
+  transition: color 150ms var(--ease-out-3), border 150ms var(--ease-out-3),
+    background 150ms var(--ease-out-3);
 
   span:first-of-type & {
     border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
@@ -30,5 +34,6 @@
   input:checked + & {
     background: oklch(var(--color-accent-oklch) / 20%);
     border: var(--input-border-focused);
+    color: var(--foreground);
   }
 }

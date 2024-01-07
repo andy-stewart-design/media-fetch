@@ -1,45 +1,44 @@
 @layer base {
   :root {
-    --white-oklch: 100% 0 0;
+    --neutral-hue: 160;
+
+    --white-oklch: 100% 0.005 var(--neutral-hue);
     --white: oklch(var(--white-oklch));
 
-    --black-oklch: 0% 0 0;
+    --black-oklch: 0% 0.005 var(--neutral-hue);
     --black: oklch(var(--black-oklch));
 
-    --gray-950-oklch: 14% 0 0;
+    --gray-950-oklch: 14% 0.005 var(--neutral-hue);
     --gray-950: oklch(var(--gray-950-oklch));
 
-    --gray-925-oklch: 20% 0 0;
+    --gray-925-oklch: 20% 0.005 var(--neutral-hue);
     --gray-925: oklch(var(--gray-925-oklch));
 
-    --gray-900-oklch: 22.5% 0 0;
+    --gray-900-oklch: 22.5% 0.005 var(--neutral-hue);
     --gray-900: oklch(var(--gray-900-oklch));
 
-    --gray-800-oklch: 29.3% 0 0; /* This is Figma's gray */
+    --gray-800-oklch: 29.3% 0.005 var(--neutral-hue); /* This is Figma's gray */
     --gray-800: oklch(var(--gray-800-oklch));
 
-    --gray-775-oklch: 35% 0 0;
+    --gray-775-oklch: 35% 0.005 var(--neutral-hue);
     --gray-775: oklch(var(--gray-775-oklch));
 
-    --color-accent-oklch: 100% 0.3 160;
-    --color-accent: oklch(var(--color-accent-oklch));
+    --gray-150-oklch: 90% 0.005 var(--neutral-hue);
+    --gray-150: oklch(var(--gray-150-oklch));
 
-    --foreground-oklch: var(--white-oklch);
-    --foreground: oklch(var(--foreground-oklch));
+    --gray-125-oklch: 92.5% 0.005 var(--neutral-hue);
+    --gray-125: oklch(var(--gray-125-oklch));
 
-    --background-oklch: var(--gray-900-oklch);
-    --background: oklch(var(--background-oklch));
+    --gray-100-oklch: 95% 0.005 var(--neutral-hue);
+    --gray-100: oklch(var(--gray-100-oklch));
 
-    --elevation-1-oklch: var(--gray-800-oklch);
-    --elevation-1: oklch(var(--elevation-1-oklch));
+    --gray-50-oklch: 97.5% 0.005 var(--neutral-hue);
+    --gray-50: oklch(var(--gray-50-oklch));
 
-    --elevation-2-oklch: var(--gray-775-oklch);
-    --elevation-2: oklch(var(--elevation-2-oklch));
+    --emerald-200-oklch: 100% 0.3 160;
+    --emerald-200: oklch(var(--emerald-200-oklch));
 
-    --depression-1-oklch: var(--gray-925-oklch);
-    --depression-1: oklch(var(--depression-1-oklch));
-
-    --depression-2-oklch: var(--gray-950-oklch);
-    --depression-2: oklch(var(--depression-1-oklch));
+    --emerald-600-oklch: 70% 0.4 180;
+    --emerald-200: oklch(var(--emerald-200-oklch));
   }
 }

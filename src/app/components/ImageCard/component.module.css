@@ -40,6 +40,10 @@
   border-radius: var(--brad);
   overflow: hidden;
 
+  :global(.figma-light) & {
+    background-color: var(--depression-1);
+  }
+
   img {
     position: absolute;
     width: 100%;
@@ -50,7 +54,7 @@
     opacity: 0;
     transition: opacity 200ms ease-out;
 
-    &[data-loaded="true"] {
+    &[data-loaded='true'] {
       opacity: 1;
     }
   }

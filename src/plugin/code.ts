@@ -12,6 +12,7 @@ import type {
 figma.showUI(__html__, {
   height: 680,
   width: 520,
+  themeColors: true,
 });
 
 // MESSAGE HANDLER

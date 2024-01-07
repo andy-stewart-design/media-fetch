@@ -9,6 +9,7 @@
 }
 
 .item {
+  position: relative;
   flex-shrink: 0;
   height: var(--input-height);
   width: var(--input-height);
@@ -19,6 +20,16 @@
   &:has(input:checked) {
     border: var(--border-background-2);
     outline: var(--border-active);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -0.5px;
+    border: var(--border-light-2);
+    border-radius: var(--input-height);
+    z-index: var(--z-1);
+    pointer-events: none;
   }
 }
 

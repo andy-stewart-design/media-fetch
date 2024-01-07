@@ -1,4 +1,3 @@
-// TODO: light mode
 // TODO: Error Handling
 // TODO: figure out strategy for loading screen
 // POST LAUNCH

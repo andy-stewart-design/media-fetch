@@ -1,5 +1,5 @@
 @layer base {
-  :root {
+  html {
     --input-height: 3rem;
     --input-background: var(--background);
     --input-padding-inline: 12px;
@@ -20,5 +20,9 @@
     --input-outline-size: 1px;
     --input-outline-style: solid;
     --input-outline-offset: 0px;
+
+    &.figma-light {
+      --input-background: var(--elevation-1);
+    }
   }
 }

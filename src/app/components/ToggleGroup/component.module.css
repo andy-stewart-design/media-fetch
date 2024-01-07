@@ -13,30 +13,46 @@
       width: 48px;
       height: 48px;
       padding: 8px;
-      background-color: var(--background);
+      color: oklch(var(--foreground-oklch) / 50%);
+      background-color: var(--input-background);
       background-clip: padding-box;
       border: var(--border-light);
       border-radius: 8px;
       overflow: hidden;
 
+      /* transition: color 150ms var(--ease-out-3), background 150ms var(--ease-out-3),
+        border 150ms var(--ease-out-3); */
+
       &:hover {
         background-color: var(--depression-1);
+        color: oklch(var(--foreground-oklch) / 100%);
+
+        :global(.figma-light) & {
+          background-color: var(--background);
+        }
       }
 
-      &:has(input[type="checkbox"]:checked) {
+      &:has(input[type='checkbox']:checked) {
         background: radial-gradient(
           oklch(var(--color-accent-oklch) / 10%),
           oklch(var(--color-accent-oklch) / 30%)
         );
-        border: 1px solid oklch(var(--color-accent-oklch) / 25%);
+        border: 1px solid oklch(var(--color-accent-oklch) / 50%);
         color: var(--color-accent);
+
+        :global(.figma-light) & {
+          background: radial-gradient(
+            oklch(var(--color-accent-oklch) / 0%),
+            oklch(var(--color-accent-oklch) / 30%)
+          );
+        }
       }
 
-      &:has(input[type="checkbox"]:checked):hover {
+      &:has(input[type='checkbox']:checked):hover {
         background: oklch(var(--color-accent-oklch) / 15%);
       }
 
-      &:has(input[type="checkbox"]:focus-visible) {
+      &:has(input[type='checkbox']:focus-visible) {
         border: var(--border-active);
       }
 
@@ -48,7 +64,7 @@
         pointer-events: none;
       }
 
-      & > :is(input[type="checkbox"], label) {
+      & > :is(input[type='checkbox'], label) {
         position: absolute;
         top: 0;
         left: 0;
