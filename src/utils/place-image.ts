@@ -1,7 +1,5 @@
 import { handleError } from './handle-error';
 
-const IMAGE_KIT_SECRET_KEY = 'oxo8xdmts';
-
 export async function placeImage(
   src: string,
   width: number,
@@ -17,13 +15,19 @@ export async function placeImage(
     resizedWidth = width * (resizedHeight / height);
   }
 
-  const imageKitURL = `https://ik.imagekit.io/${IMAGE_KIT_SECRET_KEY}/tr:w-${resizedWidth},h-${resizedHeight},q-${quality}/${src}`;
-
   try {
-    const imgData = await figma.createImageAsync(imageKitURL);
-    console.log({ imgData });
+    const res = await fetch(
+      `https://media-fetch-hono.vercel.app/generate?src=${src}&w=${resizedWidth}&h=${resizedHeight}&q=${quality}`
+    );
 
-    if (!imgData) throw new Error('There was an error processing this image');
+    if (!res.ok) throw new Error('There was an error fetching this image');
+
+    const data = await res.json();
+    const imgArray = figma.base64Decode(data);
+    const imgData = figma.createImage(imgArray);
+    console.log(imgData);
+
+    if (!imgData) throw new Error(`There was an error thrown by figma's createImage function.`);
 
     const { x, y } = figma.viewport.center;
 
