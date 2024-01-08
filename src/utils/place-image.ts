@@ -1,6 +1,6 @@
-import { handleError } from "./handle-error";
+import { handleError } from './handle-error';
 
-const IMAGE_KIT_SECRET_KEY = "oxo8xdmts";
+const IMAGE_KIT_SECRET_KEY = 'oxo8xdmts';
 
 export async function placeImage(
   src: string,
@@ -21,8 +21,9 @@ export async function placeImage(
 
   try {
     const imgData = await figma.createImageAsync(imageKitURL);
+    console.log({ imgData });
 
-    if (!imgData) throw new Error("There was an error processing this image");
+    if (!imgData) throw new Error('There was an error processing this image');
 
     const { x, y } = figma.viewport.center;
 
@@ -33,9 +34,9 @@ export async function placeImage(
 
     rect.fills = [
       {
-        type: "IMAGE",
+        type: 'IMAGE',
         imageHash: imgData.hash,
-        scaleMode: "FILL",
+        scaleMode: 'FILL',
       },
     ];
 

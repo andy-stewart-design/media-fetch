@@ -37,10 +37,17 @@ export interface ImageResultsAdditional {
   payload: ImageDataPayload;
 }
 
-export interface PluginErrorMessage {
-  type: 'ERROR';
+export interface QueryErrorMessage {
+  type: 'QUERY_ERROR';
   payload: ErrorPayload;
 }
+
+export interface PlaceImageErrorMessage {
+  type: 'PLACE_IMAGE_ERROR';
+  payload: ErrorPayload;
+}
+
+export type PluginErrorMessage = QueryErrorMessage | PlaceImageErrorMessage;
 
 export interface PluginPostMessage {
   pluginMessage: ImageResultsInitial | ImageResultsAdditional | PluginErrorMessage;

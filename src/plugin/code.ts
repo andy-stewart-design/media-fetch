@@ -6,6 +6,8 @@ import type {
   UIPostMessage,
   ImageResultsInitial,
   ImageResultsAdditional,
+  QueryErrorMessage,
+  PlaceImageErrorMessage,
 } from '@src/types/post-messages';
 
 // BOILERPLATE CODE TO DISPLAY THE UI WHEN THE PLUGIN IS RUN
@@ -21,6 +23,7 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
     const { payload } = message;
 
     try {
+      // throw new Error('This is a test query error');
       const imageData = await searchImages(payload);
       const type = message.type === 'QUERY_INIT' ? 'RESULTS_INIT' : 'RESULTS_ADD';
 
@@ -33,14 +36,36 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
 
       figma.ui.postMessage(data);
     } catch (error) {
-      handleError(error);
+      const message = handleError(error);
+
+      const data: QueryErrorMessage = {
+        type: 'QUERY_ERROR',
+        payload: {
+          message,
+        },
+      };
+
+      figma.ui.postMessage(data);
     }
   } else if (message.type === 'PLACE_IMAGE') {
     const { src, width, height, quality, exportSize } = message.payload;
 
-    const imageResult = await placeImage(src, width, height, quality, exportSize);
+    try {
+      // throw new Error('This is a test place image error');
+      const imageResult = await placeImage(src, width, height, quality, exportSize);
+      if (imageResult.ok) figma.notify('Placed image successful');
+    } catch (error) {
+      const message = handleError(error);
 
-    if (imageResult.ok) figma.notify('Placed image successful');
+      const data: PlaceImageErrorMessage = {
+        type: 'PLACE_IMAGE_ERROR',
+        payload: {
+          message,
+        },
+      };
+
+      figma.ui.postMessage(data);
+    }
   } else if (message.type === 'ERROR') {
     figma.notify(message.payload.message, { error: true });
   }

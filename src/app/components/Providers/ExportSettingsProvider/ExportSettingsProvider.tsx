@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useState,
-  type ReactNode,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import { createContext, useState, type ReactNode, type Dispatch, type SetStateAction } from 'react';
 
 interface ExportSettings {
   quality: number;
@@ -28,18 +22,14 @@ interface ProviderProps {
   children: ReactNode;
 }
 
-export default function FilterDialogDisplayProvider({
-  children,
-}: ProviderProps) {
+export default function FilterDialogDisplayProvider({ children }: ProviderProps) {
   const [exportSettings, setExportSettings] = useState<ExportSettings>({
-    quality: 60,
-    size: 2400,
+    quality: 50,
+    size: 1600,
   });
 
   return (
-    <ExportSettingsContext.Provider
-      value={{ exportSettings, setExportSettings }}
-    >
+    <ExportSettingsContext.Provider value={{ exportSettings, setExportSettings }}>
       {children}
     </ExportSettingsContext.Provider>
   );

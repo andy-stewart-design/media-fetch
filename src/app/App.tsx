@@ -5,15 +5,17 @@
 // TODO: view image dialog
 
 import Providers from '@components/Providers';
+import Main from '@components/Main';
 import FilterDialog from '@components/FilterDialog';
+import ErrorDialog from '@components/ErrorDialog';
 import './styles/main.css';
-import Main from './Main/Main';
 
 function App() {
   return (
     <Providers>
       <Main />
       <FilterDialog />
+      <ErrorDialog />
     </Providers>
   );
 }
