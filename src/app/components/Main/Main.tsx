@@ -7,7 +7,7 @@ import QueryError from '@components/QueryError';
 import { SearchQueryContext } from '@components/Providers/SearchQueryProvider';
 import { SearchFilterContext } from '@components/Providers/SearchFilterProvider';
 import { ErrorDialogDisplayContext } from '@components/Providers/ErrorDialogDisplayProvider';
-import type { ImageData } from '@utils/image-search';
+import type { StockImageData } from '@utils/image-search';
 import type { PluginPostMessage, UIPostMessage } from '@src/types/post-messages';
 
 export default function Main() {
@@ -18,7 +18,7 @@ export default function Main() {
 
   // LOCAL STATE
   const [status, setStatus] = useState('IDLE'); // IDLE, SEARCHING, GENERATING, QUERY_ERROR
-  const [images, setImages] = useState<ImageData[] | null>(null);
+  const [images, setImages] = useState<StockImageData[] | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
   // KICK OFF INITIAL IMAGE REQUEST WHEN RELEVANT PARAMETERS CHANGE

@@ -1,11 +1,11 @@
 import ImageCard from '@components/ImageCard';
-import type { ImageData } from '@utils/image-search';
+import type { StockImageData } from '@utils/image-search';
 import type { Dispatch, SetStateAction } from 'react';
 import classes from './component.module.css';
 
 interface PropTypes {
-  images: ImageData[] | null;
-  setImages: Dispatch<SetStateAction<ImageData[] | null>>;
+  images: StockImageData[] | null;
+  setImages: Dispatch<SetStateAction<StockImageData[] | null>>;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }
 

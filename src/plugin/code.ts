@@ -43,13 +43,13 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
 
     try {
       // throw new Error('This is a test query error');
-      const imageData = await searchImages(payload);
+      const imgData = await searchImages(payload);
       const type = message.type === 'QUERY_INIT' ? 'RESULTS_INIT' : 'RESULTS_ADD';
 
       const data: ImageResultsInitial | ImageResultsAdditional = {
         type,
         payload: {
-          images: shuffle(imageData),
+          images: shuffle(imgData),
         },
       };
 

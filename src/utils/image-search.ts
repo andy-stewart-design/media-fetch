@@ -1,4 +1,4 @@
-export interface ImageData {
+export interface StockImageData {
   id: string;
   width: number;
   height: number;
@@ -43,7 +43,7 @@ export async function searchImages({
   imagesPerService,
 }: GeneralSearchProps) {
   // get fetch response promises
-  const fetchResponses: Array<Promise<ImageData[]>> = [];
+  const fetchResponses: Array<Promise<StockImageData[]>> = [];
   const restSearchArgs = { query, orientation, primaryColor, imagesPerService };
 
   if (services.includes('unsplash')) fetchResponses.push(searchUnsplash(restSearchArgs));
@@ -66,14 +66,14 @@ export async function searchUnsplash({
   orientation,
   primaryColor,
   imagesPerService,
-}: ServiceSearchProps): Promise<ImageData[]> {
+}: ServiceSearchProps): Promise<StockImageData[]> {
   const apiURL = `https://media-fetch-hono.vercel.app/unsplash?query=${query}&per_page=${imagesPerService}&orientation=${orientation}&color=${primaryColor}`;
 
   const response = await fetch(apiURL);
 
   if (!response.ok) throw new Error('Failed to fetch data from Unsplash');
 
-  const data: ImageData[] = await response.json();
+  const data: StockImageData[] = await response.json();
 
   return data;
 }
@@ -87,14 +87,14 @@ async function searchPexels({
   orientation,
   primaryColor,
   imagesPerService,
-}: ServiceSearchProps): Promise<ImageData[]> {
+}: ServiceSearchProps): Promise<StockImageData[]> {
   const apiURL = `https://media-fetch-hono.vercel.app/pexels?query=${query}&per_page=${imagesPerService}&orientation=${orientation}&color=${primaryColor}`;
 
   const response = await fetch(apiURL);
 
   if (!response.ok) throw new Error('Failed to fetch data from Unsplash');
 
-  const data: ImageData[] = await response.json();
+  const data: StockImageData[] = await response.json();
 
   return data;
 }
@@ -108,14 +108,14 @@ async function searchPixabay({
   orientation,
   primaryColor,
   imagesPerService,
-}: ServiceSearchProps): Promise<ImageData[]> {
+}: ServiceSearchProps): Promise<StockImageData[]> {
   const apiURL = `https://media-fetch-hono.vercel.app/pixabay?query=${query}&per_page=${imagesPerService}&orientation=${orientation}&color=${primaryColor}`;
 
   const response = await fetch(apiURL);
 
   if (!response.ok) throw new Error('Failed to fetch data from Unsplash');
 
-  const data: ImageData[] = await response.json();
+  const data: StockImageData[] = await response.json();
 
   return data;
 }

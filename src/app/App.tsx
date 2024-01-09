@@ -1,4 +1,3 @@
-// TODO: add ability to use quick action
 // TODO: figure out strategy for loading screen
 // TODO: Polish light mode and error state styles
 // POST LAUNCH

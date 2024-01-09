@@ -1,10 +1,10 @@
 import { useContext, type Dispatch, type SetStateAction } from 'react';
-import type { ImageData } from '@utils/image-search';
+import type { StockImageData } from '@utils/image-search';
 import classes from './component.module.css';
 import { FilterDialogDisplayContext } from '@components/Providers/FilterDialogDisplayProvider';
 
 interface PropTypes {
-  setImages: Dispatch<SetStateAction<ImageData[] | null>>;
+  setImages: Dispatch<SetStateAction<StockImageData[] | null>>;
   numImages: number;
 }
 

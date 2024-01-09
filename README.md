@@ -12,11 +12,11 @@ The types of `Plugin Messages` include:
 - Initial Results (`ImageResultsInitial`), which includes:
   - type: `RESULTS_INIT`
   - payload:
-    - images: an Array or ImageData
+    - images: an Array or StockImageData
 - Additional Results (`ImageResultsAdditional`), which includes:
   - type: `RESULTS_ADD`
   - payload:
-    - images: an Array or ImageData
+    - images: an Array or StockImageData
 - Error (`PluginErrorMessage`), which includes:
   - type: `ERROR`
   - payload:

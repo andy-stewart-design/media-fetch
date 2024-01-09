@@ -1,8 +1,8 @@
-import type { ImageData, ImageService } from '@utils/image-search';
+import type { StockImageData, ImageService } from '@utils/image-search';
 
 // PAYLOAD TYPES
-interface ImageDataPayload {
-  images: ImageData[];
+interface StockImageDataPayload {
+  images: StockImageData[];
 }
 
 interface ErrorPayload {
@@ -32,12 +32,12 @@ interface PlaceImagePayload {
 // PLUGIN MESSAGES
 export interface ImageResultsInitial {
   type: 'RESULTS_INIT';
-  payload: ImageDataPayload;
+  payload: StockImageDataPayload;
 }
 
 export interface ImageResultsAdditional {
   type: 'RESULTS_ADD';
-  payload: ImageDataPayload;
+  payload: StockImageDataPayload;
 }
 
 export interface QuickAction {
