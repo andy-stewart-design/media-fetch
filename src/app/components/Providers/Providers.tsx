@@ -4,6 +4,7 @@ import SearchFilterProvider from './SearchFilterProvider';
 import FilterDialogDisplayProvider from './FilterDialogDisplayProvider';
 import ExportSettingsProvider from './ExportSettingsProvider';
 import ErrorDialogDisplayProvider from './ErrorDialogDisplayProvider';
+import AppStatusProvider from './AppStatusProvider/AppStatusProvider';
 
 interface PropTypes {
   children: ReactNode;
@@ -16,7 +17,9 @@ export default function Providers({ children }: PropTypes) {
         <SearchFilterProvider>
           <ExportSettingsProvider>
             <FilterDialogDisplayProvider>
-              <ErrorDialogDisplayProvider>{children}</ErrorDialogDisplayProvider>
+              <ErrorDialogDisplayProvider>
+                <AppStatusProvider>{children}</AppStatusProvider>
+              </ErrorDialogDisplayProvider>
             </FilterDialogDisplayProvider>
           </ExportSettingsProvider>
         </SearchFilterProvider>

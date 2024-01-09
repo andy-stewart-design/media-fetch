@@ -1,6 +1,8 @@
 import { useContext, type Dispatch, type SetStateAction } from 'react';
 import ImageCard from '@components/ImageCard';
+import { LoadingSpinner } from '@components/Loading';
 import { SearchQueryContext } from '@components/Providers/SearchQueryProvider';
+import { AppStatusContext } from '@components/Providers/AppStatusProvider';
 import type { StockImageData } from '@utils/image-search';
 import classes from './component.module.css';
 
@@ -10,6 +12,7 @@ interface PropTypes {
 }
 
 export default function ImageGallery({ images, setImages }: PropTypes) {
+  const { appStatus } = useContext(AppStatusContext);
   const { setSearchQuery } = useContext(SearchQueryContext);
 
   function clearResults() {
@@ -28,7 +31,9 @@ export default function ImageGallery({ images, setImages }: PropTypes) {
             <ImageCard key={image.id} image={image} />
           ))}
           <div className={classes.loadMore}>
-            <button onClick={loadMore}>Load More</button>
+            <button onClick={loadMore}>
+              {appStatus === 'SEARCHING' ? <LoadingSpinner size={32} /> : <>Load More</>}
+            </button>
           </div>
         </div>
       ) : images && images.length <= 0 ? (

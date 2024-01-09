@@ -20,7 +20,7 @@ interface ProviderProps {
   children: ReactNode;
 }
 
-export default function FilterDialogDisplayProvider({ children }: ProviderProps) {
+export default function ErrorDialogDisplayProvider({ children }: ProviderProps) {
   const [showDialog, setShowDialog] = useDialog('closed');
   const [message, setMessage] = useState('');
 

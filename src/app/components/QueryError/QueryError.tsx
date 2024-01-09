@@ -1,9 +1,10 @@
 import { SearchQueryContext } from '@components/Providers/SearchQueryProvider';
 import { useContext } from 'react';
 import classes from './component.module.css';
+import { AppStatus } from '@components/Providers/AppStatusProvider/AppStatusProvider';
 
 interface PropTypes {
-  setStatus: React.Dispatch<React.SetStateAction<string>>;
+  setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
 }
 
 export default function QueryError({ setStatus }: PropTypes) {

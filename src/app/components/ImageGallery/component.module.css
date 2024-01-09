@@ -14,11 +14,14 @@
   grid-column: 1 / -1;
 
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    height: 48px;
     font-weight: var(--font-medium);
     border: var(--border-foreground);
     padding-inline: var(--space-lg);
-    padding-block: var(--space-md);
     transition: color 150ms var(--ease-out-3), border 150ms var(--ease-out-3);
 
     &:hover {
