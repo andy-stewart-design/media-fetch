@@ -6,6 +6,7 @@ interface SearchQuery {
   sources: Array<ImageService>;
   imagesPerService: number;
   syncHeader: boolean;
+  page: number;
 }
 
 interface QueryContext {
@@ -19,6 +20,7 @@ export const SearchQueryContext = createContext<QueryContext>({
     sources: [],
     imagesPerService: 0,
     syncHeader: false,
+    page: 1,
   },
   setSearchQuery: () => {},
 });
@@ -33,6 +35,7 @@ export default function FilterDialogDisplayProvider({ children }: ProviderProps)
     sources: ['unsplash', 'pexels', 'pixabay'],
     imagesPerService: 10,
     syncHeader: false,
+    page: 1,
   });
 
   return (

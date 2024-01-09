@@ -16,7 +16,7 @@ export default function Header() {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const imagesPerService = 30 / searchQuery.sources.length;
-    setSearchQuery({ value, sources, imagesPerService, syncHeader: false });
+    setSearchQuery({ value, sources, imagesPerService, syncHeader: false, page: 1 });
   }
 
   useEffect(() => {

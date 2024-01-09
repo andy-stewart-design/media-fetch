@@ -1,17 +1,23 @@
+import { useContext, type Dispatch, type SetStateAction } from 'react';
 import ImageCard from '@components/ImageCard';
+import { SearchQueryContext } from '@components/Providers/SearchQueryProvider';
 import type { StockImageData } from '@utils/image-search';
-import type { Dispatch, SetStateAction } from 'react';
 import classes from './component.module.css';
 
 interface PropTypes {
   images: StockImageData[] | null;
   setImages: Dispatch<SetStateAction<StockImageData[] | null>>;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
-export default function ImageGallery({ images, setImages, setCurrentPage }: PropTypes) {
+export default function ImageGallery({ images, setImages }: PropTypes) {
+  const { setSearchQuery } = useContext(SearchQueryContext);
+
   function clearResults() {
     setImages(null);
+  }
+
+  function loadMore() {
+    setSearchQuery((current) => ({ ...current, page: current.page + 1 }));
   }
 
   return (
@@ -22,7 +28,7 @@ export default function ImageGallery({ images, setImages, setCurrentPage }: Prop
             <ImageCard key={image.id} image={image} />
           ))}
           <div className={classes.loadMore}>
-            <button onClick={() => setCurrentPage((p) => p + 1)}>Load More</button>
+            <button onClick={loadMore}>Load More</button>
           </div>
         </div>
       ) : images && images.length <= 0 ? (

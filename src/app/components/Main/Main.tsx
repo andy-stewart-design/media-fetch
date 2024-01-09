@@ -19,24 +19,28 @@ export default function Main() {
   // LOCAL STATE
   const [status, setStatus] = useState('IDLE'); // IDLE, SEARCHING, GENERATING, QUERY_ERROR
   const [images, setImages] = useState<StockImageData[] | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
 
   // KICK OFF INITIAL IMAGE REQUEST WHEN RELEVANT PARAMETERS CHANGE
   useEffect(() => {
     if (searchQuery.value !== '') {
-      const newCurrentPage = 1;
-      setCurrentPage(newCurrentPage);
-      setStatus('SEARCHING');
-      setImages([]);
+      console.log(searchQuery);
+
+      const initialRequest = searchQuery.page === 1;
+      if (initialRequest) {
+        setStatus('SEARCHING');
+        setImages([]);
+      }
+      const type = initialRequest ? 'QUERY_INIT' : 'QUERY_ADD';
 
       const pluginMessage: UIPostMessage = {
-        type: 'QUERY_INIT',
+        type,
         payload: {
           query: searchQuery.value,
           services: searchQuery.sources,
           orientation: searchFilters.orientation,
           primaryColor: searchFilters.primaryColor,
-          page: newCurrentPage,
+          page: searchQuery.page,
           imagesPerService: searchQuery.imagesPerService,
         },
       };
@@ -44,25 +48,6 @@ export default function Main() {
       parent.postMessage({ pluginMessage }, '*');
     }
   }, [searchQuery, searchFilters]);
-
-  // HANDLE ADDITIONAL IMAGE REQUESTS WHEN PAGE NUMBER CHANGES
-  useEffect(() => {
-    if (currentPage <= 1) return;
-
-    const pluginMessage: UIPostMessage = {
-      type: 'QUERY_ADD',
-      payload: {
-        query: searchQuery.value,
-        services: searchQuery.sources,
-        orientation: searchFilters.orientation,
-        primaryColor: searchFilters.primaryColor,
-        page: currentPage,
-        imagesPerService: searchQuery.imagesPerService,
-      },
-    };
-
-    parent.postMessage({ pluginMessage }, '*');
-  }, [currentPage]);
 
   // HANDLE ANY MESSAGES RECEIVED FROM THE PLUGIN
   useEffect(() => {
@@ -104,7 +89,7 @@ export default function Main() {
       ) : status === 'QUERY_ERROR' ? (
         <QueryError setStatus={setStatus} />
       ) : (
-        <ImageGallery images={images} setImages={setImages} setCurrentPage={setCurrentPage} />
+        <ImageGallery images={images} setImages={setImages} />
       )}
       <Footer setImages={setImages} numImages={images?.length ?? 0} />
     </main>
