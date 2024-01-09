@@ -66,6 +66,8 @@ export default function Main() {
       } else if (type === 'QUERY_ERROR') {
         setImages(null);
         setAppStatus(type);
+      } else if (type === 'PLACE_IMAGE_SUCCESS') {
+        setAppStatus('IDLE');
       } else if (type === 'PLACE_IMAGE_ERROR') {
         errorDialog.setShowDialog();
         errorDialog.setMessage(payload.message);
@@ -84,7 +86,7 @@ export default function Main() {
     <main>
       <Header />
       {!images && appStatus === 'SEARCHING' ? (
-        <Loading />
+        <Loading message="Finding images" />
       ) : appStatus === 'QUERY_ERROR' ? (
         // TODO: remove need to pass setStatus to this component
         <QueryError setStatus={setAppStatus} />
@@ -92,6 +94,7 @@ export default function Main() {
         <ImageGallery images={images} setImages={setImages} />
       )}
       <Footer setImages={setImages} numImages={images?.length ?? 0} />
+      {appStatus === 'GENERATING' && <Loading display="fullscreen" message="Placing image" />}
     </main>
   );
 }

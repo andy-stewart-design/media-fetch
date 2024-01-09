@@ -1,11 +1,16 @@
 import LoadingSpinner from './LoadingSpinner';
 import classes from './component.module.css';
 
-export default function Loading() {
+interface PropTypes {
+  display?: 'fullscreen' | 'fill';
+  message?: string | null;
+}
+
+export default function Loading({ display = 'fill', message = null }: PropTypes) {
   return (
-    <div className={classes['loading']}>
+    <div className={`${classes['loading']} ${classes[display]}`}>
       <LoadingSpinner />
-      <p>Finding images</p>
+      {message && <p>{message}</p>}
     </div>
   );
 }

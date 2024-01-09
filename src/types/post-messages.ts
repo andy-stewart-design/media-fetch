@@ -5,7 +5,7 @@ interface StockImageDataPayload {
   images: StockImageData[];
 }
 
-interface ErrorPayload {
+interface MessagePayload {
   message: string;
 }
 
@@ -45,20 +45,30 @@ export interface QuickAction {
   payload: QuickActionPayload;
 }
 
-export interface QueryErrorMessage {
+export interface QueryError {
   type: 'QUERY_ERROR';
-  payload: ErrorPayload;
+  payload: MessagePayload;
 }
 
-export interface PlaceImageErrorMessage {
+export interface PlaceImageSuccess {
+  type: 'PLACE_IMAGE_SUCCESS';
+  payload: MessagePayload;
+}
+
+export interface PlaceImageError {
   type: 'PLACE_IMAGE_ERROR';
-  payload: ErrorPayload;
+  payload: MessagePayload;
 }
 
-export type PluginErrorMessage = QueryErrorMessage | PlaceImageErrorMessage;
+export type PluginErrorMessage = QueryError | PlaceImageError;
 
 export interface PluginPostMessage {
-  pluginMessage: ImageResultsInitial | ImageResultsAdditional | PluginErrorMessage | QuickAction;
+  pluginMessage:
+    | ImageResultsInitial
+    | ImageResultsAdditional
+    | PlaceImageSuccess
+    | PluginErrorMessage
+    | QuickAction;
 }
 
 // UI MESSAGES
@@ -79,7 +89,7 @@ export interface PlaceImageRequest {
 
 export interface UIErrorMessage {
   type: 'ERROR';
-  payload: ErrorPayload;
+  payload: MessagePayload;
 }
 
 export type UIPostMessage =

@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import Unsplash from '@components/logos/Unsplash';
 import Pexels from '@components/logos/Pexels';
 import Pixabay from '@components/logos/Pixabay';
+import { AppStatusContext } from '@components/Providers/AppStatusProvider';
 import { ExportSettingsContext } from '@components/Providers/ExportSettingsProvider';
 import type { StockImageData } from '@src/utils/image-search';
 import classes from './component.module.css';
@@ -23,6 +24,7 @@ export default function ImageCard({ image }: PropTypes) {
     photographer_link,
   } = image;
 
+  const { setAppStatus } = useContext(AppStatusContext);
   const { exportSettings } = useContext(ExportSettingsContext);
 
   const Icon =
@@ -44,6 +46,7 @@ export default function ImageCard({ image }: PropTypes) {
       },
     };
 
+    setAppStatus('GENERATING');
     parent.postMessage({ pluginMessage }, '*');
   }
 

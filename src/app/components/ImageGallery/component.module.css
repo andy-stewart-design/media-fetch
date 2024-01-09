@@ -6,7 +6,8 @@
   padding-block-end: 24px;
 
   opacity: 0;
-  animation: gallery-fade-in forwards 400ms ease-out;
+  animation: gallery-fade-in forwards 400ms;
+  animation-timing-function: var(--ease-out-3);
   animation-delay: 200ms;
 }
 

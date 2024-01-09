@@ -6,9 +6,10 @@ import type {
   UIPostMessage,
   ImageResultsInitial,
   ImageResultsAdditional,
-  QueryErrorMessage,
-  PlaceImageErrorMessage,
+  QueryError,
+  PlaceImageError,
   QuickAction,
+  PlaceImageSuccess,
 } from '@src/types/post-messages';
 
 // const uiOptions = { height: 680, width: 520, themeColors: true };
@@ -57,7 +58,7 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
     } catch (error) {
       const message = handleError(error);
 
-      const data: QueryErrorMessage = {
+      const data: QueryError = {
         type: 'QUERY_ERROR',
         payload: {
           message,
@@ -72,11 +73,23 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
     try {
       // throw new Error('This is a test place image error');
       const imageResult = await placeImage(src, width, height, quality, exportSize);
-      if (imageResult.ok) figma.notify('Placed image successful');
+      const message = 'Image generated successfully';
+
+      const data: PlaceImageSuccess = {
+        type: 'PLACE_IMAGE_SUCCESS',
+        payload: {
+          message,
+        },
+      };
+
+      if (imageResult.ok) {
+        figma.ui.postMessage(data);
+        figma.notify(message);
+      }
     } catch (error) {
       const message = handleError(error);
 
-      const data: PlaceImageErrorMessage = {
+      const data: PlaceImageError = {
         type: 'PLACE_IMAGE_ERROR',
         payload: {
           message,

@@ -1,6 +1,4 @@
 .loading {
-  flex-grow: 1;
-
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
@@ -11,10 +9,8 @@
 
   padding-bottom: var(--space-xl);
 
-  svg {
-    animation: loading-spinner 1000ms forwards infinite;
-    animation-timing-function: var(--ease-in-out-4);
-  }
+  animation: loading-fade-in forwards 400ms;
+  animation-timing-function: var(--ease-out-3);
 
   p {
     font-size: 0.875rem;
@@ -23,8 +19,19 @@
   }
 }
 
-@keyframes loading-spinner {
-  to {
-    rotate: 360deg;
+.fill {
+  flex-grow: 1;
+}
+
+.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-4);
+  background: oklch(var(--black-oklch) / 70%);
+}
+
+@keyframes loading-fade-in {
+  from {
+    opacity: 0;
   }
 }
