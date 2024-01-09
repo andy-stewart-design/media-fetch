@@ -1,0 +1,30 @@
+.loading {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  justify-content: center;
+  align-items: center;
+
+  color: var(--color-accent);
+
+  padding-bottom: var(--space-xl);
+
+  svg {
+    animation: loading-spinner 1000ms forwards infinite;
+    animation-timing-function: var(--ease-in-out-4);
+  }
+
+  p {
+    font-size: 0.875rem;
+    font-weight: var(--font-medium);
+    color: oklch(var(--foreground-oklch) / 60%);
+  }
+}
+
+@keyframes loading-spinner {
+  to {
+    rotate: 360deg;
+  }
+}

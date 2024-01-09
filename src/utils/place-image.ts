@@ -23,9 +23,7 @@ export async function placeImage(
     if (!res.ok) throw new Error('There was an error fetching this image');
 
     const data = await res.json();
-    const imgArray = figma.base64Decode(data);
-    const imgData = figma.createImage(imgArray);
-    console.log(imgData);
+    const imgData = figma.createImage(figma.base64Decode(data));
 
     if (!imgData) throw new Error(`There was an error thrown by figma's createImage function.`);
 

@@ -8,13 +8,32 @@ import type {
   ImageResultsAdditional,
   QueryErrorMessage,
   PlaceImageErrorMessage,
+  QuickAction,
 } from '@src/types/post-messages';
 
+// const uiOptions = { height: 680, width: 520, themeColors: true };
+
 // BOILERPLATE CODE TO DISPLAY THE UI WHEN THE PLUGIN IS RUN
-figma.showUI(__html__, {
-  height: 680,
-  width: 520,
-  themeColors: true,
+figma.showUI(__html__, { height: 680, width: 520, themeColors: true, visible: false });
+
+figma.parameters.on('input', async ({ result }) => {
+  result.setLoadingMessage('');
+});
+
+figma.on('run', (event) => {
+  if (event.parameters) {
+    const data: QuickAction = {
+      type: 'QUICK_ACTION',
+      payload: {
+        query: event.parameters['query'],
+      },
+    };
+
+    figma.ui.postMessage(data);
+    figma.ui.show();
+  } else {
+    figma.ui.show();
+  }
 });
 
 // MESSAGE HANDLER

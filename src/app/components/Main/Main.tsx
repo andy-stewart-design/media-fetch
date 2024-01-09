@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import ImageGallery from '@components/ImageGallery';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
+import Loading from '@components/Loading';
 import QueryError from '@components/QueryError';
 import { SearchQueryContext } from '@components/Providers/SearchQueryProvider';
 import { SearchFilterContext } from '@components/Providers/SearchFilterProvider';
@@ -11,7 +12,7 @@ import type { PluginPostMessage, UIPostMessage } from '@src/types/post-messages'
 
 export default function Main() {
   // GLOBAL STATE
-  const { searchQuery } = useContext(SearchQueryContext);
+  const { searchQuery, setSearchQuery } = useContext(SearchQueryContext);
   const { searchFilters } = useContext(SearchFilterContext);
   const errorDialog = useContext(ErrorDialogDisplayContext);
 
@@ -76,6 +77,8 @@ export default function Main() {
           if (!images) return null;
           else return [...images, ...payload.images];
         });
+      } else if (type === 'QUICK_ACTION') {
+        setSearchQuery((current) => ({ ...current, value: payload.query, syncHeader: true }));
       } else if (type === 'QUERY_ERROR') {
         setImages(null);
         setStatus(type);
@@ -97,7 +100,7 @@ export default function Main() {
     <main>
       <Header />
       {status === 'SEARCHING' ? (
-        <div className="flex-grow" />
+        <Loading />
       ) : status === 'QUERY_ERROR' ? (
         <QueryError setStatus={setStatus} />
       ) : (

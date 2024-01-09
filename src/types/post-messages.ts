@@ -9,8 +9,11 @@ interface ErrorPayload {
   message: string;
 }
 
-interface QueryPayload {
+interface QuickActionPayload {
   query: string;
+}
+
+interface QueryPayload extends QuickActionPayload {
   services: Array<ImageService>;
   orientation: string;
   primaryColor: string;
@@ -37,6 +40,11 @@ export interface ImageResultsAdditional {
   payload: ImageDataPayload;
 }
 
+export interface QuickAction {
+  type: 'QUICK_ACTION';
+  payload: QuickActionPayload;
+}
+
 export interface QueryErrorMessage {
   type: 'QUERY_ERROR';
   payload: ErrorPayload;
@@ -50,7 +58,7 @@ export interface PlaceImageErrorMessage {
 export type PluginErrorMessage = QueryErrorMessage | PlaceImageErrorMessage;
 
 export interface PluginPostMessage {
-  pluginMessage: ImageResultsInitial | ImageResultsAdditional | PluginErrorMessage;
+  pluginMessage: ImageResultsInitial | ImageResultsAdditional | PluginErrorMessage | QuickAction;
 }
 
 // UI MESSAGES

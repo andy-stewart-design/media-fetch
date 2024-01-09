@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import SearchBar from '@components/SearchBar';
 import ToggleGroup from '@components/ToggleGroup';
 import { IMAGE_SOURCES } from '@src/app/constants/image-sources';
@@ -16,8 +16,14 @@ export default function Header() {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const imagesPerService = 30 / searchQuery.sources.length;
-    setSearchQuery({ value, sources, imagesPerService });
+    setSearchQuery({ value, sources, imagesPerService, syncHeader: false });
   }
+
+  useEffect(() => {
+    if (!searchQuery.syncHeader) return;
+
+    setValue(searchQuery.value);
+  }, [searchQuery]);
 
   return (
     <header className={classes['header']}>
