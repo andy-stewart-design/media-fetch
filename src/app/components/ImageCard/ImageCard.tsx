@@ -46,8 +46,6 @@ export default function ImageCard({ image }: PropTypes) {
       },
     };
 
-    console.log(pluginMessage.payload);
-
     setAppStatus('GENERATING');
     parent.postMessage({ pluginMessage }, '*');
   }

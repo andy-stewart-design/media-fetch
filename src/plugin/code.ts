@@ -84,7 +84,7 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
       };
 
       figma.ui.postMessage(data);
-      figma.notify(message);
+      figma.notify('✅ ' + message);
     } catch (error) {
       const message = handleError(error);
 

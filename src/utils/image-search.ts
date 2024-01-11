@@ -110,7 +110,6 @@ async function searchPixabay({
   imagesPerService,
 }: ServiceSearchProps): Promise<StockImageData[]> {
   const apiURL = `https://media-fetch-hono.vercel.app/pixabay?query=${query}&per_page=${imagesPerService}&orientation=${orientation}&color=${primaryColor}`;
-  console.log(apiURL);
 
   const response = await fetch(apiURL);
 

@@ -1,10 +1,10 @@
-// TODO: Make sure Unsplash and Pexels are working
-// TODO: consider replacing Pixabay
 // TODO: Polish light mode and error state styles
+// TODO: Clean up code
 // POST LAUNCH
 // TODO: remove need to pass setStatus to this component
 // TODO: tooltips
 // TODO: view image dialog
+// TODO: Consider adding Openverse as a service: https://api.openverse.engineering/v1/
 
 import Providers from '@components/Providers';
 import Main from '@components/Main';
