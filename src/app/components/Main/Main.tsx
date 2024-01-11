@@ -88,7 +88,6 @@ export default function Main() {
       {!images && appStatus === 'SEARCHING' ? (
         <Loading message="Finding images" />
       ) : appStatus === 'QUERY_ERROR' ? (
-        // TODO: remove need to pass setStatus to this component
         <QueryError setStatus={setAppStatus} />
       ) : (
         <ImageGallery images={images} setImages={setImages} />

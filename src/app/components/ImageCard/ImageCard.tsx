@@ -46,6 +46,8 @@ export default function ImageCard({ image }: PropTypes) {
       },
     };
 
+    console.log(pluginMessage.payload);
+
     setAppStatus('GENERATING');
     parent.postMessage({ pluginMessage }, '*');
   }
@@ -58,9 +60,9 @@ export default function ImageCard({ image }: PropTypes) {
           <button onClick={handlePlaceImage}>
             <span>Place on Canvas</span>
           </button>
-          <button>
+          {/* <button>
             <span>View Larger</span>
-          </button>
+          </button> */}
         </div>
       </div>
       <p>

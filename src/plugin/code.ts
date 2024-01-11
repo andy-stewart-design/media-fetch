@@ -72,7 +72,8 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
 
     try {
       // throw new Error('This is a test place image error');
-      const imageResult = await placeImage(src, width, height, quality, exportSize);
+      await placeImage(src, width, height, quality, exportSize);
+
       const message = 'Image generated successfully';
 
       const data: PlaceImageSuccess = {
@@ -82,10 +83,8 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
         },
       };
 
-      if (imageResult.ok) {
-        figma.ui.postMessage(data);
-        figma.notify(message);
-      }
+      figma.ui.postMessage(data);
+      figma.notify(message);
     } catch (error) {
       const message = handleError(error);
 

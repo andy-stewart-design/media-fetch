@@ -1,6 +1,8 @@
-// TODO: figure out strategy for loading screen
+// TODO: Make sure Unsplash and Pexels are working
+// TODO: consider replacing Pixabay
 // TODO: Polish light mode and error state styles
 // POST LAUNCH
+// TODO: remove need to pass setStatus to this component
 // TODO: tooltips
 // TODO: view image dialog
 
