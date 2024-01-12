@@ -4,23 +4,83 @@
 
 .item {
   flex: 1 0 0;
+
+  & > input {
+    outline: none;
+  }
 }
 
 .label {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: var(--input-height);
 
+  font-weight: var(--font-medium);
+  font-size: 0.875rem;
   line-height: 0.95;
   text-align: center;
   color: oklch(var(--foreground-oklch) / 60%);
 
+  background-color: var(--elevation-1);
   border: var(--input-border-default);
   border-right: var(--input-border-transparent);
+  background-clip: padding-box;
+  overflow: hidden;
 
   transition: color 150ms var(--ease-out-3), border 150ms var(--ease-out-3),
     background 150ms var(--ease-out-3);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    translate: 0 -50%;
+    aspect-ratio: 1 /1;
+    background: radial-gradient(
+      oklch(var(--color-accent-oklch) / 10%) 20%,
+      oklch(var(--color-accent-oklch) / 30%)
+    );
+    opacity: 0;
+    transition: opacity 150ms var(--ease-out-3);
+  }
+
+  &:hover {
+    color: var(--foreground);
+    background: var(--input-background);
+    background-clip: padding-box;
+
+    :global(.figma-light) & {
+      background: var(--depression-1);
+    }
+  }
+
+  input:checked + & {
+    color: var(--emerald-600);
+    background: var(--elevation-1);
+    border: 1px solid oklch(var(--color-accent-oklch) / 50%);
+
+    &:before {
+      opacity: 1;
+    }
+
+    &:hover {
+      background: var(--emerald-700);
+      border: var(--border-active);
+
+      :global(.figma-light) & {
+        background: var(--emerald-50);
+        border: var(--border-active);
+      }
+    }
+  }
+
+  input:focus-visible + & {
+    border: var(--border-active);
+  }
 
   span:first-of-type & {
     border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
@@ -29,11 +89,5 @@
   span:last-of-type & {
     border-right: var(--input-border-default);
     border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
-  }
-
-  input:checked + & {
-    background: oklch(var(--color-accent-oklch) / 20%);
-    border: var(--input-border-focused);
-    color: var(--foreground);
   }
 }

@@ -1,7 +1,8 @@
-// TODO: Polish light mode and error state styles
+// TODO: improve 'no results' screen
 // TODO: Clean up code
 // POST LAUNCH
-// TODO: remove need to pass setStatus to this component
+// TODO: Polish error state styles
+// TODO: remove need to pass setStatus to Query Error component
 // TODO: tooltips
 // TODO: view image dialog
 // TODO: Consider adding Openverse as a service: https://api.openverse.engineering/v1/

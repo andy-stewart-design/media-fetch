@@ -35,10 +35,37 @@
     --gray-50-oklch: 97.5% 0.005 var(--neutral-hue);
     --gray-50: oklch(var(--gray-50-oklch));
 
-    --emerald-200-oklch: 100% 0.3 160;
+    --emerald-50-oklch: 95% 0.05 180;
+    --emerald-50: oklch(var(--emerald-50-oklch));
+
+    --emerald-100-oklch: 90% 0.17 180;
+    --emerald-100: oklch(var(--emerald-100-oklch));
+
+    --emerald-200-oklch: 80% 0.19 180;
     --emerald-200: oklch(var(--emerald-200-oklch));
 
-    --emerald-600-oklch: 70% 0.4 180;
-    --emerald-200: oklch(var(--emerald-200-oklch));
+    --emerald-300-oklch: 69% 0.17 180;
+    --emerald-300: oklch(var(--emerald-300-oklch));
+
+    --emerald-400-oklch: 62% 0.18 180;
+    --emerald-400: oklch(var(--emerald-400-oklch));
+
+    --emerald-500-oklch: 55% 0.17 180;
+    --emerald-500: oklch(var(--emerald-500-oklch));
+
+    --emerald-600-oklch: 45% 0.12 180;
+    --emerald-600: oklch(var(--emerald-600-oklch));
+
+    --emerald-700-oklch: 36% 0.09 180;
+    --emerald-700: oklch(var(--emerald-700-oklch));
+
+    --emerald-800-oklch: 25% 0.06 180;
+    --emerald-800: oklch(var(--emerald-800-oklch));
+
+    --emerald-900-oklch: 20% 0.06 180;
+    --emerald-900: oklch(var(--emerald-900-oklch));
+
+    --emerald-950-oklch: 16% 0.039 180;
+    --emerald-950: oklch(var(--emerald-950-oklch));
   }
 }

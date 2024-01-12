@@ -1,7 +1,8 @@
 import { useContext, type Dispatch, type SetStateAction } from 'react';
+import { FilterDialogDisplayContext } from '@components/Providers/FilterDialogDisplayProvider';
+import { SearchQueryContext } from '@components/Providers/SearchQueryProvider';
 import type { StockImageData } from '@utils/image-search';
 import classes from './component.module.css';
-import { FilterDialogDisplayContext } from '@components/Providers/FilterDialogDisplayProvider';
 
 interface PropTypes {
   setImages: Dispatch<SetStateAction<StockImageData[] | null>>;
@@ -9,10 +10,12 @@ interface PropTypes {
 }
 
 export default function Footer({ setImages, numImages }: PropTypes) {
+  const { setSearchQuery } = useContext(SearchQueryContext);
   const { setShowDialog } = useContext(FilterDialogDisplayContext);
 
   function clearResults() {
     setImages(null);
+    setSearchQuery((current) => ({ ...current, value: '', syncHeader: true }));
   }
 
   return (

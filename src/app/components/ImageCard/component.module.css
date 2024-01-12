@@ -71,6 +71,7 @@
   flex-direction: column;
   background: oklch(var(--depression-2-oklch) / 50%);
   backdrop-filter: blur(10px);
+  padding: 8px;
   opacity: 0;
   transition: opacity 150ms ease-out;
 
@@ -78,7 +79,6 @@
     opacity: 1;
   }
 
-  padding: 8px;
   button {
     flex-grow: 1;
     font-size: 0.875rem;
@@ -96,10 +96,20 @@
 
     &:is(:hover, :focus-visible) {
       outline: none;
+
       span {
-        background: oklch(var(--white-oklch) / 15%);
+        --background-opacity: 15%;
+        background: oklch(var(--foreground-oklch) / var(--background-opacity));
         color: var(--color-accent);
-        border: var(--border-light);
+        border: var(--border-active);
+
+        :global(.figma-light) & {
+          --background-opacity: 30%;
+          /* background: oklch(var(--white-oklch) / 15%); */
+          color: var(--elevation-2);
+          text-shadow: var(--black) 0 0 24px;
+          border: 1px solid var(--emerald-200);
+        }
       }
     }
 

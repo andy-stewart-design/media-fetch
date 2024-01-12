@@ -17,6 +17,7 @@ export default function ImageGallery({ images, setImages }: PropTypes) {
 
   function clearResults() {
     setImages(null);
+    setSearchQuery((current) => ({ ...current, value: '', syncHeader: true }));
   }
 
   function loadMore() {

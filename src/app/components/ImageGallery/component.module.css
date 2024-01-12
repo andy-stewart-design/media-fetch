@@ -42,12 +42,19 @@
     display: flex;
     flex-direction: column;
     place-items: center;
-    gap: var(--space-lg);
+    gap: var(--space-xl);
 
     p {
       text-align: center;
       max-width: 30ch;
       user-select: none;
+    }
+
+    button {
+      font-weight: var(--font-medium);
+      border: var(--border-active);
+      padding-inline: var(--space-lg);
+      padding-block: var(--space-sm);
     }
   }
 }

@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useEffect, useState } from 'react';
+import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
 import SearchBar from '@components/SearchBar';
 import ToggleGroup from '@components/ToggleGroup';
 import { IMAGE_SOURCES } from '@src/app/constants/image-sources';
@@ -12,6 +12,7 @@ export default function Header() {
 
   const [value, setValue] = useState('');
   const [sources, setSources] = useState<Array<ImageService>>(['unsplash', 'pexels', 'pixabay']);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -23,11 +24,12 @@ export default function Header() {
     if (!searchQuery.syncHeader) return;
 
     setValue(searchQuery.value);
+    inputRef.current?.focus();
   }, [searchQuery]);
 
   return (
     <header className={classes['header']}>
-      <SearchBar value={value} setValue={setValue} onSubmit={handleSubmit} />
+      <SearchBar value={value} setValue={setValue} onSubmit={handleSubmit} ref={inputRef} />
       <ToggleGroup
         label={`Sources (${sources.length})`}
         sources={IMAGE_SOURCES}

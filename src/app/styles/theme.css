@@ -43,7 +43,7 @@
     -moz-osx-font-smoothing: grayscale;
 
     &.figma-light {
-      --color-accent-oklch: var(--emerald-600-oklch);
+      --color-accent-oklch: var(--emerald-300-oklch);
       --foreground-oklch: var(--gray-900-oklch);
       --background-oklch: var(--gray-100-oklch);
       --elevation-1-oklch: var(--gray-50-oklch);
