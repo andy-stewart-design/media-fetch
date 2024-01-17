@@ -20,7 +20,7 @@
 
     &[data-visible='true'] {
       opacity: 1;
-      transition: opacity 200ms ease-out;
+      transition: opacity 200ms var(--ease-out-3);
     }
 
     button {
@@ -28,11 +28,21 @@
       text-decoration: underline;
       text-decoration-color: oklch(var(--foreground-oklch) / 40%);
       text-underline-offset: 2px;
-      transition: opacity 200ms ease-out;
+      transition: opacity 200ms var(--ease-out-3);
 
-      &:hover {
+      &:is(:hover, :focus-visible) {
         opacity: 1;
       }
     }
+  }
+}
+
+.filter {
+  display: flex;
+  gap: var(--space-xs);
+
+  &:is(:hover, :focus-visible) {
+    color: var(--color-accent);
+    transition: color 200ms var(--ease-out-3);
   }
 }

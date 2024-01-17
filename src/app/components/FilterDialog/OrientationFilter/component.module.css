@@ -59,9 +59,13 @@
   }
 
   input:checked + & {
-    color: var(--emerald-600);
+    color: var(--emerald-100);
     background: var(--elevation-1);
     border: 1px solid oklch(var(--color-accent-oklch) / 50%);
+
+    :global(.figma-light) & {
+      color: var(--emerald-600);
+    }
 
     &:before {
       opacity: 1;

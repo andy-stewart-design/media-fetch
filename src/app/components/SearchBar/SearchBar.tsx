@@ -1,4 +1,4 @@
-import { forwardRef, type FormEvent, type Dispatch, type SetStateAction, RefObject } from 'react';
+import { forwardRef, type FormEvent, type Dispatch, type SetStateAction } from 'react';
 import { Search, Delete } from '../icons/20';
 import classes from './component.module.css';
 
@@ -15,10 +15,7 @@ const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
     function handleClearInput() {
       setValue('');
 
-      const inputRef = ref as RefObject<HTMLInputElement>;
-
-      if (!inputRef) return;
-      inputRef.current?.focus();
+      if (ref && 'current' in ref) ref.current?.focus();
     }
 
     return (

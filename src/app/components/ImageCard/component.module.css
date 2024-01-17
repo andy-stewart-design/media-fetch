@@ -21,8 +21,16 @@
       font-size: 0.75rem;
       transition: color 200ms ease-out;
 
-      &:hover {
+      &:is(:hover, :focus-visible) {
         color: var(--color-accent);
+
+        :global(.figma-light) & {
+          color: var(--emerald-500);
+        }
+      }
+
+      &:focus-visible {
+        outline: var(--border-active);
       }
     }
 
