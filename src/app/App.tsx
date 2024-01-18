@@ -1,6 +1,3 @@
-// TODO: Clean up code
-// -- remove need to pass setStatus to Query Error component
-
 // POST LAUNCH
 // TODO: Polish error state styles
 // TODO: tooltips
