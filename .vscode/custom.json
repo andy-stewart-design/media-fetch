@@ -1,0 +1,15 @@
+{
+  "version": 1.1,
+  "atDirectives": [
+    {
+      "name": "@custom-media",
+      "description": "This specification defines a method of defining custom media queries, which are simply-named aliases for longer and more complex media queries.",
+      "references": [
+        {
+          "name": "CSSWG Draft Proposal",
+          "url": "https://drafts.csswg.org/mediaqueries-5/#custom-mq"
+        }
+      ]
+    }
+  ]
+}
