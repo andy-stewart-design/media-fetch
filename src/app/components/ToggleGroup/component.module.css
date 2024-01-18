@@ -1,0 +1,17 @@
+.toggle-group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  div[data-toggle-group] {
+    position: relative;
+    display: flex;
+    gap: var(--space-xs);
+  }
+}
+
+.container {
+  position: relative;
+  display: flex;
+  gap: var(--space-xs);
+}

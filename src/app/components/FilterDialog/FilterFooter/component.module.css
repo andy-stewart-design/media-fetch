@@ -1,0 +1,42 @@
+.wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  font-weight: var(--font-medium);
+
+  button {
+    padding-inline: var(--space-lg);
+    padding-block-start: calc(var(--space-md) - 1px);
+    padding-block-end: calc(var(--space-md) + 1px);
+    transition: color 150ms var(--ease-out-3), border 150ms var(--ease-out-3),
+      background 150ms var(--ease-out-3);
+    user-select: none;
+
+    &:not(:disabled):hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+.apply {
+  border: var(--border-foreground);
+
+  &:not(:disabled):hover {
+    color: var(--color-accent);
+    border: var(--border-active);
+  }
+
+  :global(.figma-light) &:not(:disabled) {
+    background: oklch(var(--elevation-2-oklch) / 100%);
+  }
+
+  :global(.figma-dark) &:not(:disabled) {
+    background: oklch(var(--depression-1-oklch) / 50%);
+  }
+
+  &:disabled {
+    background: var(--transparent);
+    border: var(--border-light);
+    color: oklch(var(--foreground-oklch) / 25%);
+  }
+}

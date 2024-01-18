@@ -1,0 +1,57 @@
+@layer base {
+  html {
+    --color-accent-oklch: var(--emerald-200-oklch);
+    --color-accent: oklch(var(--color-accent-oklch));
+
+    --foreground-oklch: var(--white-oklch);
+    --foreground: oklch(var(--foreground-oklch));
+
+    --background-oklch: var(--gray-900-oklch);
+    --background: oklch(var(--background-oklch));
+
+    --elevation-1-oklch: var(--gray-800-oklch);
+    --elevation-1: oklch(var(--elevation-1-oklch));
+
+    --elevation-2-oklch: var(--gray-775-oklch);
+    --elevation-2: oklch(var(--elevation-2-oklch));
+
+    --depression-1-oklch: var(--gray-925-oklch);
+    --depression-1: oklch(var(--depression-1-oklch));
+
+    --depression-2-oklch: var(--gray-950-oklch);
+    --depression-2: oklch(var(--depression-1-oklch));
+
+    --border-light: 1px solid oklch(var(--white-oklch) / 0.13);
+    --border-light-2: 2px solid oklch(var(--white-oklch) / 0.13);
+
+    --border-foreground: 1px solid var(--foreground);
+    --border-background-2: 2px solid var(--background);
+
+    --border-active: 1px solid oklch(var(--color-accent-oklch) / 1);
+
+    --border-transparent: 1px solid transparent;
+    --border-transparent-2: 2px solid transparent;
+
+    --brad: 8px;
+
+    color: oklch(var(--foreground-oklch) / 90%);
+    background-color: var(--background);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &.figma-light {
+      --color-accent-oklch: var(--emerald-300-oklch);
+      --foreground-oklch: var(--gray-900-oklch);
+      --background-oklch: var(--gray-100-oklch);
+      --elevation-1-oklch: var(--gray-50-oklch);
+      --elevation-2-oklch: var(--white-oklch);
+      --depression-1-oklch: var(--gray-125-oklch);
+      --depression-2-oklch: var(--gray-150-oklch);
+      --border-light: 1px solid oklch(var(--black-oklch) / 0.1);
+      --border-light-2: 2px solid oklch(var(--black-oklch) / 0.1);
+    }
+  }
+}

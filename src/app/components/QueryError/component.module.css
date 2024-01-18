@@ -1,0 +1,37 @@
+.container {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-xl);
+
+  padding-inline: var(--space-xl);
+  padding-block-end: var(--space-xl);
+
+  p {
+    text-align: center;
+    max-width: 45ch;
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: var(--space-xl);
+
+  button {
+    font-weight: var(--font-medium);
+
+    &:first-of-type {
+      border: var(--border-active);
+      padding-inline: var(--space-lg);
+      padding-block: var(--space-sm);
+    }
+
+    &:last-of-type {
+      /* font-size: 0.75rem; */
+      opacity: 0.6;
+    }
+  }
+}

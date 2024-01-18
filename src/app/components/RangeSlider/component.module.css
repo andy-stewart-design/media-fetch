@@ -1,0 +1,89 @@
+.range-group {
+  --track-height: var(--space-xs);
+  --track-border-radius: var(--space-sm);
+  --track-background: linear-gradient(
+    to right,
+    var(--color-accent) 0%,
+    var(--color-accent) var(--slider-progress),
+    var(--input-background) var(--slider-progress)
+  );
+
+  --thumb-width: var(--space-xl);
+  --thumb-height: var(--thumb-width);
+  --thumb-offset: calc(((var(--thumb-height) - var(--track-height)) / 2) * -1);
+  --thumb-color: var(--foreground);
+  --thumb-border: none;
+  --thumb-border-radius: var(--space-xl);
+  --thumb-shadow: var(--shadow-below-2);
+  --thumb-filter: none;
+
+  all: unset;
+
+  position: relative;
+  height: var(--input-height);
+  border-radius: var(--input-border-radius);
+
+  overflow: hidden;
+  transition: background-color 0.25s var(--ease-out-3), border 0.25s var(--ease-out-3);
+
+  cursor: pointer;
+
+  &:hover {
+    --background-opacity: var(--hover-background-opacity);
+    --border-opacity: var(--hover-border-opacity);
+  }
+
+  &:focus-visible {
+    outline: var(--input-outline-size) var(--input-outline-style)
+      oklch(var(--input-outline-color-oklch) / var(--input-outline-opacity));
+    outline-offset: var(--input-outline-offset);
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: var(--thumb-height);
+    width: var(--thumb-width);
+    border: var(--thumb-border);
+    border-radius: var(--thumb-border-radius);
+    background: var(--thumb-color);
+    background-clip: padding-box;
+    margin-top: var(--thumb-offset);
+    box-shadow: var(--thumb-shadow);
+    filter: var(--thumb-filter);
+  }
+
+  &::-moz-range-thumb {
+    height: var(--thumb-hight);
+    width: var(--thumb-width);
+    border: var(--thumb-border);
+    border-radius: var(--thumb-border-radius);
+    background: var(--thumb-color);
+    background-clip: padding-box;
+    box-shadow: var(--thumb-shadow);
+    filter: var(--thumb-filter);
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: var(--track-height);
+    background: var(--track-background);
+    border-radius: var(--track-border-radius);
+  }
+
+  &::-moz-range-track {
+    height: var(--track-height);
+    background: var(--track-background);
+    border-radius: var(--track-border-radius);
+  }
+
+  &:disabled {
+    &::-webkit-slider-runnable-track,
+    &::-moz-range-track {
+      background: oklch(var(--gray-700-oklch) / 40%);
+    }
+
+    & + input[type='number'] {
+      background: transparent;
+      border: 1px solid oklch(var(--white-oklch) / 8%);
+    }
+  }
+}

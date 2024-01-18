@@ -1,0 +1,28 @@
+@layer base {
+  html {
+    --input-height: 3rem;
+    --input-background: var(--background);
+    --input-padding-inline: 12px;
+
+    --input-border-default: var(--border-light);
+    --input-border-focused: var(--border-active);
+    --input-border-transparent: var(--border-transparent);
+    --input-border-radius: var(--brad);
+
+    --input-selection-color: oklch(var(--color-accent-oklch) / 30%);
+    --input-placeholder-color: oklch(var(--foreground-oklch) / 40%);
+
+    --input-transition-timing: 100ms;
+    --input-transition-ease: var(--ease-out-3);
+
+    --input-outline-color-oklch: var(--color-accent-oklch);
+    --input-outline-opacity: 100%;
+    --input-outline-size: 1px;
+    --input-outline-style: solid;
+    --input-outline-offset: 0px;
+
+    &.figma-light {
+      --input-background: var(--elevation-1);
+    }
+  }
+}

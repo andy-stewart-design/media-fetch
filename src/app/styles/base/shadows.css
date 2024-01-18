@@ -1,0 +1,46 @@
+@layer base {
+  html {
+    --shadow-color: var(--black-oklch);
+    --shadow-strength: 1%;
+
+    --shadow-below-1: 0 1px 2px -1px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
+
+    --shadow-below-2: 0 3px 5px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
+      0 7px 14px -5px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 7%));
+
+    --shadow-below-5: 0 -1px 2px 0 oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+      0 2px 1px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
+      0 5px 5px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 4%)),
+      0 10px 10px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 5%)),
+      0 20px 20px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 6%)),
+      0 40px 40px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 8%));
+
+    --shadow-above-5: 0 -1px 2px 0 oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+      0 -2px 1px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
+      0 -5px 5px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 4%)),
+      0 -10px 10px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 5%)),
+      0 -20px 20px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 6%)),
+      0 -40px 40px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 8%));
+
+    &.figma-light {
+      --shadow-below-1: 0 1px 2px -1px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 4%));
+
+      --shadow-below-2: 0 3px 5px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+        0 7px 14px -5px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 5%));
+
+      --shadow-below-5: 0 -1px 2px 0 oklch(var(--shadow-color) / calc(var(--shadow-strength) + 1%)),
+        0 2px 1px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+        0 5px 5px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+        0 10px 10px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+        0 20px 20px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+        0 40px 40px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%));
+
+      --shadow-above-5: 0 -1px 2px 0 oklch(var(--shadow-color) / calc(var(--shadow-strength) + 1%)),
+        0 2px 1px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+        0 5px 5px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+        0 10px 10px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+        0 20px 20px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
+        0 40px 40px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%));
+    }
+  }
+}

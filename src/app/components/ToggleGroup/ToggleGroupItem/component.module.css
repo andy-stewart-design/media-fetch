@@ -1,0 +1,85 @@
+.item {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  padding: 8px;
+  color: oklch(var(--foreground-oklch) / 50%);
+  background-color: var(--input-background);
+  background-clip: padding-box;
+  border: var(--border-light);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: color 150ms var(--ease-out-3), background 200ms var(--ease-out-3),
+    border 150ms var(--ease-out-3);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      oklch(var(--color-accent-oklch) / 10%),
+      oklch(var(--color-accent-oklch) / 30%)
+    );
+    opacity: 0;
+    transition: opacity 150ms var(--ease-out-3);
+  }
+
+  :global(.figma-light) &::before {
+    background: radial-gradient(
+      oklch(var(--color-accent-oklch) / 0%),
+      oklch(var(--color-accent-oklch) / 30%)
+    );
+  }
+
+  &:hover {
+    color: oklch(var(--foreground-oklch) / 100%);
+    background-color: var(--depression-1);
+    background-clip: padding-box;
+  }
+
+  &:has(input[type='checkbox']:checked) {
+    color: var(--color-accent);
+    border: 1px solid oklch(var(--color-accent-oklch) / 50%);
+    background: var(--elevation-1);
+
+    &::before {
+      opacity: 1;
+    }
+
+    &:hover {
+      background: var(--emerald-700);
+      border: var(--border-active);
+
+      :global(.figma-light) & {
+        background: var(--emerald-50);
+        border: var(--border-active);
+      }
+    }
+  }
+
+  &:has(input[type='checkbox']:focus-visible) {
+    border: var(--border-active);
+  }
+
+  /* Boilerplate code to stack the children on top of each other */
+
+  & > * {
+    cursor: pointer;
+  }
+
+  & > svg {
+    pointer-events: none;
+  }
+
+  & > :is(input[type='checkbox'], label) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}

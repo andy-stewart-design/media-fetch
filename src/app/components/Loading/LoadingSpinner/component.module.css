@@ -1,0 +1,10 @@
+.spinner {
+  animation: loading-spinner 1000ms forwards infinite;
+  animation-timing-function: var(--ease-in-out-4);
+}
+
+@keyframes loading-spinner {
+  to {
+    rotate: 360deg;
+  }
+}

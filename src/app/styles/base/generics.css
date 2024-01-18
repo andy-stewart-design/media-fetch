@@ -1,0 +1,21 @@
+@layer base {
+  label,
+  .label {
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: var(--font-medium);
+    cursor: default;
+    user-select: none;
+    font-variant-numeric: tabular-nums;
+
+    &[for] {
+      cursor: pointer;
+    }
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+}

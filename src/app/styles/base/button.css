@@ -1,0 +1,11 @@
+@layer base {
+  button {
+    border-radius: var(--brad);
+
+    &:focus-visible {
+      outline: var(--input-outline-size) var(--input-outline-style)
+        oklch(var(--input-outline-color-oklch) / var(--input-outline-opacity));
+      outline-offset: var(--input-outline-offset);
+    }
+  }
+}

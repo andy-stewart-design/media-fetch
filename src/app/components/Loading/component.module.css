@@ -1,0 +1,37 @@
+.loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  justify-content: center;
+  align-items: center;
+
+  color: var(--color-accent);
+
+  padding-bottom: var(--space-xl);
+
+  animation: loading-fade-in forwards 400ms;
+  animation-timing-function: var(--ease-out-3);
+
+  p {
+    font-size: 0.875rem;
+    font-weight: var(--font-medium);
+    color: oklch(var(--foreground-oklch) / 60%);
+  }
+}
+
+.fill {
+  flex-grow: 1;
+}
+
+.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-4);
+  background: oklch(var(--black-oklch) / 70%);
+}
+
+@keyframes loading-fade-in {
+  from {
+    opacity: 0;
+  }
+}
