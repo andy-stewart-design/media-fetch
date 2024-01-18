@@ -1,7 +1,7 @@
 import { useContext, type Dispatch, type SetStateAction } from 'react';
 import { FilterDialogDisplayContext } from '@components/Providers/FilterDialogDisplayProvider';
 import { SearchQueryContext } from '@components/Providers/SearchQueryProvider';
-import { Filter } from '@components/icons/20';
+import { Filter } from '@components/icons/16';
 import type { StockImageData } from '@utils/image-search';
 import classes from './component.module.css';
 

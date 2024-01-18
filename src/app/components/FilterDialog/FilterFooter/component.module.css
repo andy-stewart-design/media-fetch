@@ -19,7 +19,12 @@
 }
 
 .apply {
-  border: var(--border-active);
+  border: var(--border-foreground);
+
+  &:not(:disabled):hover {
+    color: var(--color-accent);
+    border: var(--border-active);
+  }
 
   :global(.figma-light) &:not(:disabled) {
     background: oklch(var(--elevation-2-oklch) / 100%);
