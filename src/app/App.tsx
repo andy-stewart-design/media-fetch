@@ -1,7 +1,7 @@
 // POST LAUNCH
-// TODO: Polish error state styles
-// TODO: tooltips
 // TODO: view image dialog
+// TODO: tooltips
+// TODO: Polish error state styles
 // TODO: Consider adding Openverse as a service: https://api.openverse.engineering/v1/
 
 import Providers from '@components/Providers';
