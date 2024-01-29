@@ -119,7 +119,5 @@ async function searchPixabay({
 
   const data: StockImageData[] = await response.json();
 
-  console.log(data);
-
   return data;
 }

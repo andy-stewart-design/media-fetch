@@ -55,6 +55,53 @@ export default function Main() {
       if (type === 'RESULTS_INIT') {
         setImages(payload.images);
         setAppStatus('IDLE');
+
+        const cols = payload.images.reduce(
+          (acc, cur, idx) => {
+            idx % 2 === 0 ? acc[0].push(cur) : acc[1].push(cur);
+            return acc;
+          },
+          [[], []] as Array<Array<StockImageData>>
+        );
+
+        const [colLeft, colRight] = cols.map((col) => {
+          const height = col.reduce((acc, image) => {
+            return acc + image.height;
+          }, 0);
+
+          const lastImageHeights = col.toSpliced(0, col.length - 4).map((col) => col.height);
+
+          return { height, lastImageHeights: [0, ...lastImageHeights] };
+        });
+
+        console.log({ colLeft, colRight });
+
+        const heightDifference = colLeft.height - colRight.height;
+        console.log({ heightDifference });
+
+        if (heightDifference < 0) {
+          // right column is longer
+          console.log('right column is longer');
+
+          const colRightHeights = colRight.lastImageHeights.reduce(
+            (acc, cur, index) => {
+              if (index === 0) return [acc[index] - cur];
+              else return [...acc, acc[index - 1] - cur];
+            },
+            [colRight.height]
+          );
+          const colLeftHeights = colRight.lastImageHeights.reduce(
+            (acc, cur, index) => {
+              if (index === 0) return [acc[index] + cur];
+              else return [...acc, acc[index - 1] + cur];
+            },
+            [colLeft.height]
+          );
+
+          console.log({ colRightHeights, colLeftHeights });
+        } else if (heightDifference > 0) {
+          console.log('left column is longer');
+        }
       } else if (type === 'RESULTS_ADD') {
         setImages((images) => {
           if (!images) return null;

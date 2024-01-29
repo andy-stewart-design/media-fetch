@@ -9,6 +9,7 @@ import FilterFooter from './FilterFooter/';
 import { FilterDialogDisplayContext } from '@components/Providers/FilterDialogDisplayProvider';
 import { SearchFilterContext } from '@components/Providers/SearchFilterProvider';
 import { ExportSettingsContext } from '@components/Providers/ExportSettingsProvider';
+import { SearchQueryContext } from '@components/Providers/SearchQueryProvider';
 import { useNumberInput, useRadio } from '@hooks/use-input';
 import { COLOR_OPTIONS, ORIENTATION_OPTIONS } from '@src/app/constants/filters';
 import classes from './component.module.css';
@@ -16,6 +17,7 @@ import classes from './component.module.css';
 export default function FilterDialog() {
   // GLOBAL STATE
   const { showDialog, setShowDialog } = useContext(FilterDialogDisplayContext);
+  const { setSearchQuery } = useContext(SearchQueryContext);
   const { searchFilters, setSearchFilters } = useContext(SearchFilterContext);
   const { exportSettings, setExportSettings } = useContext(ExportSettingsContext);
 
@@ -33,6 +35,7 @@ export default function FilterDialog() {
 
   function applyFilters() {
     if (orientation !== searchFilters.orientation || primaryColor !== searchFilters.primaryColor) {
+      setSearchQuery((current) => ({ ...current, page: 1 }));
       setSearchFilters({ orientation, primaryColor });
     }
 
