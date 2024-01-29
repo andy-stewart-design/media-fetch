@@ -7,21 +7,13 @@ import type { StockImageData } from '@utils/image-search';
 import classes from './component.module.css';
 
 interface PropTypes {
-  images: StockImageData[] | null;
-  setImages: Dispatch<SetStateAction<StockImageData[] | null>>;
+  images: Array<Array<StockImageData>> | null;
+  setImages: Dispatch<SetStateAction<Array<Array<StockImageData>> | null>>;
 }
 
 export default function ImageGallery({ images, setImages }: PropTypes) {
   const { appStatus } = useContext(AppStatusContext);
   const { setSearchQuery } = useContext(SearchQueryContext);
-
-  const cols = images?.reduce(
-    (acc, cur, idx) => {
-      idx % 2 === 0 ? acc[0].push(cur) : acc[1].push(cur);
-      return acc;
-    },
-    [[], []] as Array<Array<StockImageData>>
-  );
 
   function clearResults() {
     setImages(null);
@@ -34,9 +26,9 @@ export default function ImageGallery({ images, setImages }: PropTypes) {
 
   return (
     <>
-      {images && cols && images.length > 0 ? (
+      {images && images.length > 0 ? (
         <div className={classes['gallery']}>
-          {cols.map((col, index) => (
+          {images.map((col, index) => (
             <div key={index} className={classes['column']}>
               {col.map((image) => (
                 <ImageCard key={image.id} image={image} />

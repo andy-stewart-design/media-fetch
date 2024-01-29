@@ -8,6 +8,7 @@ import { SearchQueryContext } from '@components/Providers/SearchQueryProvider';
 import { SearchFilterContext } from '@components/Providers/SearchFilterProvider';
 import { ErrorDialogDisplayContext } from '@components/Providers/ErrorDialogDisplayProvider';
 import { AppStatusContext } from '@components/Providers/AppStatusProvider';
+import { shuffle } from '@src/utils/shuffle';
 import type { StockImageData } from '@utils/image-search';
 import type { PluginPostMessage, UIPostMessage } from '@src/types/post-messages';
 
@@ -19,7 +20,7 @@ export default function Main() {
   const errorDialog = useContext(ErrorDialogDisplayContext);
 
   // LOCAL STATE
-  const [images, setImages] = useState<StockImageData[] | null>(null);
+  const [images, setImages] = useState<Array<Array<StockImageData>> | null>(null);
 
   // KICK OFF INITIAL IMAGE REQUEST WHEN RELEVANT PARAMETERS CHANGE
   useEffect(() => {
@@ -53,12 +54,30 @@ export default function Main() {
       const { type, payload } = data.pluginMessage;
 
       if (type === 'RESULTS_INIT') {
-        setImages(payload.images);
+        setImages(createColumns(payload.images));
         setAppStatus('IDLE');
       } else if (type === 'RESULTS_ADD') {
-        setImages((images) => {
-          if (!images) return null;
-          else return [...images, ...payload.images];
+        setImages((currentImages) => {
+          if (!currentImages) return null;
+          else {
+            const [curColLeft, curColRight] = currentImages;
+            const [newColOne, newColTwo] = createColumns(payload.images);
+
+            const newColLeft = curColLeft.concat(newColOne);
+            const newColRight = curColRight.concat(newColTwo);
+
+            // const currentPage = currentImages.flat().length / 30 + 1;
+            // const pageIsEven = currentPage % 2 === 0;
+
+            // const newColLeft = pageIsEven
+            //   ? curColLeft.concat(newColOne)
+            //   : curColLeft.concat(newColTwo);
+            // const newColRight = pageIsEven
+            //   ? curColRight.concat(newColTwo)
+            //   : curColRight.concat(newColOne);
+
+            return [newColLeft, newColRight];
+          }
         });
         setAppStatus('IDLE');
       } else if (type === 'QUICK_ACTION') {
@@ -92,8 +111,26 @@ export default function Main() {
       ) : (
         <ImageGallery images={images} setImages={setImages} />
       )}
-      <Footer setImages={setImages} numImages={images?.length ?? 0} />
+      <Footer setImages={setImages} numImages={images?.flat().length ?? 0} />
       {appStatus === 'GENERATING' && <Loading display="fullscreen" message="Placing image" />}
     </main>
   );
+}
+
+function createColumns(images: Array<StockImageData>) {
+  const sortedImages = images?.toSorted((a, b) => {
+    const aHeight = a.height / a.width;
+    const bHeight = b.height / b.width;
+    return aHeight - bHeight;
+  });
+
+  const cols = sortedImages?.reduce(
+    (acc, cur, idx) => {
+      idx % 2 === 0 ? acc[0].push(cur) : acc[1].push(cur);
+      return acc;
+    },
+    [[], []] as Array<Array<StockImageData>>
+  );
+
+  return cols?.map((col) => shuffle(col));
 }

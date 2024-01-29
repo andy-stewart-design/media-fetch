@@ -6,7 +6,7 @@ import type { StockImageData } from '@utils/image-search';
 import classes from './component.module.css';
 
 interface PropTypes {
-  setImages: Dispatch<SetStateAction<StockImageData[] | null>>;
+  setImages: Dispatch<SetStateAction<Array<Array<StockImageData>> | null>>;
   numImages: number;
 }
 

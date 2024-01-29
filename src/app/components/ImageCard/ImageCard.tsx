@@ -56,8 +56,14 @@ export default function ImageCard({ image }: PropTypes) {
   return (
     <div className={classes['img-card']}>
       <div className={classes['img-group']}>
-        <Img src={image_thumbnail} />
+        <Img
+          src={image_thumbnail}
+          width={width}
+          height={height}
+          style={{ aspectRatio: `${width} / ${height}` }}
+        />
         <div className={classes['btn-group']}>
+          e
           <button className={classes['generate']} onClick={handlePlaceImage}>
             <Download />
             <span>Place Image</span>
