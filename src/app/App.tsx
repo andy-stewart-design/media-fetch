@@ -1,5 +1,5 @@
 // POST LAUNCH
-// TODO: view image dialog
+// TODO: Switch images to masonry grid
 // TODO: tooltips
 // TODO: Polish error state styles
 // TODO: Consider adding Openverse as a service: https://api.openverse.engineering/v1/
@@ -8,6 +8,7 @@ import Providers from '@components/Providers';
 import Main from '@components/Main';
 import FilterDialog from '@components/FilterDialog';
 import ErrorDialog from '@components/ErrorDialog';
+// import ImageDialog from '@components/ImageDialog';
 import './styles/main.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Main />
       <FilterDialog />
       <ErrorDialog />
+      {/* <ImageDialog /> */}
     </Providers>
   );
 }

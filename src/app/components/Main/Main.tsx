@@ -83,7 +83,7 @@ export default function Main() {
   }, []);
 
   return (
-    <main>
+    <main style={{ isolation: 'isolate' }}>
       <Header />
       {!images && appStatus === 'SEARCHING' ? (
         <Loading message="Finding images" />

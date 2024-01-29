@@ -1,0 +1,183 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+
+  &[data-state='open'] {
+    animation: image-dialog-show forwards 500ms;
+    animation-timing-function: var(--ease-out-3);
+  }
+
+  &[data-state='closed'] {
+    animation: image-dialog-hide forwards 500ms;
+    animation-timing-function: var(--ease-in-5);
+  }
+}
+
+.trigger {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  color: var(--gray-50);
+  background: oklch(var(--gray-950-oklch) / 50%);
+  padding: var(--space-xs);
+  border: var(--border-light);
+  border-radius: var(--space-xs);
+  transition: background 200ms var(--ease-out-3), color 200ms var(--ease-out-3);
+  user-select: none;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--color-accent);
+    color: var(--gray-950);
+  }
+}
+
+.dialog {
+  :global(.figma-light) & {
+    --background-color: var(--elevation-1-oklch);
+  }
+
+  :global(.figma-dark) & {
+    --background-color: var(--depression-1-oklch);
+  }
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: oklch(var(--background-color) / 1);
+  width: 100vw;
+  min-height: 100vh;
+
+  outline: var(--border-light);
+
+  &[data-state='open'] {
+    animation: image-dialog-show forwards 500ms;
+    animation-timing-function: var(--ease-out-3);
+    /* animation-delay: 400ms; */
+  }
+
+  &[data-state='closed'] {
+    animation: image-dialog-hide forwards 500ms;
+    animation-timing-function: var(--ease-in-2);
+    /* animation-delay: 400ms; */
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-2xl);
+  padding-block-end: var(--space-xl);
+}
+
+.content {
+  flex-grow: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-2xl);
+  padding-block-start: 0;
+}
+
+.image {
+  width: 100%;
+  box-shadow: var(--shadow-below-5);
+  border: var(--border-light);
+  border-radius: var(--brad);
+}
+
+.close {
+  position: relative;
+  background-color: var(--elevation-1);
+  width: fit-content;
+  padding: var(--space-sm);
+  border: var(--border-light);
+  border-radius: var(--brad);
+  box-shadow: var(--shadow-below-2);
+}
+
+.avatar {
+  flex: 0 0 48px;
+
+  position: relative;
+  width: 48px;
+  height: 48px;
+  padding: var(--space-md);
+  background: var(--elevation-1);
+  border: var(--border-light);
+  border-radius: 50%;
+  overflow: clip;
+
+  img {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+  }
+}
+
+.attribution {
+  flex-grow: 1;
+
+  p {
+    font-size: 0.875rem;
+    font-weight: var(--font-medium);
+    opacity: 0.6;
+  }
+}
+
+.generate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  background: var(--foreground);
+
+  color: var(--background);
+  font-weight: var(--font-medium);
+  width: 100%;
+  height: 48px;
+  padding-inline: var(--space-lg);
+  transition: background-color 200ms var(--ease-out-3), color 200ms var(--ease-out-3);
+
+  &:hover {
+    background: var(--color-accent);
+    color: var(--black);
+  }
+}
+
+.footer {
+  :global(.figma-light) & {
+    --background-opacity: 0.85;
+  }
+
+  :global(.figma-dark) & {
+    --background-opacity: 0.6;
+  }
+
+  position: sticky;
+  bottom: 0;
+  padding-block: var(--space-lg);
+  padding-inline: var(--space-2xl);
+  border-top: var(--border-light);
+  background-color: oklch(var(--elevation-2-oklch) / var(--background-opacity));
+  backdrop-filter: blur(var(--space-xs));
+}
+
+@keyframes image-dialog-show {
+  from {
+    translate: 100%;
+  }
+}
+
+@keyframes image-dialog-hide {
+  to {
+    translate: 100%;
+  }
+}

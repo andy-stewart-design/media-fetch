@@ -4,8 +4,10 @@ export interface StockImageData {
   height: number;
   image_thumbnail: string;
   image_large: string;
+  image_download: string;
   image_link: string;
   photographer: string;
+  photographer_avatar?: string | undefined;
   photographer_link: string;
   source: string;
 }
@@ -116,6 +118,8 @@ async function searchPixabay({
   if (!response.ok) throw new Error('Failed to fetch data from Unsplash');
 
   const data: StockImageData[] = await response.json();
+
+  console.log(data);
 
   return data;
 }

@@ -10,7 +10,8 @@
       "https://media-fetch-hono.vercel.app",
       "https://images.pexels.com",
       "https://images.unsplash.com",
-      "https://cdn.pixabay.com"
+      "https://cdn.pixabay.com",
+      "https://pixabay.com"
     ],
     "reasoning": "AllStock proxies all search queries through a custom endpoint (hosted on Vercel) to protect any API keys required to complete the query. Images displayed in the plugin and copied to the design canvas are pulled directly from one of the services powering the plugin (Unsplash, Pexels, and Pixabay)."
   },
