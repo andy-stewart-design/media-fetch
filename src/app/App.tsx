@@ -8,7 +8,6 @@ import Providers from '@components/Providers';
 import Main from '@components/Main';
 import FilterDialog from '@components/FilterDialog';
 import ErrorDialog from '@components/ErrorDialog';
-// import ImageDialog from '@components/ImageDialog';
 import './styles/main.css';
 
 function App() {
@@ -17,7 +16,6 @@ function App() {
       <Main />
       <FilterDialog />
       <ErrorDialog />
-      {/* <ImageDialog /> */}
     </Providers>
   );
 }

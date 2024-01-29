@@ -41,7 +41,11 @@ export function ImageDialogContent({ image, icon: Icon, handlePlaceImage }: Prop
             <img src={image_large} className={classes.image} width={width} height={height} />
           </div>
           <div className={classes.footer}>
-            <button className={classes.generate} onClick={handlePlaceImage}>
+            <button
+              className={classes.generate}
+              onClick={handlePlaceImage}
+              disabled={appStatus === 'GENERATING'}
+            >
               {appStatus === 'GENERATING' ? (
                 <LoadingSpinner size={32} />
               ) : (
