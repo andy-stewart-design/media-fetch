@@ -15,6 +15,14 @@ export default function ImageGallery({ images, setImages }: PropTypes) {
   const { appStatus } = useContext(AppStatusContext);
   const { setSearchQuery } = useContext(SearchQueryContext);
 
+  const cols = images?.reduce(
+    (acc, cur, idx) => {
+      idx % 2 === 0 ? acc[0].push(cur) : acc[1].push(cur);
+      return acc;
+    },
+    [[], []] as Array<Array<StockImageData>>
+  );
+
   function clearResults() {
     setImages(null);
     setSearchQuery((current) => ({ ...current, value: '', syncHeader: true }));
@@ -26,10 +34,14 @@ export default function ImageGallery({ images, setImages }: PropTypes) {
 
   return (
     <>
-      {images && images.length > 0 ? (
+      {images && cols && images.length > 0 ? (
         <div className={classes['gallery']}>
-          {images.map((image) => (
-            <ImageCard key={image.id} image={image} />
+          {cols.map((col, index) => (
+            <div key={index} className={classes['column']}>
+              {col.map((image) => (
+                <ImageCard key={image.id} image={image} />
+              ))}
+            </div>
           ))}
           <div className={classes.loadMore}>
             <button onClick={loadMore}>
