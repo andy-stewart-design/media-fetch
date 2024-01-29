@@ -54,7 +54,7 @@ export default function Main() {
       const { type, payload } = data.pluginMessage;
 
       if (type === 'RESULTS_INIT') {
-        setImages(createColumns(payload.images));
+        setImages(createColumns(payload.images).toReversed());
         setAppStatus('IDLE');
       } else if (type === 'RESULTS_ADD') {
         setImages((currentImages) => {
@@ -63,18 +63,15 @@ export default function Main() {
             const [curColLeft, curColRight] = currentImages;
             const [newColOne, newColTwo] = createColumns(payload.images);
 
-            const newColLeft = curColLeft.concat(newColOne);
-            const newColRight = curColRight.concat(newColTwo);
+            const currentPage = currentImages.flat().length / 30 + 1;
+            const pageIsEven = currentPage % 2 === 0;
 
-            // const currentPage = currentImages.flat().length / 30 + 1;
-            // const pageIsEven = currentPage % 2 === 0;
-
-            // const newColLeft = pageIsEven
-            //   ? curColLeft.concat(newColOne)
-            //   : curColLeft.concat(newColTwo);
-            // const newColRight = pageIsEven
-            //   ? curColRight.concat(newColTwo)
-            //   : curColRight.concat(newColOne);
+            const newColLeft = pageIsEven
+              ? curColLeft.concat(newColOne)
+              : curColLeft.concat(newColTwo);
+            const newColRight = pageIsEven
+              ? curColRight.concat(newColTwo)
+              : curColRight.concat(newColOne);
 
             return [newColLeft, newColRight];
           }
