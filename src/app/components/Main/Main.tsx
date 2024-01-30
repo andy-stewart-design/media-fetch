@@ -30,6 +30,7 @@ export default function Main() {
       const initialRequest = searchQuery.page === 1;
       if (initialRequest) {
         setImages(null);
+        setTotal(0);
       }
       const type = initialRequest ? 'QUERY_INIT' : 'QUERY_ADD';
 
@@ -78,7 +79,6 @@ export default function Main() {
             return [newColLeft, newColRight];
           }
         });
-        setTotal(payload.total);
         setAppStatus('IDLE');
       } else if (type === 'QUICK_ACTION') {
         setSearchQuery((current) => ({ ...current, value: payload.query, syncHeader: true }));
@@ -132,6 +132,5 @@ function createColumns(images: Array<StockImageData>) {
     [[], []] as Array<Array<StockImageData>>
   );
 
-  return cols;
   return cols?.map((col) => shuffle(col));
 }

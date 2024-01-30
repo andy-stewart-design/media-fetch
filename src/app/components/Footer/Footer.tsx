@@ -24,7 +24,7 @@ export default function Footer({ setImages, numImages, totalImages }: PropTypes)
     <footer className={classes['footer']}>
       <div data-visible={numImages > 0 ? 'true' : 'false'}>
         <span>
-          Showing {numImages} of {totalImages}
+          Showing {numImages} of {numberWithCommas(totalImages)}
         </span>
         <button onClick={clearResults}>Clear Results</button>
       </div>
@@ -34,4 +34,8 @@ export default function Footer({ setImages, numImages, totalImages }: PropTypes)
       </button>
     </footer>
   );
+}
+
+function numberWithCommas(x: number) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
