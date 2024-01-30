@@ -21,6 +21,7 @@ export default function Main() {
 
   // LOCAL STATE
   const [images, setImages] = useState<Array<Array<StockImageData>> | null>(null);
+  const [total, setTotal] = useState(0);
 
   // KICK OFF INITIAL IMAGE REQUEST WHEN RELEVANT PARAMETERS CHANGE
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function Main() {
 
       if (type === 'RESULTS_INIT') {
         setImages(createColumns(payload.images).toReversed());
+        setTotal(payload.total);
         setAppStatus('IDLE');
       } else if (type === 'RESULTS_ADD') {
         setImages((currentImages) => {
@@ -76,6 +78,7 @@ export default function Main() {
             return [newColLeft, newColRight];
           }
         });
+        setTotal(payload.total);
         setAppStatus('IDLE');
       } else if (type === 'QUICK_ACTION') {
         setSearchQuery((current) => ({ ...current, value: payload.query, syncHeader: true }));
@@ -108,7 +111,7 @@ export default function Main() {
       ) : (
         <ImageGallery images={images} setImages={setImages} />
       )}
-      <Footer setImages={setImages} numImages={images?.flat().length ?? 0} />
+      <Footer setImages={setImages} numImages={images?.flat().length ?? 0} totalImages={total} />
       {appStatus === 'GENERATING' && <Loading display="fullscreen" message="Placing image" />}
     </main>
   );
@@ -129,5 +132,6 @@ function createColumns(images: Array<StockImageData>) {
     [[], []] as Array<Array<StockImageData>>
   );
 
+  return cols;
   return cols?.map((col) => shuffle(col));
 }

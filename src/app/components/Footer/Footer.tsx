@@ -8,9 +8,10 @@ import classes from './component.module.css';
 interface PropTypes {
   setImages: Dispatch<SetStateAction<Array<Array<StockImageData>> | null>>;
   numImages: number;
+  totalImages: number;
 }
 
-export default function Footer({ setImages, numImages }: PropTypes) {
+export default function Footer({ setImages, numImages, totalImages }: PropTypes) {
   const { setSearchQuery } = useContext(SearchQueryContext);
   const { setShowDialog } = useContext(FilterDialogDisplayContext);
 
@@ -22,7 +23,9 @@ export default function Footer({ setImages, numImages }: PropTypes) {
   return (
     <footer className={classes['footer']}>
       <div data-visible={numImages > 0 ? 'true' : 'false'}>
-        <span>{numImages} Images</span>
+        <span>
+          Showing {numImages} of {totalImages}
+        </span>
         <button onClick={clearResults}>Clear Results</button>
       </div>
 

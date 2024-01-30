@@ -50,9 +50,12 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
       const data: ImageResultsInitial | ImageResultsAdditional = {
         type,
         payload: {
-          images: shuffle(imgData),
+          total: imgData.total,
+          images: shuffle(imgData.results),
         },
       };
+
+      console.log(data);
 
       figma.ui.postMessage(data);
     } catch (error) {

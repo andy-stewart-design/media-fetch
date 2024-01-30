@@ -2,6 +2,7 @@ import type { StockImageData, ImageService } from '@utils/image-search';
 
 // PAYLOAD TYPES
 interface StockImageDataPayload {
+  total: number;
   images: StockImageData[];
 }
 
