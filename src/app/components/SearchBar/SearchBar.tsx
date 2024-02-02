@@ -28,7 +28,7 @@ const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
             ref={ref}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder="Search for free images"
+            placeholder="Search for free photos"
             spellCheck="false"
             autoFocus
           />

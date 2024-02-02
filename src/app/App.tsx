@@ -1,6 +1,5 @@
 // POST LAUNCH
-// TODO: Figure out why api is always returning the same images, regardless of page
-// TODO: ------ Make sure page number is being sent to api
+// TODO: switch all dialogs to Radix
 // TODO: tooltips
 // TODO: Polish error state styles
 // TODO: Consider adding Openverse as a service: https://api.openverse.engineering/v1/

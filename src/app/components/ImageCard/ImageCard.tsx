@@ -31,9 +31,9 @@ export default function ImageCard({ image }: PropTypes) {
   const { exportSettings } = useContext(ExportSettingsContext);
 
   const Icon =
-    source.toLocaleLowerCase() === 'unsplash'
+    source.toLowerCase() === 'unsplash'
       ? Unsplash
-      : source.toLocaleLowerCase() === 'pexels'
+      : source.toLowerCase() === 'pexels'
       ? Pexels
       : Pixabay;
 

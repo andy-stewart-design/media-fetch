@@ -55,8 +55,6 @@ figma.ui.onmessage = async (message: UIPostMessage) => {
         },
       };
 
-      console.log(data);
-
       figma.ui.postMessage(data);
     } catch (error) {
       const message = handleError(error);
