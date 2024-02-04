@@ -2,13 +2,14 @@ import { useState, useEffect, useContext } from 'react';
 import ImageGallery from '@components/ImageGallery';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
+import ErrorDialog from '@components/ErrorDialog';
 import Loading from '@components/Loading';
 import QueryError from '@components/QueryError';
 import { SearchQueryContext } from '@components/Providers/SearchQueryProvider';
 import { SearchFilterContext } from '@components/Providers/SearchFilterProvider';
-import { ErrorDialogDisplayContext } from '@components/Providers/ErrorDialogDisplayProvider';
 import { AppStatusContext } from '@components/Providers/AppStatusProvider';
-import { shuffle } from '@src/utils/shuffle';
+import { useToggle } from '@hooks/use-input';
+import { shuffle } from '@utils/shuffle';
 import type { StockImageData } from '@utils/image-search';
 import type { PluginPostMessage, UIPostMessage } from '@src/types/post-messages';
 
@@ -17,11 +18,12 @@ export default function Main() {
   const { appStatus, setAppStatus } = useContext(AppStatusContext);
   const { searchQuery, setSearchQuery } = useContext(SearchQueryContext);
   const { searchFilters } = useContext(SearchFilterContext);
-  const errorDialog = useContext(ErrorDialogDisplayContext);
 
   // LOCAL STATE
   const [images, setImages] = useState<Array<Array<StockImageData>> | null>(null);
   const [total, setTotal] = useState(0);
+  const [showErrorDialog, setShowErrorDialog] = useToggle(false);
+  // const [message, setMessage] = useState('');
 
   // KICK OFF INITIAL IMAGE REQUEST WHEN RELEVANT PARAMETERS CHANGE
   useEffect(() => {
@@ -88,8 +90,8 @@ export default function Main() {
       } else if (type === 'PLACE_IMAGE_SUCCESS') {
         setAppStatus('IDLE');
       } else if (type === 'PLACE_IMAGE_ERROR') {
-        errorDialog.setShowDialog();
-        errorDialog.setMessage(payload.message);
+        setShowErrorDialog(false);
+        // errorDialog.setMessage(payload.message);
         setAppStatus('IDLE');
       }
     }
@@ -112,7 +114,8 @@ export default function Main() {
         <ImageGallery images={images} setImages={setImages} />
       )}
       <Footer setImages={setImages} numImages={images?.flat().length ?? 0} totalImages={total} />
-      {appStatus === 'GENERATING' && <Loading display="fullscreen" message="Placing image" />}
+      <ErrorDialog status={showErrorDialog} onChange={setShowErrorDialog} />
+      <Loading open={appStatus === 'GENERATING'} display="fullscreen" message="Placing image" />
     </main>
   );
 }

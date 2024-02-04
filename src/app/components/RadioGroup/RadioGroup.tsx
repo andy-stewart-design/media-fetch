@@ -1,6 +1,6 @@
-import { ComponentProps, ReactNode } from "react";
-import InputGroup from "../InputGroup";
-import classes from "./component.module.css";
+import { ComponentProps, ReactNode } from 'react';
+import InputGroup from '../InputGroup';
+import classes from './component.module.css';
 
 interface RadioGroupProps {
   children?: ReactNode;
@@ -15,53 +15,29 @@ export function RadioGroup({ children, className }: RadioGroupProps) {
   );
 }
 
-export function RadioGroupLabel({
-  className,
-  children,
-  ...delegated
-}: ComponentProps<"legend">) {
+export function RadioGroupLabel({ className, children, ...delegated }: ComponentProps<'legend'>) {
   return (
-    <legend {...delegated} className={`${classes["label"]} label ${className}`}>
+    <legend {...delegated} className={`${classes['label']} label ${className}`}>
       {children}
     </legend>
   );
 }
 
-export function RadioGroupItem({
-  className,
-  children,
-  ...delegated
-}: ComponentProps<"span">) {
+export function RadioGroupItem({ className, children, ...delegated }: ComponentProps<'span'>) {
   return (
-    <span
-      {...delegated}
-      className={`${classes["radio-group-item"]} ${className}`}
-    >
+    <span {...delegated} className={`${classes['radio-group-item']} ${className}`}>
       {children}
     </span>
   );
 }
 
-export function RadioItemInput({
-  className,
-  ...delegated
-}: ComponentProps<"input">) {
-  return (
-    <input
-      {...delegated}
-      type="radio"
-      className={`${classes["input"]} ${className}`}
-    />
-  );
+export function RadioItemInput({ className, ...delegated }: ComponentProps<'input'>) {
+  return <input {...delegated} type="radio" className={`${classes['input']} ${className}`} />;
 }
 
-export function RadioItemLabel({
-  className,
-  children,
-  ...delegated
-}: ComponentProps<"label">) {
+export function RadioItemLabel({ className, children, ...delegated }: ComponentProps<'label'>) {
   return (
-    <label {...delegated} className={`${classes["label"]} ${className}`}>
+    <label {...delegated} className={`${classes['label']} ${className}`}>
       {children}
     </label>
   );

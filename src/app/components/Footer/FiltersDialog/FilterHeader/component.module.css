@@ -1,7 +1,9 @@
 .header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  p {
+  &:first-child {
     font-weight: var(--font-medium);
     font-size: 14px;
   }

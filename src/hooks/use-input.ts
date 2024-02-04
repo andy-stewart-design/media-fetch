@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, type ChangeEvent } from "react";
+import { useCallback, useMemo, useState, type ChangeEvent } from 'react';
 
 type InputChangeEvent = ChangeEvent<HTMLInputElement>;
 
@@ -14,11 +14,7 @@ export interface DelegatedNumberProps {
   step: number;
 }
 
-export type UseNumberReturn = [
-  number,
-  NumberChangeAction,
-  DelegatedNumberProps
-];
+export type UseNumberReturn = [number, NumberChangeAction, DelegatedNumberProps];
 
 type NumberSetupHook = (
   initialValue: number,
@@ -36,7 +32,7 @@ export const useNumberInput: NumberSetupHook = (
   const [value, setValue] = useState(initialValue);
 
   const onChange = useCallback<NumberChangeAction>(function (event) {
-    if (typeof event === "number") {
+    if (typeof event === 'number') {
       setValue(event);
     } else {
       const { target } = event;
@@ -69,10 +65,34 @@ export const useRadio: RadioSetupHook = (initialValue) => {
   const [value, setValue] = useState(initialValue);
 
   const onChange = useCallback<RadioGroupAction>(function (event) {
-    if (typeof event === "string") {
+    if (typeof event === 'string') {
       setValue(event);
     } else {
       setValue(event.target.value);
+    }
+  }, []);
+
+  return [value, onChange];
+};
+
+// ------------------------------------------------------
+// Input: Toggle ------------------------------------
+// ------------------------------------------------------
+
+export type ToggleAction = (event: ChangeEvent<HTMLInputElement> | boolean) => void;
+
+export type UseToggleReturn = [boolean, ToggleAction];
+
+type ToggleSetupHook = (initialValue: boolean) => UseToggleReturn;
+
+export const useToggle: ToggleSetupHook = (initialValue) => {
+  const [value, setValue] = useState(initialValue);
+
+  const onChange = useCallback<ToggleAction>(function (event) {
+    if (typeof event === 'boolean') {
+      setValue(event);
+    } else if (event.target.checked) {
+      setValue(event.target.checked);
     }
   }, []);
 

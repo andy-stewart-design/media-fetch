@@ -1,4 +1,4 @@
-.loading {
+.overlay {
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
@@ -9,14 +9,26 @@
 
   padding-bottom: var(--space-xl);
 
-  animation: loading-fade-in forwards 400ms;
-  animation-timing-function: var(--ease-out-3);
+  &[data-state='open'] {
+    animation-name: loading-fade-in;
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--ease-out-3);
+    animation-duration: 300ms;
+  }
 
   p {
     font-size: 0.875rem;
     font-weight: var(--font-medium);
     color: oklch(var(--foreground-oklch) / 60%);
   }
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  justify-content: center;
+  align-items: center;
 }
 
 .fill {

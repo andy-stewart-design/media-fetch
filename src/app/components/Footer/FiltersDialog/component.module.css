@@ -1,0 +1,93 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+
+  &[data-state='open'] {
+    animation: image-dialog-show forwards 500ms;
+    animation-timing-function: var(--ease-out-3);
+  }
+
+  &[data-state='closed'] {
+    animation: image-dialog-hide forwards 500ms;
+    animation-timing-function: var(--ease-in-5);
+  }
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+
+  &:is(:hover, :focus-visible) {
+    color: var(--color-accent);
+    transition: color 200ms var(--ease-out-3);
+  }
+}
+
+.dialog {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+
+  background: var(--elevation-1);
+  border-top: var(--border-light);
+  border-radius: var(--space-xl) var(--space-xl) 0 0;
+  box-shadow: var(--shadow-above-5);
+
+  outline: var(--border-light);
+
+  & > section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    padding-inline: var(--space-xl);
+    margin-block: var(--space-xl);
+    margin-block-end: var(--space-2xl);
+
+    &:first-of-type {
+      display: block;
+      padding-block: var(--space-md);
+      border-bottom: var(--border-light);
+      margin: 0;
+    }
+
+    &:last-of-type {
+      display: block;
+      padding-block: var(--space-xl);
+      border-top: var(--border-light);
+      margin: 0;
+    }
+  }
+
+  &[data-state='open'] {
+    animation-name: image-dialog-show;
+    animation-timing-function: var(--ease-out-3);
+    animation-fill-mode: forwards;
+    animation-duration: 400ms;
+  }
+
+  &[data-state='closed'] {
+    animation-name: image-dialog-hide;
+    animation-timing-function: var(--ease-in-2);
+    animation-fill-mode: forwards;
+    animation-duration: 350ms;
+  }
+}
+
+@keyframes image-dialog-show {
+  from {
+    translate: 0 100%;
+  }
+}
+
+@keyframes image-dialog-hide {
+  to {
+    translate: 0 100%;
+  }
+}

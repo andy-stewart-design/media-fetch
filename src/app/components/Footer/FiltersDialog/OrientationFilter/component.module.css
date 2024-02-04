@@ -1,20 +1,25 @@
-.wrapper {
-  display: flex;
+.fieldset {
+  display: grid;
 }
 
-.item {
-  flex: 1 0 0;
-
-  & > input {
-    outline: none;
-  }
+.group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
-.label {
+.groupLabel {
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+}
+
+.radio {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: var(--input-height);
 
   font-weight: var(--font-medium);
@@ -25,12 +30,31 @@
 
   background-color: var(--elevation-1);
   border: var(--input-border-default);
+  border-radius: 0;
   border-right: var(--input-border-transparent);
   background-clip: padding-box;
   overflow: hidden;
-
   transition: color 150ms var(--ease-out-3), border 150ms var(--ease-out-3),
     background 150ms var(--ease-out-3);
+
+  label:first-of-type & {
+    border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+  }
+
+  label:last-of-type & {
+    border-right: var(--input-border-default);
+    border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
+  }
+
+  &:hover {
+    color: var(--foreground);
+    background: var(--input-background);
+    background-clip: padding-box;
+
+    :global(.figma-light) & {
+      background: var(--depression-1);
+    }
+  }
 
   &::before {
     content: '';
@@ -48,17 +72,7 @@
     transition: opacity 150ms var(--ease-out-3);
   }
 
-  &:hover {
-    color: var(--foreground);
-    background: var(--input-background);
-    background-clip: padding-box;
-
-    :global(.figma-light) & {
-      background: var(--depression-1);
-    }
-  }
-
-  input:checked + & {
+  &[data-state='checked'] {
     color: var(--emerald-100);
     background: var(--elevation-1);
     border: 1px solid oklch(var(--color-accent-oklch) / 50%);
@@ -75,23 +89,18 @@
       background: var(--emerald-700);
       border: var(--border-active);
 
+      label:last-of-type & {
+        border-right: var(--border-active);
+      }
+
       :global(.figma-light) & {
         background: var(--emerald-50);
         border: var(--border-active);
       }
     }
-  }
 
-  input:focus-visible + & {
-    border: var(--border-active);
-  }
-
-  span:first-of-type & {
-    border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
-  }
-
-  span:last-of-type & {
-    border-right: var(--input-border-default);
-    border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
+    label:last-of-type & {
+      border-right: 1px solid oklch(var(--color-accent-oklch) / 50%);
+    }
   }
 }

@@ -12,8 +12,6 @@ import type {
   PlaceImageSuccess,
 } from '@src/types/post-messages';
 
-// const uiOptions = { height: 680, width: 520, themeColors: true };
-
 // BOILERPLATE CODE TO DISPLAY THE UI WHEN THE PLUGIN IS RUN
 figma.showUI(__html__, { height: 680, width: 520, themeColors: true, visible: false });
 
