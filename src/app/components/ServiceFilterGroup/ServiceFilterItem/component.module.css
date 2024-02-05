@@ -3,14 +3,21 @@
   width: 48px;
   height: 48px;
   padding: 8px;
-  color: oklch(var(--foreground-oklch) / 50%);
+  color: oklch(var(--foreground-oklch) / 30%);
   background-color: var(--input-background);
-  background-clip: padding-box;
   border: var(--border-light);
+  background-clip: padding-box;
   border-radius: 8px;
   overflow: hidden;
   transition: color 150ms var(--ease-out-3), background 200ms var(--ease-out-3),
     border 150ms var(--ease-out-3);
+
+  &:hover {
+    background: var(--depression-2);
+    color: oklch(var(--foreground-oklch) / 50%);
+    border: var(--border-light);
+    background-clip: padding-box;
+  }
 
   &::before {
     content: '';
