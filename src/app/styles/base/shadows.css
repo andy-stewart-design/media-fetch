@@ -8,6 +8,10 @@
     --shadow-below-2: 0 3px 5px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
       0 7px 14px -5px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 7%));
 
+    --shadow-below-3: 0 3px 5px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
+      0 7px 14px -5px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 5%)),
+      0 7px 18px -5px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 7%));
+
     --shadow-below-5: 0 -1px 2px 0 oklch(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
       0 2px 1px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
       0 5px 5px -2px oklch(var(--shadow-color) / calc(var(--shadow-strength) + 4%)),

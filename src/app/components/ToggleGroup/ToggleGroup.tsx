@@ -39,7 +39,7 @@ export default function ToggleGroup({ label, activeSources, sources, setSources 
         className={classes.container}
       >
         {sources.map((source) => (
-          <ToggleGroupItem value={source.value} icon={source.icon} />
+          <ToggleGroupItem {...source} />
         ))}
       </ToggleRoot>
     </fieldset>

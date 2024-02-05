@@ -1,0 +1,46 @@
+.tooltip {
+  --background-color: var(--tooltip-bg, var(--color-accent));
+
+  background: var(--background-color);
+  padding-inline: var(--space-sm);
+  padding-block: var(--space-xs);
+  border-radius: var(--brad);
+  box-shadow: var(--shadow-below-3);
+
+  font-weight: var(--font-medium);
+  font-size: 0.875rem;
+  color: var(--gray-950);
+  animation-duration: 300ms;
+  animation-timing-function: var(--ease-out-4);
+  animation-delay: 500ms;
+  animation-fill-mode: forwards;
+
+  opacity: 0;
+  transform: translateY(-2px);
+
+  &[data-state='delayed-open'] {
+    animation-name: tooltip-enter;
+  }
+
+  :global(.figma-light) & {
+    --background-color: var(--tooltip-bg, var(--emerald-200));
+  }
+}
+
+.arrow {
+  fill: var(--background-color);
+  width: var(--space-lg);
+  height: var(--space-sm);
+  margin-top: -3px;
+}
+
+@keyframes tooltip-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
