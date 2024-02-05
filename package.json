@@ -1,7 +1,7 @@
 {
   "name": "media-fetch",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "build": "tsc && vite build && pnpm run build:code",
