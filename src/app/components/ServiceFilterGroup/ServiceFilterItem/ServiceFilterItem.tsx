@@ -9,7 +9,7 @@ interface ItemPropTypes {
   icon: () => JSX.Element;
 }
 
-export default function ToggleGroupItem({ value, name, icon: Icon }: ItemPropTypes) {
+export default function ServiceFilterItem({ value, name, icon: Icon }: ItemPropTypes) {
   return (
     <TooltipRoot>
       <ToggleItem value={value} asChild>

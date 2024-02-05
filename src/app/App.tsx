@@ -1,5 +1,4 @@
 // POST LAUNCH
-// TODO: tooltips
 // TODO: clean up Filter dialog CSS
 // TODO: Polish error state styles
 // TODO: Consider adding Openverse as a service: https://api.openverse.engineering/v1/

@@ -1,4 +1,4 @@
-import ToggleGroupItem from './ToggleGroupItem';
+import ToggleGroupItem from './ServiceFilterItem';
 import type { Dispatch, SetStateAction } from 'react';
 import type { ImageSource } from '@src/app/constants/image-sources';
 import type { ImageService } from '@src/utils/image-search';
@@ -13,7 +13,12 @@ interface PropTypes {
   setSources: Dispatch<SetStateAction<Array<ImageService>>>;
 }
 
-export default function ToggleGroup({ label, activeSources, sources, setSources }: PropTypes) {
+export default function ServiceFilterGroup({
+  label,
+  activeSources,
+  sources,
+  setSources,
+}: PropTypes) {
   function handleChange(newSources: Array<ImageService>) {
     if (newSources.length <= 0) {
       const pluginMessage: UIPostMessage = {

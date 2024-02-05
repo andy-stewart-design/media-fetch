@@ -1,6 +1,6 @@
 import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
 import SearchBar from '@components/SearchBar';
-import ToggleGroup from '@components/ToggleGroup';
+import ServiceFilterGroup from '@src/app/components/ServiceFilterGroup';
 import { IMAGE_SOURCES } from '@src/app/constants/image-sources';
 import type { ImageService } from '@src/utils/image-search';
 
@@ -30,7 +30,7 @@ export default function Header() {
   return (
     <header className={classes['header']}>
       <SearchBar value={value} setValue={setValue} onSubmit={handleSubmit} ref={inputRef} />
-      <ToggleGroup
+      <ServiceFilterGroup
         label={`Sources (${sources.length})`}
         sources={IMAGE_SOURCES}
         activeSources={sources}
