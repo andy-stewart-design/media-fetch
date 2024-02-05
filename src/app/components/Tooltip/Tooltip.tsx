@@ -1,8 +1,8 @@
 import { Provider, Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-tooltip';
-import { ComponentProps, ReactNode } from 'react';
+import { ComponentProps } from 'react';
 import classes from './component.module.css';
 
-export function TooltipRoot({ children }: ComponentProps<'div'>) {
+export function TooltipRoot({ children }: ComponentProps<typeof Provider>) {
   return (
     <Provider delayDuration={0} skipDelayDuration={0}>
       <Root>{children}</Root>
@@ -12,12 +12,11 @@ export function TooltipRoot({ children }: ComponentProps<'div'>) {
 
 // TRIGGER ----------------------------------------------------------------------
 
-interface TriggerProps {
-  children: ReactNode;
-  asChild?: boolean | undefined;
-}
-
-export function TooltipTrigger({ children, asChild = true, ...delegated }: TriggerProps) {
+export function TooltipTrigger({
+  children,
+  asChild = true,
+  ...delegated
+}: ComponentProps<typeof Trigger>) {
   console.log({ delegated });
 
   return (
