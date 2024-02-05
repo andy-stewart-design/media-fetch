@@ -1,31 +1,16 @@
-import { type ChangeEvent } from 'react';
-import { ImageSource } from '@app/constants/image-sources';
+import { Item as Toggle } from '@radix-ui/react-toggle-group';
+import type { ImageService } from '@src/utils/image-search';
 import classes from './component.module.css';
 
 interface ItemPropTypes {
-  source: ImageSource;
-  activeSources: string[];
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: ImageService;
+  icon: () => JSX.Element;
 }
 
-export default function ToggleGroupItem({
-  source,
-  activeSources,
-  onChange: handleChange,
-}: ItemPropTypes) {
-  const { value, name, icon: Icon } = source;
-
+export default function ToggleGroupItem({ value, icon: Icon }: ItemPropTypes) {
   return (
-    <div className={classes.item}>
-      <input
-        type="checkbox"
-        id={value}
-        value={value}
-        onChange={handleChange}
-        checked={activeSources.includes(value)}
-      />
-      <label htmlFor={value}>{name}</label>
+    <Toggle value={value} className={classes.item}>
       <Icon />
-    </div>
+    </Toggle>
   );
 }

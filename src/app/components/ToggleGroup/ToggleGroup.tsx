@@ -1,8 +1,9 @@
 import ToggleGroupItem from './ToggleGroupItem';
-import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import type { ImageSource } from '@src/app/constants/image-sources';
 import type { ImageService } from '@src/utils/image-search';
 import type { UIPostMessage } from '@src/types/post-messages';
+import { Root as ToggleRoot } from '@radix-ui/react-toggle-group';
 import classes from './component.module.css';
 
 interface PropTypes {
@@ -13,39 +14,34 @@ interface PropTypes {
 }
 
 export default function ToggleGroup({ label, activeSources, sources, setSources }: PropTypes) {
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { checked, value } = e.target;
+  function handleChange(newSources: Array<ImageService>) {
+    if (newSources.length <= 0) {
+      const pluginMessage: UIPostMessage = {
+        type: 'ERROR',
+        payload: { message: 'You must select at least one image source' },
+      };
 
-    // TODO: REMOVE CODE SMELL
-    if (value !== 'unsplash' && value !== 'pexels' && value !== 'pixabay') {
+      parent.postMessage({ pluginMessage }, '*');
+
       return;
-    }
-
-    if (checked) {
-      setSources([...activeSources, value]);
     } else {
-      if (activeSources.length <= 1) {
-        const pluginMessage: UIPostMessage = {
-          type: 'ERROR',
-          payload: { message: 'You must select at least one image source' },
-        };
-
-        parent.postMessage({ pluginMessage }, '*');
-
-        return;
-      }
-      setSources(activeSources.filter((source) => source !== value));
+      setSources(newSources);
     }
   }
 
   return (
     <fieldset className={`${classes['toggle-group']} input-group`}>
       <legend className="label">{label}</legend>
-      <div className={classes.container}>
+      <ToggleRoot
+        type="multiple"
+        value={activeSources}
+        onValueChange={handleChange}
+        className={classes.container}
+      >
         {sources.map((source) => (
-          <ToggleGroupItem source={source} activeSources={activeSources} onChange={handleChange} />
+          <ToggleGroupItem value={source.value} icon={source.icon} />
         ))}
-      </div>
+      </ToggleRoot>
     </fieldset>
   );
 }

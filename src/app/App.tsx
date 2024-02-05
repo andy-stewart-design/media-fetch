@@ -1,5 +1,4 @@
 // POST LAUNCH
-// TODO: Switch Radio Groups to Radix
 // TODO: tooltips
 // TODO: clean up Filter dialog CSS
 // TODO: Polish error state styles
